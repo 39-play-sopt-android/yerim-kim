@@ -31,7 +31,7 @@ fun PlaySoptTextField(
     state: TextFieldState,
     label: String,
     placeholder: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     errorMsg: String? = null,
     isPassword: Boolean = false,
 ) {

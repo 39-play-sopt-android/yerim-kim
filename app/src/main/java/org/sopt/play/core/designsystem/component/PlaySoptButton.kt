@@ -20,7 +20,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 fun PlaySoptButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     enabled: Boolean = false,
 ){
     Box(
