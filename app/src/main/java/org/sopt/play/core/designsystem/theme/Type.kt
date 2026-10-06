@@ -1,4 +1,4 @@
-package org.sopt.play.ui.theme
+package org.sopt.play.core.designsystem.theme
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.runtime.Immutable
