@@ -15,13 +15,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.isEmailValid
+import org.sopt.play.core.extension.isPasswordValid
 
 @Composable
 fun LoginScreen(
@@ -52,7 +55,7 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) "올바른 이메일을 입력해주세요." else null,
+                errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) stringResource(R.string.invalid_email) else null,
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -61,7 +64,7 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = if (passwordState.text.isNotEmpty() && passwordState.text.length < 6) "비밀번호는 6자 이상 입력해주세요." else null,
+                errorMsg = if (passwordState.text.isNotEmpty() && passwordState.text.length < 6) stringResource(R.string.short_password) else null,
                 isPassword = true,
             )
         }
@@ -72,6 +75,8 @@ fun LoginScreen(
             PlaySoptButton(
                 text = "로그인",
                 onClick = onLoginClick,
+                enabled = isEmailValid(emailState.text.toString())
+                        && isPasswordValid(passwordState.text.toString()),
             )
 
             Spacer(modifier = Modifier.height(20.dp))

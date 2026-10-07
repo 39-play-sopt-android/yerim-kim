@@ -9,8 +9,10 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
@@ -59,7 +61,7 @@ fun SignUpScreen(
                 placeholder = "abc@email.com",
                 errorMsg = if (isEmailValid(emailState.text.toString())
                     || emailState.text.isEmpty()
-                ) null else "올바른 이메일을 입력해주세요.",
+                ) null else stringResource(R.string.invalid_email),
             )
 
             PlaySoptTextField(
@@ -68,7 +70,7 @@ fun SignUpScreen(
                 placeholder = "6자 이상의 비밀번호",
                 errorMsg = if (isPasswordValid(passwordState.text.toString())
                     || passwordState.text.isEmpty()
-                ) null else "비밀번호는 6자 이상 입력해주세요.",
+                ) null else stringResource(R.string.short_password),
                 isPassword = true,
             )
 
@@ -81,7 +83,7 @@ fun SignUpScreen(
                         passwordCheckState.text.toString()
                     )
                     || passwordCheckState.text.isEmpty()
-                ) null else "비밀번호와 동일하게 입력해주세요.",
+                ) null else stringResource(R.string.different_password),
                 isPassword = true,
             )
         }
