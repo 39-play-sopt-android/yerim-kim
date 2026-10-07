@@ -1,7 +1,6 @@
 package org.sopt.play.core.designsystem.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
 fun PlaySoptButton(
@@ -31,7 +31,7 @@ fun PlaySoptButton(
                 shape = RoundedCornerShape(100.dp),
                 color = if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1,
             )
-            .clickable(
+            .noRippleClickable(
                 enabled = enabled,
                 onClick = onClick,
             )

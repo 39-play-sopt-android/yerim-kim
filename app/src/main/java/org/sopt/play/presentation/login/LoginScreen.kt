@@ -1,7 +1,6 @@
 package org.sopt.play.presentation.login
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +24,7 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.isEmailValid
 import org.sopt.play.core.extension.isPasswordValid
+import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
 fun LoginScreen(
@@ -105,7 +105,10 @@ fun LoginScreen(
                     style = PLAYSOPTTheme.typography.caption.m14.copy(
                         color = PLAYSOPTTheme.colors.gray6,
                     ),
-                    modifier = Modifier.clickable(onClick = onSignUpClick)
+                    modifier = Modifier
+                        .noRippleClickable(
+                            onClick = onSignUpClick
+                        ),
                 )
             }
         }
