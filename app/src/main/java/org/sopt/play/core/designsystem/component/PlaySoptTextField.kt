@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.KeyboardActionHandler
 import androidx.compose.foundation.text.input.OutputTransformation
 import androidx.compose.foundation.text.input.TextFieldDecorator
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -38,6 +40,8 @@ fun PlaySoptTextField(
     modifier: Modifier = Modifier,
     errorMsg: String? = null,
     isPassword: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    onKeyboardAction: KeyboardActionHandler? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -57,6 +61,7 @@ fun PlaySoptTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { isFocused = it.isFocused }
+
                 .background(
                     shape = RoundedCornerShape(12.dp),
                     color = PLAYSOPTTheme.colors.white,
@@ -92,6 +97,8 @@ fun PlaySoptTextField(
             } else null,
             lineLimits = TextFieldLineLimits.SingleLine,
             cursorBrush = SolidColor(PLAYSOPTTheme.colors.gray5),
+            keyboardOptions = keyboardOptions,
+            onKeyboardAction = onKeyboardAction,
         )
 
         if (!errorMsg.isNullOrEmpty()) {

@@ -4,12 +4,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.R
@@ -31,6 +39,9 @@ fun SignUpScreen(
     val passwordState = rememberTextFieldState()
     val passwordCheckState = rememberTextFieldState()
 
+    val scrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -47,12 +58,21 @@ fun SignUpScreen(
         )
 
         Column(
+            modifier = Modifier
+                .imePadding()
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
             PlaySoptTextField(
                 state = nameState,
                 label = "이름",
                 placeholder = "홍길동",
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                ),
+                onKeyboardAction = {
+                    focusManager.moveFocus(FocusDirection.Next)
+                },
             )
 
             PlaySoptTextField(
@@ -62,6 +82,13 @@ fun SignUpScreen(
                 errorMsg = if (isEmailValid(emailState.text.toString())
                     || emailState.text.isEmpty()
                 ) null else stringResource(R.string.invalid_email),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
+                onKeyboardAction = {
+                    focusManager.moveFocus(FocusDirection.Next)
+                },
             )
 
             PlaySoptTextField(
@@ -72,6 +99,13 @@ fun SignUpScreen(
                     || passwordState.text.isEmpty()
                 ) null else stringResource(R.string.short_password),
                 isPassword = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Next,
+                ),
+                onKeyboardAction = {
+                    focusManager.moveFocus(FocusDirection.Next)
+                },
             )
 
             PlaySoptTextField(
@@ -85,6 +119,13 @@ fun SignUpScreen(
                     || passwordCheckState.text.isEmpty()
                 ) null else stringResource(R.string.different_password),
                 isPassword = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done,
+                ),
+                onKeyboardAction = {
+                    focusManager.clearFocus()
+                },
             )
         }
 
@@ -98,7 +139,10 @@ fun SignUpScreen(
             },
             enabled = isEmailValid(emailState.text.toString())
                     && isPasswordValid(passwordState.text.toString())
-                    && isPasswordCheckValid(passwordState.text.toString(),passwordCheckState.text.toString()),
+                    && isPasswordCheckValid(
+                passwordState.text.toString(),
+                passwordCheckState.text.toString()
+            ),
         )
     }
 }

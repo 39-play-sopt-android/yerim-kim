@@ -9,12 +9,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.R
@@ -34,6 +39,8 @@ fun LoginScreen(
 ) {
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
+
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -58,6 +65,13 @@ fun LoginScreen(
                 errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) stringResource(
                     R.string.invalid_email
                 ) else null,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next,
+                ),
+                onKeyboardAction = {
+                    focusManager.moveFocus(FocusDirection.Next)
+                },
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -70,6 +84,13 @@ fun LoginScreen(
                     R.string.short_password
                 ) else null,
                 isPassword = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done,
+                ),
+                onKeyboardAction = {
+                    focusManager.clearFocus()
+                },
             )
         }
 
