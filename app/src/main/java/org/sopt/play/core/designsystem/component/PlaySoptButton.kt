@@ -1,6 +1,7 @@
 package org.sopt.play.core.designsystem.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,10 @@ fun PlaySoptButton(
             .background(
                 shape = RoundedCornerShape(100.dp),
                 color = if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1,
+            )
+            .clickable(
+                enabled = enabled,
+                onClick = onClick,
             )
             .padding(16.dp),
         contentAlignment = Alignment.Center,

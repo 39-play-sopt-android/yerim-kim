@@ -23,7 +23,7 @@ import org.sopt.play.core.extension.isPasswordValid
 
 @Composable
 fun SignUpScreen(
-    onSignUpClick: () -> Unit,
+    onSignUpClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nameState = rememberTextFieldState()
@@ -90,7 +90,12 @@ fun SignUpScreen(
 
         PlaySoptButton(
             text = "회원가입",
-            onClick = onSignUpClick,
+            onClick = {
+                onSignUpClick(
+                    emailState.text.toString(),
+                    passwordState.text.toString()
+                )
+            },
             enabled = isEmailValid(emailState.text.toString())
                     && isPasswordValid(passwordState.text.toString())
                     && isPasswordCheckValid(passwordState.text.toString(),passwordCheckState.text.toString()),
@@ -103,7 +108,7 @@ fun SignUpScreen(
 private fun SignUpScreenPreview() {
     PlaySoptTheme {
         SignUpScreen(
-            onSignUpClick = {},
+            onSignUpClick = { _, _ -> }
         )
     }
 }

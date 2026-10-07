@@ -1,6 +1,8 @@
 package org.sopt.play.presentation.login
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -8,12 +10,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import org.sopt.play.MainActivity
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.presentation.signup.SignUpActivity
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val signUpEmail = intent.getStringExtra("email")
+        val signUpPassword = intent.getStringExtra("password")
+
         enableEdgeToEdge()
         setContent {
             PlaySoptTheme {
@@ -22,8 +31,24 @@ class LoginActivity : ComponentActivity() {
                     containerColor = PLAYSOPTTheme.colors.white,
                 ) { innerPadding ->
                     LoginScreen(
-                        onLoginClick = {},
-                        onSignUpClick = {},
+                        onLoginClick = { email,password ->
+                            val intent = Intent(this, MainActivity::class.java)
+
+                            if (email == signUpEmail && password == signUpPassword) {
+                                Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
+
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this, R.string.wrong_input, Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                        onSignUpClick = {
+                            val intent = Intent(this, SignUpActivity::class.java)
+
+                            startActivity(intent)
+                            finish()
+                        },
                         modifier = Modifier.padding(innerPadding),
                     )
                 }

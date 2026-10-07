@@ -28,7 +28,7 @@ import org.sopt.play.core.extension.isPasswordValid
 
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit,
+    onLoginClick: (String, String) -> Unit,
     onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -55,7 +55,9 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) stringResource(R.string.invalid_email) else null,
+                errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) stringResource(
+                    R.string.invalid_email
+                ) else null,
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -64,7 +66,9 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = if (passwordState.text.isNotEmpty() && passwordState.text.length < 6) stringResource(R.string.short_password) else null,
+                errorMsg = if (passwordState.text.isNotEmpty() && passwordState.text.length < 6) stringResource(
+                    R.string.short_password
+                ) else null,
                 isPassword = true,
             )
         }
@@ -74,7 +78,12 @@ fun LoginScreen(
         ) {
             PlaySoptButton(
                 text = "로그인",
-                onClick = onLoginClick,
+                onClick = {
+                    onLoginClick(
+                        emailState.text.toString(),
+                        passwordState.text.toString(),
+                    )
+                },
                 enabled = isEmailValid(emailState.text.toString())
                         && isPasswordValid(passwordState.text.toString()),
             )
@@ -109,7 +118,7 @@ private fun LoginScreenPreview() {
     PlaySoptTheme {
         LoginScreen(
             modifier = Modifier,
-            onLoginClick = {},
+            onLoginClick = { _, _ -> },
             onSignUpClick = {},
         )
     }

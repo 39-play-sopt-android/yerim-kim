@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
             PlaySoptTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "하이룽",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -33,8 +34,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        text = name,
+        modifier = modifier,
     )
 }
 
@@ -42,6 +43,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     PlaySoptTheme {
-        Greeting("Android")
+        Greeting("하이룽")
     }
 }
