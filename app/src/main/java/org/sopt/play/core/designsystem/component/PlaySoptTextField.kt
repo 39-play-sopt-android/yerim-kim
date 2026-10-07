@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.OutputTransformation
 import androidx.compose.foundation.text.input.TextFieldDecorator
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
@@ -21,8 +23,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
@@ -81,11 +85,15 @@ fun PlaySoptTextField(
                     innerTextField()
                 }
             },
+            outputTransformation = if (isPassword) OutputTransformation {
+                repeat(length) {
+                    replace(it, it + 1, "•")
+                }
+            } else null,
+            lineLimits = TextFieldLineLimits.SingleLine,
             cursorBrush = SolidColor(PLAYSOPTTheme.colors.gray5),
-            outputTransformation = {
-                if (isPassword) replace(0, length, "•".repeat(length))
-            },
         )
+
         if (!errorMsg.isNullOrEmpty()) {
             Text(
                 text = errorMsg,
@@ -133,7 +141,7 @@ private fun PlaySoptTextFieldPreview() {
                 label = "이메일 주소",
                 placeholder = "abc@email.com",
                 modifier = Modifier,
-                errorMsg = "올바른 이메일을 입력해주세요.",
+                errorMsg = stringResource(R.string.invalid_email),
             )
         }
     }
