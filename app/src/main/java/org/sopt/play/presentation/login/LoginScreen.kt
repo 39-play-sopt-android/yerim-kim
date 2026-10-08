@@ -35,7 +35,7 @@ import org.sopt.play.core.extension.noRippleClickable
 @Composable
 fun LoginScreen(
     onLoginClick: (String, String) -> Unit,
-    onSignUpClick: () -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val emailState = rememberTextFieldState()
@@ -130,7 +130,7 @@ fun LoginScreen(
                     ),
                     modifier = Modifier
                         .noRippleClickable(
-                            onClick = onSignUpClick
+                            onClick = onRegisterClick
                         ),
                 )
             }
@@ -145,7 +145,7 @@ private fun LoginScreenPreview() {
         LoginScreen(
             modifier = Modifier,
             onLoginClick = { _, _ -> },
-            onSignUpClick = {},
+            onRegisterClick = {},
         )
     }
 }

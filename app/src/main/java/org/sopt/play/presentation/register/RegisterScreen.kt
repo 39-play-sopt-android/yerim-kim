@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.signup
+package org.sopt.play.presentation.register
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +30,8 @@ import org.sopt.play.core.extension.isPasswordCheckValid
 import org.sopt.play.core.extension.isPasswordValid
 
 @Composable
-fun SignUpScreen(
-    onSignUpClick: (String, String) -> Unit,
+fun RegisterScreen(
+    onRegisterClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nameState = rememberTextFieldState()
@@ -131,7 +131,7 @@ fun SignUpScreen(
         PlaySoptButton(
             text = "회원가입",
             onClick = {
-                onSignUpClick(
+                onRegisterClick(
                     emailState.text.toString(),
                     passwordState.text.toString()
                 )
@@ -148,10 +148,10 @@ fun SignUpScreen(
 
 @Preview
 @Composable
-private fun SignUpScreenPreview() {
+private fun RegisterScreenPreview() {
     PlaySoptTheme {
-        SignUpScreen(
-            onSignUpClick = { _, _ -> }
+        RegisterScreen(
+            onRegisterClick = { _, _ -> }
         )
     }
 }

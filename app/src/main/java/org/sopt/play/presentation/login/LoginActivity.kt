@@ -15,14 +15,14 @@ import org.sopt.play.MainActivity
 import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.presentation.signup.SignUpActivity
+import org.sopt.play.presentation.register.RegisterActivity
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val signUpEmail = intent.getStringExtra("email")
-        val signUpPassword = intent.getStringExtra("password")
+        val registerEmail = intent.getStringExtra("email")
+        val registerPassword = intent.getStringExtra("password")
 
         enableEdgeToEdge()
         setContent {
@@ -37,7 +37,7 @@ class LoginActivity : ComponentActivity() {
                                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             }
 
-                            if (email == signUpEmail && password == signUpPassword) {
+                            if (email == registerEmail && password == registerPassword) {
                                 Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
                                 startActivity(intent)
@@ -45,8 +45,8 @@ class LoginActivity : ComponentActivity() {
                                 Toast.makeText(this, R.string.wrong_input, Toast.LENGTH_SHORT).show()
                             }
                         },
-                        onSignUpClick = {
-                            val intent = Intent(this, SignUpActivity::class.java)
+                        onRegisterClick = {
+                            val intent = Intent(this, RegisterActivity::class.java)
 
                             startActivity(intent)
                         },

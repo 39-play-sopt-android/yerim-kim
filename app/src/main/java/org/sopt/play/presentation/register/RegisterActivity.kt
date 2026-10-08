@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.signup
+package org.sopt.play.presentation.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.login.LoginActivity
 
-class SignUpActivity : ComponentActivity() {
+class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,8 +25,8 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = PLAYSOPTTheme.colors.white,
                 ) { innerPadding ->
-                    SignUpScreen(
-                        onSignUpClick = { email, password ->
+                    RegisterScreen(
+                        onRegisterClick = { email, password ->
                             val intent = Intent(this, LoginActivity::class.java).apply {
                                 putExtra("email", email)
                                 putExtra("password", password)
