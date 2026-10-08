@@ -60,11 +60,10 @@ fun PlaySoptTextField(
         modifier = modifier
             .fillMaxWidth()
             .bringIntoViewRequester(bringIntoViewRequester),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, bottom = 6.dp),
             style = PLAYSOPTTheme.typography.body.sb16,
             color = PLAYSOPTTheme.colors.gray6,
         )
@@ -131,7 +130,7 @@ fun PlaySoptTextField(
             Text(
                 text = errorMsg ?: "",
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(start = 8.dp, top = 6.dp)
                     .imePadding(),
                 style = PLAYSOPTTheme.typography.caption.m14.copy(
                     color = PLAYSOPTTheme.colors.red,
