@@ -46,6 +46,8 @@ fun SignUpScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = PLAYSOPTTheme.colors.white)
+            .imePadding()
+            .verticalScroll(scrollState)
             .padding(horizontal = 16.dp)
             .padding(top = 60.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
@@ -58,9 +60,6 @@ fun SignUpScreen(
         )
 
         Column(
-            modifier = Modifier
-                .imePadding()
-                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
             PlaySoptTextField(
