@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
@@ -129,9 +128,7 @@ fun PlaySoptTextField(
         ) {
             Text(
                 text = errorMsg ?: "",
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 6.dp)
-                    .imePadding(),
+                modifier = Modifier.padding(start = 8.dp, top = 6.dp),
                 style = PLAYSOPTTheme.typography.caption.m14.copy(
                     color = PLAYSOPTTheme.colors.red,
                 ),
