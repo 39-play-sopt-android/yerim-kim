@@ -33,13 +33,14 @@ class LoginActivity : ComponentActivity() {
                 ) { innerPadding ->
                     LoginScreen(
                         onLoginClick = { email,password ->
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
 
                             if (email == signUpEmail && password == signUpPassword) {
                                 Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
 
                                 startActivity(intent)
-                                finish()
                             } else {
                                 Toast.makeText(this, R.string.wrong_input, Toast.LENGTH_SHORT).show()
                             }
@@ -48,7 +49,6 @@ class LoginActivity : ComponentActivity() {
                             val intent = Intent(this, SignUpActivity::class.java)
 
                             startActivity(intent)
-                            finish()
                         },
                         modifier = Modifier
                             .padding(innerPadding)

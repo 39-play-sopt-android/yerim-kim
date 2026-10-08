@@ -33,7 +33,6 @@ class SignUpActivity : ComponentActivity() {
                             }
 
                             startActivity(intent)
-                            finish()
                         },
                         modifier = Modifier
                             .padding(innerPadding)
