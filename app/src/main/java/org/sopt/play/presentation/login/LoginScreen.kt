@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
@@ -46,6 +47,7 @@ fun LoginScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = PLAYSOPTTheme.colors.white)
+            .imePadding()
             .padding(horizontal = 16.dp)
             .padding(top = 60.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
