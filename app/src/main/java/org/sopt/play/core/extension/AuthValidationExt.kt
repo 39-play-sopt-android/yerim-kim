@@ -1,9 +1,8 @@
 package org.sopt.play.core.extension
 
-fun isEmailValid(email: String) : Boolean {
-    val emailRegex = "^[\\w.-]+@([\\w\\-]+\\.)+[a-z]{2,4}$"
-    return email.matches(emailRegex.toRegex())
-}
+const val EMAIL_REGEX = "^[\\w.-]+@([\\w\\-]+\\.)+[a-z]{2,}$"
+
+fun isEmailValid(email: String) = email.matches(EMAIL_REGEX.toRegex())
 
 fun isPasswordValid(password: String) = password.length >= 6
 
