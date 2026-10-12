@@ -2,15 +2,14 @@ package org.sopt.play.core.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
@@ -24,11 +23,12 @@ fun PlaySoptButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = false,
 ){
-    Box(
+    Text(
+        text = text,
         modifier = modifier
             .fillMaxWidth()
             .background(
-                shape = RoundedCornerShape(100.dp),
+                shape = CircleShape,
                 color = if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1,
             )
             .noRippleClickable(
@@ -36,14 +36,10 @@ fun PlaySoptButton(
                 onClick = onClick,
             )
             .padding(16.dp),
-        contentAlignment = Alignment.Center,
-    ){
-        Text(
-            text = text,
-            style = PLAYSOPTTheme.typography.caption.sb14,
-            color = if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3,
-        )
-    }
+        color = if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3,
+        textAlign = TextAlign.Center,
+        style = PLAYSOPTTheme.typography.caption.sb14,
+    )
 }
 
 @Preview
