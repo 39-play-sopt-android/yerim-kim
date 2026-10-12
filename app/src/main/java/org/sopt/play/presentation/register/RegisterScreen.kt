@@ -25,9 +25,9 @@ import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.extension.isEmailValid
-import org.sopt.play.core.extension.isPasswordCheckValid
-import org.sopt.play.core.extension.isPasswordValid
+import org.sopt.play.core.util.isEmailValid
+import org.sopt.play.core.util.isPasswordCheckValid
+import org.sopt.play.core.util.isPasswordValid
 
 @Composable
 fun RegisterScreen(
