@@ -2,7 +2,6 @@ package org.sopt.play.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +14,7 @@ import org.sopt.play.MainActivity
 import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.extension.toast
 import org.sopt.play.presentation.register.RegisterActivity
 
 const val EXTRA_EMAIL = "email"
@@ -41,11 +41,10 @@ class LoginActivity : ComponentActivity() {
                             }
 
                             if (email == registerEmail && password == registerPassword) {
-                                Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
-
+                                this.toast("로그인 성공!")
                                 startActivity(intent)
                             } else {
-                                Toast.makeText(this, R.string.wrong_input, Toast.LENGTH_SHORT).show()
+                                this.toast(getString(R.string.wrong_input))
                             }
                         },
                         onRegisterClick = {
