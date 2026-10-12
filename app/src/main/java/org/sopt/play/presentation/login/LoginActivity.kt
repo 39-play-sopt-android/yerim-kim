@@ -17,12 +17,15 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.register.RegisterActivity
 
+const val EXTRA_EMAIL = "email"
+const val EXTRA_PASSWORD = "password"
+
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val registerEmail = intent.getStringExtra("email")
-        val registerPassword = intent.getStringExtra("password")
+        val registerEmail = intent.getStringExtra(EXTRA_EMAIL)
+        val registerPassword = intent.getStringExtra(EXTRA_PASSWORD)
 
         enableEdgeToEdge()
         setContent {

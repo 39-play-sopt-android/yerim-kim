@@ -14,6 +14,9 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.login.LoginActivity
 
+const val EXTRA_EMAIL = "email"
+const val EXTRA_PASSWORD = "password"
+
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +33,8 @@ class RegisterActivity : ComponentActivity() {
                             val intent = Intent(this, LoginActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 
-                                putExtra("email", email)
-                                putExtra("password", password)
+                                putExtra(EXTRA_EMAIL, email)
+                                putExtra(EXTRA_PASSWORD, password)
                             }
 
                             startActivity(intent)
