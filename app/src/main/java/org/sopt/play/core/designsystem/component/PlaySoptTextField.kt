@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -77,10 +78,12 @@ fun PlaySoptTextField(
                 )
                 .border(
                     width = 2.dp,
+                    color = when {
+                        errorMsg != null -> PLAYSOPTTheme.colors.red
+                        isFocused -> PLAYSOPTTheme.colors.gray5
+                        else -> PLAYSOPTTheme.colors.gray2
+                    },
                     shape = RoundedCornerShape(12.dp),
-                    color = if (errorMsg != null) PLAYSOPTTheme.colors.red
-                    else if (isFocused) PLAYSOPTTheme.colors.gray5
-                    else PLAYSOPTTheme.colors.gray2
                 )
                 .onFocusChanged { focusState ->
                     isFocused = focusState.isFocused
@@ -93,15 +96,17 @@ fun PlaySoptTextField(
                 }
                 .padding(16.dp),
             textStyle = PLAYSOPTTheme.typography.body.m18.copy(
-                color = PLAYSOPTTheme.colors.black
+                color = PLAYSOPTTheme.colors.black,
             ),
             decorator = TextFieldDecorator { innerTextField ->
                 Box {
                     if (state.text.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = PLAYSOPTTheme.typography.body.m18,
                             color = PLAYSOPTTheme.colors.gray2,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            style = PLAYSOPTTheme.typography.body.m18,
                         )
                     }
 
@@ -129,9 +134,8 @@ fun PlaySoptTextField(
             Text(
                 text = errorMsg ?: "",
                 modifier = Modifier.padding(start = 8.dp, top = 6.dp),
-                style = PLAYSOPTTheme.typography.caption.m14.copy(
-                    color = PLAYSOPTTheme.colors.red,
-                ),
+                color = PLAYSOPTTheme.colors.red,
+                style = PLAYSOPTTheme.typography.caption.m14,
             )
         }
     }
