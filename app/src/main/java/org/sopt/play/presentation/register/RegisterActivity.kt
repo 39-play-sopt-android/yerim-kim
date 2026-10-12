@@ -28,6 +28,8 @@ class RegisterActivity : ComponentActivity() {
                     RegisterScreen(
                         onRegisterClick = { email, password ->
                             val intent = Intent(this, LoginActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
                                 putExtra("email", email)
                                 putExtra("password", password)
                             }
