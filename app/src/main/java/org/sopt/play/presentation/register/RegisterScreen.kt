@@ -54,9 +54,8 @@ fun RegisterScreen(
     ) {
         Text(
             text = "이메일로 회원가입",
-            style = PLAYSOPTTheme.typography.headline.b28.copy(
-                color = PLAYSOPTTheme.colors.black,
-            ),
+            color = PLAYSOPTTheme.colors.black,
+            style = PLAYSOPTTheme.typography.headline.b28,
         )
 
         Column(

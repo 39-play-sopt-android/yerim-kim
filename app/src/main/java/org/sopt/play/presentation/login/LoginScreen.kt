@@ -54,9 +54,8 @@ fun LoginScreen(
     ) {
         Text(
             text = "이메일로 로그인하기",
-            style = PLAYSOPTTheme.typography.headline.b28.copy(
-                color = PLAYSOPTTheme.colors.black,
-            ),
+            color = PLAYSOPTTheme.colors.black,
+            style = PLAYSOPTTheme.typography.headline.b28,
         )
 
         Column {
@@ -116,18 +115,16 @@ fun LoginScreen(
             Row {
                 Text(
                     text = "아직 계정이 없으신가요?",
-                    style = PLAYSOPTTheme.typography.caption.m14.copy(
-                        color = PLAYSOPTTheme.colors.gray3,
-                    ),
+                    color = PLAYSOPTTheme.colors.gray3,
+                    style = PLAYSOPTTheme.typography.caption.m14,
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Text(
                     text = "회원가입하기",
-                    style = PLAYSOPTTheme.typography.caption.m14.copy(
-                        color = PLAYSOPTTheme.colors.gray6,
-                    ),
+                    color = PLAYSOPTTheme.colors.gray6,
+                    style = PLAYSOPTTheme.typography.caption.m14,
                     modifier = Modifier
                         .noRippleClickable(
                             onClick = onRegisterClick
