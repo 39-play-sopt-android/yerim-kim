@@ -20,14 +20,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.util.isEmailValid
-import org.sopt.play.core.util.isPasswordCheckValid
-import org.sopt.play.core.util.isPasswordValid
+import org.sopt.play.core.util.getEmailError
+import org.sopt.play.core.util.getPasswordCheckError
+import org.sopt.play.core.util.getPasswordError
 
 @Composable
 fun RegisterScreen(
@@ -77,9 +76,8 @@ fun RegisterScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@email.com",
-                errorMsg = if (isEmailValid(emailState.text.toString())
-                    || emailState.text.isEmpty()
-                ) null else stringResource(R.string.invalid_email),
+                errorMsg = getEmailError(emailState.text.toString())
+                    ?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -93,9 +91,8 @@ fun RegisterScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = if (isPasswordValid(passwordState.text.toString())
-                    || passwordState.text.isEmpty()
-                ) null else stringResource(R.string.short_password),
+                errorMsg = getPasswordError(passwordState.text.toString())
+                    ?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -110,12 +107,10 @@ fun RegisterScreen(
                 state = passwordCheckState,
                 label = "비밀번호 확인",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = if (isPasswordCheckValid(
-                        passwordState.text.toString(),
-                        passwordCheckState.text.toString()
-                    )
-                    || passwordCheckState.text.isEmpty()
-                ) null else stringResource(R.string.different_password),
+                errorMsg = getPasswordCheckError(
+                    passwordState.text.toString(),
+                    passwordCheckState.text.toString()
+                )?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -135,12 +130,12 @@ fun RegisterScreen(
                     passwordState.text.toString()
                 )
             },
-            enabled = isEmailValid(emailState.text.toString())
-                    && isPasswordValid(passwordState.text.toString())
-                    && isPasswordCheckValid(
+            enabled = getEmailError(emailState.text.toString()) != null
+                    && getPasswordError(passwordState.text.toString()) != null
+                    && getPasswordCheckError(
                 passwordState.text.toString(),
                 passwordCheckState.text.toString()
-            ),
+            ) != null,
         )
     }
 }

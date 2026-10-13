@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,13 +24,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.util.isEmailValid
-import org.sopt.play.core.util.isPasswordValid
+import org.sopt.play.core.util.getEmailError
+import org.sopt.play.core.util.getPasswordError
 import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
@@ -63,9 +63,8 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = if (emailState.text.isNotEmpty() && !isEmailValid(emailState.text.toString())) stringResource(
-                    R.string.invalid_email
-                ) else null,
+                errorMsg = getEmailError(emailState.text.toString())
+                    ?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -81,9 +80,8 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = if (passwordState.text.isNotEmpty() && passwordState.text.length < 6) stringResource(
-                    R.string.short_password
-                ) else null,
+                errorMsg = getPasswordError(passwordState.text.toString())
+                    ?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -106,8 +104,8 @@ fun LoginScreen(
                         passwordState.text.toString(),
                     )
                 },
-                enabled = isEmailValid(emailState.text.toString())
-                        && isPasswordValid(passwordState.text.toString()),
+                enabled = getEmailError(emailState.text.toString()) == null
+                        && getPasswordError(passwordState.text.toString()) == null,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
