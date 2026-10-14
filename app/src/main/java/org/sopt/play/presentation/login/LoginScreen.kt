@@ -14,6 +14,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -40,6 +43,13 @@ fun LoginScreen(
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
 
+    val emailError by remember {
+        derivedStateOf { getEmailError(emailState.text.toString()) }
+    }
+    val passwordError by remember {
+        derivedStateOf { getPasswordError(passwordState.text.toString()) }
+    }
+
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -62,8 +72,7 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = getEmailError(emailState.text.toString())
-                    ?.let { stringResource(it) },
+                errorMsg = emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -79,8 +88,7 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = getPasswordError(passwordState.text.toString())
-                    ?.let { stringResource(it) },
+                errorMsg = passwordError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -103,8 +111,7 @@ fun LoginScreen(
                         passwordState.text.toString(),
                     )
                 },
-                enabled = getEmailError(emailState.text.toString()) == null
-                        && getPasswordError(passwordState.text.toString()) == null,
+                enabled = emailError == null && passwordError == null,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -122,10 +129,7 @@ fun LoginScreen(
                     text = "회원가입하기",
                     color = PLAYSOPTTheme.colors.gray6,
                     style = PLAYSOPTTheme.typography.caption.m14,
-                    modifier = Modifier
-                        .noRippleClickable(
-                            onClick = onRegisterClick
-                        ),
+                    modifier = Modifier.noRippleClickable(onClick = onRegisterClick),
                 )
             }
         }

@@ -12,6 +12,9 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -37,6 +40,21 @@ fun RegisterScreen(
     val emailState = rememberTextFieldState()
     val passwordState = rememberTextFieldState()
     val passwordCheckState = rememberTextFieldState()
+
+    val emailError by remember {
+        derivedStateOf { getEmailError(emailState.text.toString()) }
+    }
+    val passwordError by remember {
+        derivedStateOf { getPasswordError(passwordState.text.toString()) }
+    }
+    val passwordCheckError by remember {
+        derivedStateOf {
+            getPasswordCheckError(
+                passwordState.text.toString(),
+                passwordCheckState.text.toString()
+            )
+        }
+    }
 
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
@@ -76,8 +94,7 @@ fun RegisterScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@email.com",
-                errorMsg = getEmailError(emailState.text.toString())
-                    ?.let { stringResource(it) },
+                errorMsg = emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -91,8 +108,7 @@ fun RegisterScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = getPasswordError(passwordState.text.toString())
-                    ?.let { stringResource(it) },
+                errorMsg = passwordError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -107,10 +123,7 @@ fun RegisterScreen(
                 state = passwordCheckState,
                 label = "비밀번호 확인",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = getPasswordCheckError(
-                    passwordState.text.toString(),
-                    passwordCheckState.text.toString()
-                )?.let { stringResource(it) },
+                errorMsg = passwordCheckError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -130,12 +143,9 @@ fun RegisterScreen(
                     passwordState.text.toString()
                 )
             },
-            enabled = getEmailError(emailState.text.toString()) != null
-                    && getPasswordError(passwordState.text.toString()) != null
-                    && getPasswordCheckError(
-                passwordState.text.toString(),
-                passwordCheckState.text.toString()
-            ) != null,
+            enabled = emailError == null &&
+                    passwordError == null &&
+                    passwordCheckError == null,
         )
     }
 }
