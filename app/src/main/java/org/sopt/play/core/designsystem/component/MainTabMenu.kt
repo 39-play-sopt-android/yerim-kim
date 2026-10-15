@@ -26,7 +26,7 @@ fun MainTabMenu(
     tabText: String,
     onTabClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isActivated: Boolean = false,
+    isSelected: Boolean = false,
 ){
     Column(
         modifier = modifier
@@ -38,7 +38,7 @@ fun MainTabMenu(
             modifier = Modifier
                 .size(4.dp)
                 .background(
-                    color = if (isActivated) PLAYSOPTTheme.colors.black else Color.Transparent,
+                    color = if (isSelected) PLAYSOPTTheme.colors.black else Color.Transparent,
                     shape = CircleShape,
                 ),
         )
@@ -48,7 +48,7 @@ fun MainTabMenu(
         Text(
             text = tabText,
             style = PLAYSOPTTheme.typography.body.m18,
-            color = if (isActivated) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray3,
+            color = if (isSelected) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray3,
         )
     }
 }
@@ -64,7 +64,7 @@ private fun MainTabMenuPreview(){
             MainTabMenu(
                 tabText = "메뉴",
                 onTabClick = {},
-                isActivated = true,
+                isSelected = true,
             )
 
             MainTabMenu(
