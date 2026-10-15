@@ -14,28 +14,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.extension.noRippleClickable
+import org.sopt.play.data.model.HomeCategoryModel
 
 @Composable
 fun PlaySoptChip(
-    chipText: String,
+    category: HomeCategoryModel,
+    onChipClick: (HomeCategoryModel) -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
 ){
     Text(
-        text = chipText,
+        text = category.chipText,
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .background(
-                color = if (isSelected) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.gray5,
+                color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.white,
             )
             .border(
                 width = 2.dp,
-                color = if (isSelected) PLAYSOPTTheme.colors.gray2 else PLAYSOPTTheme.colors.gray5,
+                color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.gray2,
                 shape = RoundedCornerShape(6.dp),
             )
+            .noRippleClickable({ onChipClick(category)} )
             .padding(vertical = 8.dp, horizontal = 12.dp),
         style = PLAYSOPTTheme.typography.caption.m14,
-        color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.white,
+        color = if (isSelected) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.gray5,
     )
 }
 
@@ -48,12 +52,14 @@ private fun PlaySoptChipPreview(){
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ){
             PlaySoptChip(
-                chipText = "전체",
+                category = HomeCategoryModel.ALL,
+                onChipClick = {},
             )
 
             PlaySoptChip(
-                chipText = "이너웨어/잠옷",
+                category = HomeCategoryModel.INNERWEAR,
                 isSelected = true,
+                onChipClick = {},
             )
         }
     }
