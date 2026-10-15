@@ -36,13 +36,13 @@ fun MainTabRow(
 @Composable
 private fun MainTabRowPreview(){
     PlaySoptTheme {
-        var selectedChip by remember {
+        var selectedTab by remember {
             mutableStateOf(HomeMenuModel.HOME)
         }
 
         MainTabRow(
-            selectedTab = selectedChip,
-            onTabClick = { selectedChip = it },
+            selectedTab = selectedTab,
+            onTabClick = { selectedTab = it },
         )
     }
 }
