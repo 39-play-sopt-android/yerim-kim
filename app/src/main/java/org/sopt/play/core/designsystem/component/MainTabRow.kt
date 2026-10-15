@@ -11,18 +11,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.data.model.MainTabModel
+import org.sopt.play.data.model.HomeMenuModel
 
 @Composable
 fun MainTabRow(
-    selectedTab: MainTabModel,
-    onTabClick: (MainTabModel) -> Unit,
+    selectedTab: HomeMenuModel,
+    onTabClick: (HomeMenuModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
     ){
-        items(MainTabModel.entries) { tab ->
+        items(HomeMenuModel.entries) { tab ->
             MainTabMenu(
                 tabText = tab.label,
                 onTabClick = { onTabClick(tab) },
@@ -37,7 +37,7 @@ fun MainTabRow(
 private fun MainTabRowPreview(){
     PlaySoptTheme {
         var selectedChip by remember {
-            mutableStateOf(MainTabModel.HOME)
+            mutableStateOf(HomeMenuModel.HOME)
         }
 
         MainTabRow(

@@ -1,6 +1,6 @@
 package org.sopt.play.data.model
 
-enum class MainTabModel(
+enum class HomeMenuModel(
     val label: String,
 ) {
     DOUBLE_REWARD("2배 적립"),
