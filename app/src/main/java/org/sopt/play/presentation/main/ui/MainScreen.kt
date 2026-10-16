@@ -23,8 +23,8 @@ fun MainScreen(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val selectedTab = BottomBarItemModel.entries.find { item ->
-        currentDestination?.hasRoute(item.route::class) == true
+    val selectedTab = BottomBarItemModel.entries.find { tab ->
+        currentDestination?.hasRoute(tab.route::class) == true
     }
 
     Scaffold(
@@ -34,10 +34,9 @@ fun MainScreen(
             if (selectedTab != null) {
                 MainBottomBar(
                     selectedTab = selectedTab,
-                    onTabClick = { item ->
-                        navController.navigate(item.route) {
+                    onTabClick = { tab ->
+                        navController.navigate(tab.route) {
                             launchSingleTop = true
-                            restoreState = true
                         }
                     },
                 )
