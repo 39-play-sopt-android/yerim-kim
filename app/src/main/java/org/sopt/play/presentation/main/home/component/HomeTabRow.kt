@@ -21,7 +21,7 @@ fun HomeTabRow(
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
-    ){
+    ) {
         items(HomeMenuModel.entries) { tab ->
             MenuTab(
                 tabText = tab.label,
@@ -34,7 +34,7 @@ fun HomeTabRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeTabRowPreview(){
+private fun HomeTabRowPreview() {
     PlaySoptTheme {
         var selectedTab by remember {
             mutableStateOf(HomeMenuModel.HOME)

@@ -2,7 +2,7 @@ package org.sopt.play.presentation.main.home.model
 
 enum class HomeCategoryModel(
     val chipText: String,
-){
+) {
     ALL("전체"),
     TOP("상의"),
     PANTS("팬츠"),

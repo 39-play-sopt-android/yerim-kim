@@ -21,13 +21,13 @@ import org.sopt.play.core.extension.noRippleClickable
 fun MainTopBar(
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
-    ){
+    ) {
         Text(
             text = "PLAY SOPT",
             style = PLAYSOPTTheme.typography.headline.b28,
@@ -48,7 +48,7 @@ fun MainTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainTopBarPreview(){
+private fun MainTopBarPreview() {
     PlaySoptTheme {
         MainTopBar(
             onSearchClick = {},

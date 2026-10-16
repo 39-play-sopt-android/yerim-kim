@@ -23,7 +23,7 @@ fun PlaySoptChip(
     onChipClick: (HomeCategoryModel) -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-){
+) {
     Text(
         text = category.chipText,
         modifier = modifier
@@ -36,7 +36,7 @@ fun PlaySoptChip(
                 color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.gray2,
                 shape = RoundedCornerShape(6.dp),
             )
-            .noRippleClickable({ onChipClick(category)} )
+            .noRippleClickable({ onChipClick(category) })
             .padding(vertical = 8.dp, horizontal = 12.dp),
         style = PLAYSOPTTheme.typography.caption.m14,
         color = if (isSelected) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.gray5,
@@ -45,12 +45,12 @@ fun PlaySoptChip(
 
 @Preview(showBackground = true)
 @Composable
-private fun PlaySoptChipPreview(){
+private fun PlaySoptChipPreview() {
     PlaySoptTheme {
         Row(
             modifier = Modifier.padding(10.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
-        ){
+        ) {
             PlaySoptChip(
                 category = HomeCategoryModel.ALL,
                 onChipClick = {},

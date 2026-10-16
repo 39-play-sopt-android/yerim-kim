@@ -1,6 +1,5 @@
 package org.sopt.play.presentation.auth.login.ui
 
-import android.R.attr.enabled
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -28,7 +28,7 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = MainGraph,
+        startDestination = AuthGraph,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
