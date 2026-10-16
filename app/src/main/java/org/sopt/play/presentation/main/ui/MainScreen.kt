@@ -11,6 +11,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.sopt.play.core.common.navigation.AppNavHost
+import org.sopt.play.core.common.navigation.MainGraph
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.presentation.main.component.MainBottomBar
 import org.sopt.play.presentation.main.model.BottomBarItemModel
@@ -36,7 +37,11 @@ fun MainScreen(
                     selectedTab = selectedTab,
                     onTabClick = { tab ->
                         navController.navigate(tab.route) {
+                            popUpTo<MainGraph> {
+                                saveState = true
+                            }
                             launchSingleTop = true
+                            restoreState = true
                         }
                     },
                 )

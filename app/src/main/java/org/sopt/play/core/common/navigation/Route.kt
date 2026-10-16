@@ -3,10 +3,16 @@ package org.sopt.play.core.common.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
+data object AuthGraph
+
+@Serializable
 data object Login
 
 @Serializable
 data object Register
+
+@Serializable
+data object MainGraph
 
 @Serializable
 sealed interface BottomBarRoute {
