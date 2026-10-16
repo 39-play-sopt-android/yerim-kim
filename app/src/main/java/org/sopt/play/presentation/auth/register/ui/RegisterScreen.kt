@@ -76,8 +76,7 @@ fun RegisterScreen(
             .background(color = PLAYSOPTTheme.colors.white)
             .imePadding()
             .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp)
-            .padding(top = 60.dp),
+            .padding(horizontal = 16.dp, vertical = 60.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
         Text(
