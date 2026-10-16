@@ -49,7 +49,7 @@ fun ProductCard(
             )
 
             Icon(
-                painter = painterResource(if (product.isHeartEmpty) R.drawable.ic_heart_empty_24 else R.drawable.ic_heart_fill_24),
+                painter = painterResource(if (product.isHeartEmpty) R.drawable.ic_heart_default_24 else R.drawable.ic_heart_fill_24),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
