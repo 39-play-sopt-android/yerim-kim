@@ -114,10 +114,13 @@ fun HomeScreen(
                     }
                 }
             }
+
+            item {
+                Spacer(modifier = Modifier.height(96.dp))
+            }
         }
     }
 }
-
 
 @Preview
 @Composable
