@@ -26,7 +26,7 @@ import org.sopt.play.data.model.productMockData
 import org.sopt.play.presentation.main.home.component.HomeTabRow
 import org.sopt.play.presentation.main.home.component.HomeBanner
 import org.sopt.play.presentation.main.home.component.HomeChipRow
-import org.sopt.play.presentation.main.home.component.HomeTopBar
+import org.sopt.play.presentation.main.component.MainTopBar
 import org.sopt.play.presentation.main.home.component.ProductCard
 import org.sopt.play.presentation.main.home.model.HomeCategoryModel
 import org.sopt.play.presentation.main.home.model.HomeMenuModel
@@ -67,7 +67,7 @@ fun HomeScreen(
             .background(color = PLAYSOPTTheme.colors.white),
     ){
         item {
-            HomeTopBar(
+            MainTopBar(
                 onSearchClick = {},
             )
 

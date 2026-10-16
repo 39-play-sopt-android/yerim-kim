@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.main.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +18,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
-fun HomeTopBar(
+fun MainTopBar(
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -48,9 +48,9 @@ fun HomeTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeTopBarPreview(){
+private fun MainTopBarPreview(){
     PlaySoptTheme {
-        HomeTopBar(
+        MainTopBar(
             onSearchClick = {},
         )
     }
