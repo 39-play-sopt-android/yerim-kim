@@ -33,7 +33,7 @@ import org.sopt.play.presentation.main.home.model.HomeMenuModel
 
 @Composable
 fun HomeRoute(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     var selectedTab by rememberSaveable {
         mutableStateOf(HomeMenuModel.HOME)

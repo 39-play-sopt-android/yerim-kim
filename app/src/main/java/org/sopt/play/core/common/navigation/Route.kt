@@ -9,4 +9,13 @@ data object Login
 data object Register
 
 @Serializable
-data object Home
+sealed class BottomBarRoute {
+    @Serializable
+    data object Home : BottomBarRoute()
+
+    @Serializable
+    data object Favorite : BottomBarRoute()
+
+    @Serializable
+    data object MyPage : BottomBarRoute()
+}

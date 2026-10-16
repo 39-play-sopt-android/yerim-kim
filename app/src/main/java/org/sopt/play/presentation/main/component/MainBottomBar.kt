@@ -1,11 +1,13 @@
 package org.sopt.play.presentation.main.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -31,12 +33,17 @@ fun MainBottomBar(
     onTabClick: (BottomBarItemModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(PLAYSOPTTheme.colors.white)
+            .navigationBarsPadding(),
+    ) {
         BottomBarItemModel.entries.forEach { item ->
             BottomBarItem(
                 bottomTab = item,
                 onTabClick = onTabClick,
-                modifier = modifier.weight(1f),
+                modifier = Modifier.weight(1f),
                 isSelected = selectedTab == item,
             )
         }
