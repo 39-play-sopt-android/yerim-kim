@@ -1,4 +1,4 @@
-package org.sopt.play.data.model
+package org.sopt.play.presentation.main.home.model
 
 enum class HomeMenuModel(
     val label: String,

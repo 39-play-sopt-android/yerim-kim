@@ -1,4 +1,4 @@
-package org.sopt.play.core.designsystem.component
+package org.sopt.play.presentation.main.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -62,13 +62,13 @@ private fun MainTabMenuPreview(){
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ){
             MainTabMenu(
-                tabText = "메뉴",
+                tabText = "홈",
                 onTabClick = {},
                 isSelected = true,
             )
 
             MainTabMenu(
-                tabText = "메뉴",
+                tabText = "2배 적립",
                 onTabClick = {},
             )
         }

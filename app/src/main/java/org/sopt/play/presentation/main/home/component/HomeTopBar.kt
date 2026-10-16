@@ -1,4 +1,4 @@
-package org.sopt.play.core.designsystem.component
+package org.sopt.play.presentation.main.home.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

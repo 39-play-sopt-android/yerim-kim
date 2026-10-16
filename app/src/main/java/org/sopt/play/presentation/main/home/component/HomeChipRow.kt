@@ -1,4 +1,4 @@
-package org.sopt.play.core.designsystem.component
+package org.sopt.play.presentation.main.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.data.model.HomeCategoryModel
+import org.sopt.play.presentation.main.home.model.HomeCategoryModel
 
 @Composable
 fun MainChipRow(
