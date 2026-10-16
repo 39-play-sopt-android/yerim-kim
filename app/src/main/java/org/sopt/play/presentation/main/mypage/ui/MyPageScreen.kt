@@ -15,7 +15,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 @Composable
 fun MyPageRoute(
     modifier: Modifier = Modifier,
-){
+) {
     MyPageScreen()
 }
 
@@ -40,7 +40,7 @@ fun MyPageScreen(
 
 @Preview
 @Composable
-private fun MyPageScreenPreview(){
+private fun MyPageScreenPreview() {
     PlaySoptTheme {
         MyPageScreen()
     }

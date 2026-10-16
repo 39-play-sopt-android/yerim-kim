@@ -21,13 +21,13 @@ fun HomeChipRow(
     selectedCategory: HomeCategoryModel,
     onChipClick: (HomeCategoryModel) -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     LazyRow(
         modifier = modifier
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ){
+    ) {
         items(HomeCategoryModel.entries) { category ->
             PlaySoptChip(
                 category = category,
@@ -40,9 +40,9 @@ fun HomeChipRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeChipRowPreview(){
+private fun HomeChipRowPreview() {
     PlaySoptTheme {
-        var selectedCategory by remember  {
+        var selectedCategory by remember {
             mutableStateOf(HomeCategoryModel.ALL)
         }
         HomeChipRow(
