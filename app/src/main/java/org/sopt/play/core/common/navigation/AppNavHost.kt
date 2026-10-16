@@ -11,8 +11,6 @@ import androidx.navigation.compose.rememberNavController
 import org.sopt.play.presentation.main.home.ui.HomeRoute
 import org.sopt.play.presentation.auth.login.ui.LoginRoute
 import org.sopt.play.presentation.auth.register.ui.RegisterRoute
-import org.sopt.play.presentation.main.home.model.HomeCategoryModel
-import org.sopt.play.presentation.main.home.model.HomeMenuModel
 
 @Composable
 fun AppNavHost(
@@ -50,10 +48,6 @@ fun AppNavHost(
     ) {
         composable<Home> {
             HomeRoute(
-                selectedTab = HomeMenuModel.HOME,
-                selectedCategory = HomeCategoryModel.ALL,
-                onTabClick = {},
-                onChipClick = {},
                 modifier = modifier,
             )
         }

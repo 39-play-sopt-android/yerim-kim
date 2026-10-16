@@ -1,6 +1,5 @@
 package org.sopt.play.presentation.main.home.component
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +32,7 @@ val priceFormatter = DecimalFormat("#,###")
 @Composable
 fun ProductCard(
     product: ProductModel,
-    isHeartClick: () -> Unit,
+    onHeartClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -54,7 +53,7 @@ fun ProductCard(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
-                    .noRippleClickable(isHeartClick)
+                    .noRippleClickable(onHeartClick)
                     .align(Alignment.BottomEnd),
                 tint = if (product.isHeartEmpty) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
             )
@@ -122,7 +121,7 @@ private fun ProductCardPreview() {
                         price = 29370,
                         isHeartEmpty = false,
                     ),
-                    isHeartClick = {},
+                    onHeartClick = {},
                     modifier = Modifier.weight(1f),
                 )
 
@@ -137,7 +136,7 @@ private fun ProductCardPreview() {
                         price = 999999999,
                         isHeartEmpty = true,
                     ),
-                    isHeartClick = {},
+                    onHeartClick = {},
                     modifier = Modifier.weight(1f),
                 )
             }

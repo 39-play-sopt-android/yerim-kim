@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,17 +33,21 @@ import org.sopt.play.presentation.main.home.model.HomeMenuModel
 
 @Composable
 fun HomeRoute(
-    selectedTab: HomeMenuModel,
-    selectedCategory: HomeCategoryModel,
-    onTabClick: (HomeMenuModel) -> Unit,
-    onChipClick: (HomeCategoryModel) -> Unit,
     modifier: Modifier,
 ) {
+    var selectedTab by rememberSaveable {
+        mutableStateOf(HomeMenuModel.HOME)
+    }
+    var selectedCategory by rememberSaveable {
+        mutableStateOf(HomeCategoryModel.ALL)
+    }
+
     HomeScreen(
         selectedTab = selectedTab,
         selectedCategory = selectedCategory,
-        onTabClick = onTabClick,
-        onChipClick = onChipClick,
+        onTabClick = { selectedTab = it },
+        onChipClick = { selectedCategory = it },
+        onHeartClick = {},
         modifier = modifier,
     )
 }
@@ -51,6 +58,7 @@ fun HomeScreen(
     selectedCategory: HomeCategoryModel,
     onTabClick: (HomeMenuModel) -> Unit,
     onChipClick: (HomeCategoryModel) -> Unit,
+    onHeartClick: (ProductModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -95,9 +103,8 @@ fun HomeScreen(
                 rowItems.forEach { product ->
                     ProductCard(
                         product = product,
-                        isHeartClick = {},
-                        modifier = Modifier
-                            .weight(1f),
+                        onHeartClick = { onHeartClick(product) },
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
@@ -113,11 +120,15 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview(){
     PlaySoptTheme {
+        var selectedTab by rememberSaveable { mutableStateOf(HomeMenuModel.HOME) }
+        var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }
+
         HomeScreen(
             selectedTab = HomeMenuModel.HOME,
             selectedCategory = HomeCategoryModel.ALL,
-            onTabClick = {},
-            onChipClick = {},
+            onTabClick = { selectedTab = it },
+            onChipClick = { selectedCategory = it },
+            onHeartClick = { },
         )
     }
 }
