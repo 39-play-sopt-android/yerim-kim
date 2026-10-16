@@ -27,7 +27,7 @@ fun AppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Login,
+        startDestination = BottomBarRoute.Home,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },

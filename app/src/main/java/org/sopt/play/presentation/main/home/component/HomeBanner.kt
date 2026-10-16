@@ -18,8 +18,8 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
 val bannerImageList = listOf(
     R.drawable.img_banner1,
-    R.drawable.img_banner1,
-    R.drawable.img_banner1,
+    R.drawable.img_banner2,
+    R.drawable.img_banner3,
 )
 
 @Composable
