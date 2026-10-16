@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.sopt.play.R
 
-object PretendardFont{
+object PretendardFont {
     val Medium = FontFamily(Font(R.font.pretendard_medium))
     val SemiBold = FontFamily(Font(R.font.pretendard_semibold))
     val Bold = FontFamily(Font(R.font.pretendard_bold))

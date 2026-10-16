@@ -154,7 +154,11 @@ fun RegisterScreen(
                     passwordState.text.toString()
                 )
             },
-            enabled = emailError == null &&
+            enabled = nameState.text.isNotEmpty() &&
+                    emailState.text.isNotEmpty() &&
+                    passwordState.text.isNotEmpty() &&
+                    passwordCheckState.text.isNotEmpty() &&
+                    emailError == null &&
                     passwordError == null &&
                     passwordCheckError == null,
         )

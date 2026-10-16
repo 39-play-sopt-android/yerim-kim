@@ -2,25 +2,23 @@ package org.sopt.play.core.common.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.DefaultNavTransitions.enterTransition
-import androidx.navigation.compose.DefaultNavTransitions.exitTransition
-import androidx.navigation.compose.DefaultNavTransitions.popEnterTransition
-import androidx.navigation.compose.DefaultNavTransitions.popExitTransition
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import org.sopt.play.R
+import org.sopt.play.core.extension.toast
 import org.sopt.play.presentation.main.home.ui.HomeRoute
 import org.sopt.play.presentation.auth.login.ui.LoginRoute
 import org.sopt.play.presentation.auth.register.ui.RegisterRoute
 import org.sopt.play.presentation.main.favorite.ui.FavoriteRoute
-import org.sopt.play.presentation.main.model.BottomBarItemModel
 import org.sopt.play.presentation.main.mypage.ui.MyPageRoute
+import androidx.compose.ui.res.stringResource
+
+private const val REGISTER_EMAIL = "register_email"
+private const val REGISTER_PASSWORD = "register_password"
 
 @Composable
 fun AppNavHost(
@@ -30,51 +28,33 @@ fun AppNavHost(
     NavHost(
         navController = navController,
         startDestination = Login,
-        enterTransition = {
-            val initialIndex = BottomBarItemModel.entries.indexOfFirst {
-                initialState.destination.hasRoute(it.route::class)
-            }
-            val targetIndex = BottomBarItemModel.entries.indexOfFirst {
-                targetState.destination.hasRoute(it.route::class)
-            }
-
-            slideInHorizontally { width ->
-                if (targetIndex > initialIndex) width else -width
-            }
-        },
-        exitTransition = {
-            val initialIndex = BottomBarItemModel.entries.indexOfFirst {
-                initialState.destination.hasRoute(it.route::class)
-            }
-            val targetIndex = BottomBarItemModel.entries.indexOfFirst {
-                targetState.destination.hasRoute(it.route::class)
-            }
-
-            slideOutHorizontally { width ->
-                if (targetIndex > initialIndex) -width else width
-            }
-        },
-        popEnterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> -fullWidth },
-                animationSpec = tween(durationMillis = 300)
-            )
-        },
-        popExitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(durationMillis = 300)
-            )
-        },
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
         modifier = modifier,
     ) {
-        composable<Login> {
+        composable<Login> { backStackEntry ->
+            val context = LocalContext.current
+            val successMessage = stringResource(R.string.success_login)
+            val errorMessage = stringResource(R.string.wrong_input)
+
             LoginRoute(
-                onLoginClick = { _, _ ->
-                    navController.navigate(BottomBarRoute.Home) {
-                        popUpTo<Login> {
-                            inclusive = true
+                onLoginClick = { email, password ->
+                    val savedStateHandle = backStackEntry.savedStateHandle
+                    val registerEmail = savedStateHandle.get<String>(REGISTER_EMAIL)
+                    val registerPassword = savedStateHandle.get<String>(REGISTER_PASSWORD)
+
+                    if (email == registerEmail && password == registerPassword) {
+                        context.toast(successMessage)
+
+                        navController.navigate(BottomBarRoute.Home) {
+                            popUpTo<Login> {
+                                inclusive = true
+                            }
                         }
+                    } else {
+                        context.toast(errorMessage)
                     }
                 },
                 onRegisterClick = {
@@ -84,14 +64,20 @@ fun AppNavHost(
         }
 
         composable<Register> {
+            val context = LocalContext.current
+            val successMessage = stringResource(R.string.success_register)
+
             RegisterRoute(
-                onRegisterClick = { _, _ ->
-                    navController.navigate(Login) {
-                        popUpTo<Register> {
-                            inclusive = true
+                onRegisterClick = { email, password ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.apply {
+                            set(REGISTER_EMAIL, email)
+                            set(REGISTER_PASSWORD, password)
                         }
-                        launchSingleTop = true
-                    }
+
+                    context.toast(successMessage)
+                    navController.popBackStack()
                 },
             )
         }
