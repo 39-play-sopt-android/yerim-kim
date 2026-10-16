@@ -18,7 +18,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
-fun MainTopBar(
+fun HomeTopBar(
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -48,9 +48,9 @@ fun MainTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainTopBarPreview(){
+private fun HomeTopBarPreview(){
     PlaySoptTheme {
-        MainTopBar(
+        HomeTopBar(
             onSearchClick = {},
         )
     }

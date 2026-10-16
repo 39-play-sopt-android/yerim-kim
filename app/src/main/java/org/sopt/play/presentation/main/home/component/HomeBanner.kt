@@ -23,7 +23,7 @@ val bannerImageList = listOf(
 )
 
 @Composable
-fun MainBanner(
+fun HomeBanner(
     modifier: Modifier = Modifier,
 ) {
     val pageCount = Int.MAX_VALUE
@@ -54,8 +54,8 @@ fun MainBanner(
 
 @Preview
 @Composable
-private fun MainBannerPreview() {
+private fun HomeBannerPreview() {
     PlaySoptTheme {
-        MainBanner()
+        HomeBanner()
     }
 }

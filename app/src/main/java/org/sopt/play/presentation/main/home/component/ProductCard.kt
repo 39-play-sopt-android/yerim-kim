@@ -1,4 +1,4 @@
-package org.sopt.play.core.designsystem.component
+package org.sopt.play.presentation.main.home.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -33,17 +33,15 @@ val priceFormatter = DecimalFormat("#,###")
 @Composable
 fun ProductCard(
     product: ProductModel,
-    @DrawableRes imgRes: Int,
     isHeartClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isHeartEmpty: Boolean = true,
-){
+) {
     Column(
         modifier = modifier.fillMaxWidth(),
-    ){
-        Box{
+    ) {
+        Box {
             Image(
-                painter = painterResource(imgRes),
+                painter = painterResource(product.imgRes),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,13 +50,13 @@ fun ProductCard(
             )
 
             Icon(
-                painter = painterResource(if (isHeartEmpty) R.drawable.ic_heart_empty_24 else R.drawable.ic_heart_fill_24),
+                painter = painterResource(if (product.isHeartEmpty) R.drawable.ic_heart_empty_24 else R.drawable.ic_heart_fill_24),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
                     .noRippleClickable(isHeartClick)
                     .align(Alignment.BottomEnd),
-                tint = if (isHeartEmpty) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
+                tint = if (product.isHeartEmpty) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
             )
         }
 
@@ -107,11 +105,11 @@ fun ProductCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun ProductCardPreview(){
+private fun ProductCardPreview() {
     PlaySoptTheme {
         Column(
             modifier = Modifier.fillMaxWidth()
-        ){
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -122,8 +120,8 @@ private fun ProductCardPreview(){
                         productName = "상품명 최대 한 줄",
                         discountRate = 49,
                         price = 29370,
+                        isHeartEmpty = false,
                     ),
-                    imgRes = R.drawable.img_mock,
                     isHeartClick = {},
                     modifier = Modifier.weight(1f),
                 )
@@ -137,11 +135,10 @@ private fun ProductCardPreview(){
                         productName = "상품명이 한 줄을 넘어가면 이렇게 됩니다.",
                         discountRate = 1,
                         price = 999999999,
+                        isHeartEmpty = true,
                     ),
-                    imgRes = R.drawable.img_mock,
                     isHeartClick = {},
                     modifier = Modifier.weight(1f),
-                    isHeartEmpty = false,
                 )
             }
         }

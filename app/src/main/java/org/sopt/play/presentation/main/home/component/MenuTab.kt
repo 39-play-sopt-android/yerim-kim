@@ -22,7 +22,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
-fun MainTabMenu(
+fun MenuTab(
     tabText: String,
     onTabClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -55,19 +55,19 @@ fun MainTabMenu(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainTabMenuPreview(){
+private fun MenuTabPreview(){
     PlaySoptTheme {
         Row(
             modifier = Modifier.padding(10.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ){
-            MainTabMenu(
+            MenuTab(
                 tabText = "홈",
                 onTabClick = {},
                 isSelected = true,
             )
 
-            MainTabMenu(
+            MenuTab(
                 tabText = "2배 적립",
                 onTabClick = {},
             )

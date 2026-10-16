@@ -14,7 +14,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.main.home.model.HomeMenuModel
 
 @Composable
-fun MainTabRow(
+fun HomeTabRow(
     selectedTab: HomeMenuModel,
     onTabClick: (HomeMenuModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -23,7 +23,7 @@ fun MainTabRow(
         modifier = modifier.fillMaxWidth(),
     ){
         items(HomeMenuModel.entries) { tab ->
-            MainTabMenu(
+            MenuTab(
                 tabText = tab.label,
                 onTabClick = { onTabClick(tab) },
                 isSelected = selectedTab == tab,
@@ -34,13 +34,13 @@ fun MainTabRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainTabRowPreview(){
+private fun HomeTabRowPreview(){
     PlaySoptTheme {
         var selectedTab by remember {
             mutableStateOf(HomeMenuModel.HOME)
         }
 
-        MainTabRow(
+        HomeTabRow(
             selectedTab = selectedTab,
             onTabClick = { selectedTab = it },
         )

@@ -32,7 +32,7 @@ fun PlaySoptChip(
                 color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.white,
             )
             .border(
-                width = 2.dp,
+                width = 1.dp,
                 color = if (isSelected) PLAYSOPTTheme.colors.gray5 else PLAYSOPTTheme.colors.gray2,
                 shape = RoundedCornerShape(6.dp),
             )

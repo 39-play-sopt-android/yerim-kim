@@ -17,7 +17,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.main.home.model.HomeCategoryModel
 
 @Composable
-fun MainChipRow(
+fun HomeChipRow(
     selectedCategory: HomeCategoryModel,
     onChipClick: (HomeCategoryModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -40,12 +40,12 @@ fun MainChipRow(
 
 @Preview(showBackground = true)
 @Composable
-private fun MainChipRowPreview(){
+private fun HomeChipRowPreview(){
     PlaySoptTheme {
         var selectedCategory by remember  {
             mutableStateOf(HomeCategoryModel.ALL)
         }
-        MainChipRow(
+        HomeChipRow(
             selectedCategory = HomeCategoryModel.ALL,
             onChipClick = { selectedCategory = it }
         )
