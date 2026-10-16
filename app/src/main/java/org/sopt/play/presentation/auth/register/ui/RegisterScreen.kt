@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.register
+package org.sopt.play.presentation.auth.register.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,17 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordCheckError
 import org.sopt.play.core.util.getPasswordError
+
+@Composable
+fun RegisterRoute(
+    onRegisterClick: (String, String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    RegisterScreen(
+        onRegisterClick = onRegisterClick,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun RegisterScreen(
@@ -65,8 +76,7 @@ fun RegisterScreen(
             .background(color = PLAYSOPTTheme.colors.white)
             .imePadding()
             .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp)
-            .padding(top = 60.dp),
+            .padding(horizontal = 16.dp, vertical = 60.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
         Text(
@@ -143,7 +153,11 @@ fun RegisterScreen(
                     passwordState.text.toString()
                 )
             },
-            enabled = emailError == null &&
+            enabled = nameState.text.isNotEmpty() &&
+                    emailState.text.isNotEmpty() &&
+                    passwordState.text.isNotEmpty() &&
+                    passwordCheckState.text.isNotEmpty() &&
+                    emailError == null &&
                     passwordError == null &&
                     passwordCheckError == null,
         )

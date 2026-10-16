@@ -12,10 +12,11 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import org.sopt.play.R
 
-object PretendardFont{
+object PretendardFont {
     val Medium = FontFamily(Font(R.font.pretendard_medium))
     val SemiBold = FontFamily(Font(R.font.pretendard_semibold))
     val Bold = FontFamily(Font(R.font.pretendard_bold))
+    val Regular = FontFamily(Font(R.font.pretendard_regular))
 }
 
 sealed interface TypographyTokens {
@@ -34,6 +35,7 @@ sealed interface TypographyTokens {
     data class Caption(
         val m14: TextStyle,
         val sb14: TextStyle,
+        val r14: TextStyle,
     ) : TypographyTokens
 }
 
@@ -92,6 +94,11 @@ val defaultPLAYSOPTTypography = PLAYSOPTTypography(
             fontFamily = PretendardFont.SemiBold,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
+        ),
+        r14 = PLAYSOPTTextStyle(
+            fontFamily = PretendardFont.Regular,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
         ),
     ),
 )

@@ -22,7 +22,7 @@ fun PlaySoptButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = false,
-){
+) {
     Text(
         text = text,
         modifier = modifier
@@ -44,7 +44,7 @@ fun PlaySoptButton(
 
 @Preview
 @Composable
-private fun PlaySoptButtonPreview(){
+private fun PlaySoptButtonPreview() {
     PlaySoptTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp),

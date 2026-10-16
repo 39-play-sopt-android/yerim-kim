@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.login
+package org.sopt.play.presentation.auth.login.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +33,19 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
 import org.sopt.play.core.extension.noRippleClickable
+
+@Composable
+fun LoginRoute(
+    onLoginClick: (String, String) -> Unit,
+    onRegisterClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LoginScreen(
+        onLoginClick = onLoginClick,
+        onRegisterClick = onRegisterClick,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun LoginScreen(
@@ -111,7 +124,10 @@ fun LoginScreen(
                         passwordState.text.toString(),
                     )
                 },
-                enabled = emailError == null && passwordError == null,
+                enabled = emailState.text.isNotEmpty() &&
+                        passwordState.text.isNotEmpty() &&
+                        emailError == null &&
+                        passwordError == null,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
