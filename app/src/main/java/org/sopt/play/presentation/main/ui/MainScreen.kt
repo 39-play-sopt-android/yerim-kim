@@ -1,4 +1,3 @@
-
 package org.sopt.play.presentation.main.ui
 
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -17,7 +16,9 @@ import org.sopt.play.presentation.main.component.MainBottomBar
 import org.sopt.play.presentation.main.model.BottomBarItemModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -27,7 +28,7 @@ fun MainScreen() {
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         containerColor = PLAYSOPTTheme.colors.white,
         bottomBar = {
             if (selectedTab != null) {

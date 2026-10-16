@@ -61,64 +61,67 @@ fun HomeScreen(
     onHeartClick: (ProductModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(color = PLAYSOPTTheme.colors.white),
-    ){
-        item {
-            MainTopBar(
-                onSearchClick = {},
-            )
+    ) {
+        MainTopBar(
+            onSearchClick = {},
+        )
 
-            HomeTabRow(
-                selectedTab = selectedTab,
-                onTabClick = onTabClick,
-            )
-
-            HomeBanner()
-
-            Column(
-                modifier = Modifier.padding(vertical = 20.dp),
-            ) {
-                Text(
-                    text = "김솝트님을 위한 추천 아이템",
-                    style = PLAYSOPTTheme.typography.body.m18,
-                    modifier = Modifier.padding(horizontal = 16.dp),
+        LazyColumn {
+            item {
+                HomeTabRow(
+                    selectedTab = selectedTab,
+                    onTabClick = onTabClick,
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                HomeBanner()
 
-                HomeChipRow(
-                    selectedCategory = selectedCategory,
-                    onChipClick = onChipClick,
-                )
-            }
-        }
+                Column(
+                    modifier = Modifier.padding(vertical = 20.dp),
+                ) {
+                    Text(
+                        text = "김솝트님을 위한 추천 아이템",
+                        style = PLAYSOPTTheme.typography.body.m18,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
 
-        items(productMockData.chunked(2)) { rowItems ->
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                rowItems.forEach { product ->
-                    ProductCard(
-                        product = product,
-                        onHeartClick = { onHeartClick(product) },
-                        modifier = Modifier.weight(1f),
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    HomeChipRow(
+                        selectedCategory = selectedCategory,
+                        onChipClick = onChipClick,
                     )
                 }
+            }
 
-                if (rowItems.size == 1) {
-                    Spacer(modifier = Modifier.weight(1f))
+            items(productMockData.chunked(2)) { rowItems ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    rowItems.forEach { product ->
+                        ProductCard(
+                            product = product,
+                            onHeartClick = { onHeartClick(product) },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+
+                    if (rowItems.size == 1) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
                 }
             }
         }
     }
 }
 
+
 @Preview
 @Composable
-private fun HomeScreenPreview(){
+private fun HomeScreenPreview() {
     PlaySoptTheme {
         var selectedTab by rememberSaveable { mutableStateOf(HomeMenuModel.HOME) }
         var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }

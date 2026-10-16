@@ -34,7 +34,7 @@ import org.sopt.play.core.util.getPasswordError
 @Composable
 fun RegisterRoute(
     onRegisterClick: (String, String) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     RegisterScreen(
         onRegisterClick = onRegisterClick,

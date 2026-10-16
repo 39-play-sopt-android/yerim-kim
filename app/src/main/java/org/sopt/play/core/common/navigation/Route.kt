@@ -9,13 +9,13 @@ data object Login
 data object Register
 
 @Serializable
-sealed class BottomBarRoute {
+sealed interface BottomBarRoute {
     @Serializable
-    data object Home : BottomBarRoute()
+    data object Home : BottomBarRoute
 
     @Serializable
-    data object Favorite : BottomBarRoute()
+    data object Favorite : BottomBarRoute
 
     @Serializable
-    data object MyPage : BottomBarRoute()
+    data object MyPage : BottomBarRoute
 }

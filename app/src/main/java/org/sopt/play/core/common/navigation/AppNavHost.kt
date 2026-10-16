@@ -56,7 +56,6 @@ fun AppNavHost(
                 onRegisterClick = {
                     navController.navigate(Register)
                 },
-                modifier = modifier,
             )
         }
 
@@ -65,26 +64,19 @@ fun AppNavHost(
                 onRegisterClick = { _, _ ->
                     navController.navigate(Login)
                 },
-                modifier = modifier,
             )
         }
 
         composable<BottomBarRoute.Home> {
-            HomeRoute(
-                modifier = modifier,
-            )
+            HomeRoute()
         }
 
         composable<BottomBarRoute.Favorite> {
-            FavoriteRoute(
-                modifier = modifier,
-            )
+            FavoriteRoute()
         }
 
         composable<BottomBarRoute.MyPage> {
-            MyPageRoute(
-                modifier = modifier,
-            )
+            MyPageRoute()
         }
     }
 }
