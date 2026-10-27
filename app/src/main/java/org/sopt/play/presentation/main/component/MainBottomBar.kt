@@ -19,7 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
@@ -66,7 +67,7 @@ private fun BottomBarItem(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            painter = painterResource(if (isSelected) bottomTab.filledIcon else bottomTab.defaultIcon),
+            imageVector = ImageVector.vectorResource(if (isSelected) bottomTab.filledIcon else bottomTab.defaultIcon),
             contentDescription = bottomTab.label,
             modifier = Modifier.size(24.dp),
             tint = PLAYSOPTTheme.colors.black,
