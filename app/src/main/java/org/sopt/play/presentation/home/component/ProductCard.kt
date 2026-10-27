@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -84,7 +85,7 @@ fun ProductCard(
                 overflow = TextOverflow.Ellipsis,
             )
 
-            Row {
+            FlowRow {
                 Text(
                     text = "${product.discountRate}%",
                     style = PLAYSOPTTheme.typography.caption.m14,
@@ -98,7 +99,6 @@ fun ProductCard(
                     style = PLAYSOPTTheme.typography.caption.m14,
                     color = PLAYSOPTTheme.colors.black,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
