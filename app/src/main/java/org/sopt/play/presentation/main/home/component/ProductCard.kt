@@ -53,8 +53,8 @@ fun ProductCard(
                 painter = painterResource(if (product.isHeartEmpty) R.drawable.ic_heart_default_24 else R.drawable.ic_heart_fill_24),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(8.dp)
                     .noRippleClickable(onHeartClick)
+                    .padding(8.dp)
                     .align(Alignment.BottomEnd),
                 tint = if (product.isHeartEmpty) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
             )

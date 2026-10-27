@@ -40,8 +40,8 @@ fun MainTopBar(
             painter = painterResource(R.drawable.ic_search_24),
             contentDescription = null,
             modifier = Modifier
-                .padding(10.dp)
-                .noRippleClickable(onSearchClick),
+                .noRippleClickable(onSearchClick)
+                .padding(10.dp),
         )
     }
 }
