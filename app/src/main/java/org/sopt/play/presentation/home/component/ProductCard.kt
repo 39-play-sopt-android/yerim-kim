@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,7 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
 import org.sopt.play.data.model.ProductModel
-import org.sopt.play.presentation.main.home.model.HomeCategoryModel
+import org.sopt.play.data.model.ProductType
 import java.text.DecimalFormat
 
 val priceFormatter = DecimalFormat("#,###")
@@ -52,13 +52,13 @@ fun ProductCard(
             )
 
             Icon(
-                imageVector = ImageVector.vectorResource(if (product.isHeartEmpty) R.drawable.ic_heart_default_24 else R.drawable.ic_heart_fill_24),
+                imageVector = ImageVector.vectorResource(if (product.isFavorite) R.drawable.ic_heart_default_24 else R.drawable.ic_heart_fill_24),
                 contentDescription = null,
                 modifier = Modifier
                     .noRippleClickable(onHeartClick)
                     .padding(8.dp)
                     .align(Alignment.BottomEnd),
-                tint = if (product.isHeartEmpty) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
+                tint = if (product.isFavorite) PLAYSOPTTheme.colors.white else PLAYSOPTTheme.colors.red,
             )
         }
 
@@ -120,10 +120,10 @@ private fun ProductCardPreview() {
                         imgRes = R.drawable.img_product1,
                         storeName = "스토어명 최대 한 줄",
                         productName = "상품명 최대 한 줄",
-                        productType = HomeCategoryModel.PANTS,
+                        productType = ProductType.PANTS,
                         discountRate = 49,
                         price = 29370,
-                        isHeartEmpty = false,
+                        isFavorite = false,
                     ),
                     onHeartClick = {},
                     modifier = Modifier.weight(1f),
@@ -136,10 +136,10 @@ private fun ProductCardPreview() {
                         imgRes = R.drawable.img_product2,
                         storeName = "스토어명이 한 줄을 넘어가면 이렇게 됩니다.",
                         productName = "상품명이 한 줄을 넘어가면 이렇게 됩니다.",
-                        productType = HomeCategoryModel.PANTS,
+                        productType = ProductType.PANTS,
                         discountRate = 1,
                         price = 999999999,
-                        isHeartEmpty = true,
+                        isFavorite = true,
                     ),
                     onHeartClick = {},
                     modifier = Modifier.weight(1f),

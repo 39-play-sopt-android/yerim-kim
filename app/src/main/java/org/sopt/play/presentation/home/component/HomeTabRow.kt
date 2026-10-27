@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
@@ -11,7 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.presentation.main.home.model.HomeMenuModel
+import org.sopt.play.presentation.home.model.HomeMenuModel
 
 @Composable
 fun HomeTabRow(

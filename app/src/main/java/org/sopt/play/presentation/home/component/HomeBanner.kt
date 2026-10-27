@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues

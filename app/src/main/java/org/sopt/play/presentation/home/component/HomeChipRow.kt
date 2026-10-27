@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.presentation.main.home.model.HomeCategoryModel
+import org.sopt.play.presentation.home.model.HomeCategoryModel
 
 @Composable
 fun HomeChipRow(
@@ -32,7 +32,7 @@ fun HomeChipRow(
             PlaySoptChip(
                 category = category,
                 isSelected = category == selectedCategory,
-                onChipClick = { onChipClick(category) },
+                onChipClick = onChipClick,
             )
         }
     }

@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.model
+package org.sopt.play.presentation.home.model
 
 enum class HomeCategoryModel(
     val chipText: String,

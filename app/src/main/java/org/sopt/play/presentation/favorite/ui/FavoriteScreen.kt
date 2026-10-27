@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.mypage.ui
+package org.sopt.play.presentation.favorite.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,14 +13,16 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
 @Composable
-fun MyPageRoute(
+fun FavoriteRoute(
     modifier: Modifier = Modifier,
 ) {
-    MyPageScreen()
+    FavoriteScreen(
+        modifier = modifier,
+    )
 }
 
 @Composable
-fun MyPageScreen(
+fun FavoriteScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -31,7 +33,7 @@ fun MyPageScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "마이 페이지",
+            text = "찜~",
             modifier = Modifier,
             style = PLAYSOPTTheme.typography.body.m18,
         )
@@ -40,8 +42,8 @@ fun MyPageScreen(
 
 @Preview
 @Composable
-private fun MyPageScreenPreview() {
+private fun FavoriteScreenPreview() {
     PlaySoptTheme {
-        MyPageScreen()
+        FavoriteScreen()
     }
 }

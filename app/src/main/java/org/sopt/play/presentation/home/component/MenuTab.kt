@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.component
+package org.sopt.play.presentation.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +30,8 @@ fun MenuTab(
 ){
     Column(
         modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 16.dp)
-            .noRippleClickable(onTabClick),
+            .noRippleClickable(onTabClick)
+            .padding(vertical = 8.dp, horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
         Box(

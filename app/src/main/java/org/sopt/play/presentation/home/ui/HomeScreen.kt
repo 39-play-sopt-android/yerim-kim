@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.home.ui
+package org.sopt.play.presentation.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,15 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.data.mock.productMockData
 import org.sopt.play.data.model.ProductModel
-import org.sopt.play.data.model.productMockData
-import org.sopt.play.presentation.main.home.component.HomeTabRow
-import org.sopt.play.presentation.main.home.component.HomeBanner
-import org.sopt.play.presentation.main.home.component.HomeChipRow
+import org.sopt.play.presentation.home.component.HomeBanner
+import org.sopt.play.presentation.home.component.HomeChipRow
+import org.sopt.play.presentation.home.component.HomeTabRow
+import org.sopt.play.presentation.home.component.ProductCard
+import org.sopt.play.presentation.home.model.HomeCategoryModel
+import org.sopt.play.presentation.home.model.HomeMenuModel
 import org.sopt.play.presentation.main.component.MainTopBar
-import org.sopt.play.presentation.main.home.component.ProductCard
-import org.sopt.play.presentation.main.home.model.HomeCategoryModel
-import org.sopt.play.presentation.main.home.model.HomeMenuModel
 
 @Composable
 fun HomeRoute(

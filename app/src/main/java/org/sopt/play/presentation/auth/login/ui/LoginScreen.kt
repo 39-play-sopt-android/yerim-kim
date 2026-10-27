@@ -22,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -145,7 +148,11 @@ fun LoginScreen(
                     text = "회원가입하기",
                     color = PLAYSOPTTheme.colors.gray6,
                     style = PLAYSOPTTheme.typography.caption.m14,
-                    modifier = Modifier.noRippleClickable(onClick = onRegisterClick),
+                    modifier = Modifier
+                        .noRippleClickable(onClick = onRegisterClick)
+                        .semantics{
+                            role = Role.Button
+                        },
                 )
             }
         }

@@ -9,6 +9,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +37,11 @@ fun PlaySoptButton(
             .noRippleClickable(
                 enabled = enabled,
                 onClick = onClick,
+            )
+            .semantics(
+                properties = {
+                    role = Role.Button
+                }
             )
             .padding(16.dp),
         color = if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3,
