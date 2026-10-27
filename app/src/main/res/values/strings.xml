@@ -2,6 +2,7 @@
     <string name="app_name">Play Sopt</string>
     <string name="activity_main">MainActivity</string>
 
+    <!-- Auth -->
     <string name="success_login">로그인 성공!</string>
     <string name="success_register">회원가입 성공!</string>
 
@@ -9,4 +10,7 @@
     <string name="short_password">비밀번호는 6자 이상 입력해주세요.</string>
     <string name="different_password">비밀번호와 동일하게 입력해주세요.</string>
     <string name="wrong_input">이메일 또는 비밀번호가 올바르지 않아요.</string>
+
+    <!-- Home -->
+    <string name="home_title">PLAY SOPT</string>
 </resources>
