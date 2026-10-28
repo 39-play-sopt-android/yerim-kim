@@ -1,0 +1,139 @@
+package org.sopt.play.presentation.home.ui
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import org.sopt.play.core.designsystem.preview.FontScalePreviews
+import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
+import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.data.mock.productMockData
+import org.sopt.play.data.model.ProductModel
+import org.sopt.play.presentation.home.component.HomeBanner
+import org.sopt.play.presentation.home.component.HomeChipRow
+import org.sopt.play.presentation.home.component.HomeTabRow
+import org.sopt.play.presentation.home.component.ProductCard
+import org.sopt.play.presentation.home.model.HomeCategoryModel
+import org.sopt.play.presentation.home.model.HomeMenuModel
+import org.sopt.play.presentation.main.component.MainTopBar
+
+@Composable
+fun HomeRoute(
+    modifier: Modifier = Modifier,
+) {
+    var selectedTab by rememberSaveable {
+        mutableStateOf(HomeMenuModel.HOME)
+    }
+    var selectedCategory by rememberSaveable {
+        mutableStateOf(HomeCategoryModel.ALL)
+    }
+
+    HomeScreen(
+        productList = productMockData,
+        selectedTab = selectedTab,
+        selectedCategory = selectedCategory,
+        onTabClick = { selectedTab = it },
+        onChipClick = { selectedCategory = it },
+        onHeartClick = {},
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun HomeScreen(
+    productList: List<ProductModel>,
+    selectedTab: HomeMenuModel,
+    selectedCategory: HomeCategoryModel,
+    onTabClick: (HomeMenuModel) -> Unit,
+    onChipClick: (HomeCategoryModel) -> Unit,
+    onHeartClick: (ProductModel) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = PLAYSOPTTheme.colors.white),
+    ) {
+        MainTopBar(
+            onSearchClick = {},
+        )
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(bottom = 96.dp),
+        ) {
+            item(
+                span = { GridItemSpan(maxLineSpan) },
+            ) {
+                Column {
+                    HomeTabRow(
+                        selectedTab = selectedTab,
+                        onTabClick = onTabClick,
+                    )
+
+                    HomeBanner()
+
+                    Column(
+                        modifier = Modifier.padding(vertical = 20.dp),
+                    ) {
+                        Text(
+                            text = "김솝트님을 위한 추천 아이템",
+                            style = PLAYSOPTTheme.typography.body.m18,
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        HomeChipRow(
+                            selectedCategory = selectedCategory,
+                            onChipClick = onChipClick,
+                        )
+                    }
+                }
+            }
+
+            items(productList) { product ->
+                ProductCard(
+                    product = product,
+                    onHeartClick = { onHeartClick(product) },
+                    modifier = Modifier.weight(1f),
+                )
+            }
+        }
+    }
+}
+
+@FontScalePreviews
+@Composable
+private fun HomeScreenPreview() {
+    PlaySoptTheme {
+        var selectedTab by rememberSaveable { mutableStateOf(HomeMenuModel.HOME) }
+        var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }
+
+        HomeScreen(
+            productList = productMockData,
+            selectedTab = HomeMenuModel.HOME,
+            selectedCategory = HomeCategoryModel.ALL,
+            onTabClick = { selectedTab = it },
+            onChipClick = { selectedCategory = it },
+            onHeartClick = { },
+        )
+    }
+}

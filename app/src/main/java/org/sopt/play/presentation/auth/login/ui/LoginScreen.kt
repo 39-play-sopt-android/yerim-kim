@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.login
+package org.sopt.play.presentation.auth.login.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,17 +22,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
+import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.extension.noRippleClickable
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
-import org.sopt.play.core.extension.noRippleClickable
+
+@Composable
+fun LoginRoute(
+    onLoginClick: (String, String) -> Unit,
+    onRegisterClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LoginScreen(
+        onLoginClick = onLoginClick,
+        onRegisterClick = onRegisterClick,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun LoginScreen(
@@ -111,7 +127,10 @@ fun LoginScreen(
                         passwordState.text.toString(),
                     )
                 },
-                enabled = emailError == null && passwordError == null,
+                enabled = emailState.text.isNotEmpty() &&
+                        passwordState.text.isNotEmpty() &&
+                        emailError == null &&
+                        passwordError == null,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -129,14 +148,18 @@ fun LoginScreen(
                     text = "회원가입하기",
                     color = PLAYSOPTTheme.colors.gray6,
                     style = PLAYSOPTTheme.typography.caption.m14,
-                    modifier = Modifier.noRippleClickable(onClick = onRegisterClick),
+                    modifier = Modifier
+                        .noRippleClickable(onClick = onRegisterClick)
+                        .semantics {
+                            role = Role.Button
+                        },
                 )
             }
         }
     }
 }
 
-@Preview
+@FontScalePreviews
 @Composable
 private fun LoginScreenPreview() {
     PlaySoptTheme {
