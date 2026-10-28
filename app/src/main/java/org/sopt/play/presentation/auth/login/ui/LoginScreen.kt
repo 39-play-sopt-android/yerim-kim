@@ -33,9 +33,9 @@ import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.core.extension.noRippleClickable
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
-import org.sopt.play.core.extension.noRippleClickable
 
 @Composable
 fun LoginRoute(
@@ -150,7 +150,7 @@ fun LoginScreen(
                     style = PLAYSOPTTheme.typography.caption.m14,
                     modifier = Modifier
                         .noRippleClickable(onClick = onRegisterClick)
-                        .semantics{
+                        .semantics {
                             role = Role.Button
                         },
                 )

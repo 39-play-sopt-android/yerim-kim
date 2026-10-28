@@ -3,13 +3,15 @@ package org.sopt.play.presentation.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,6 +45,7 @@ fun HomeRoute(
     }
 
     HomeScreen(
+        productList = productMockData,
         selectedTab = selectedTab,
         selectedCategory = selectedCategory,
         onTabClick = { selectedTab = it },
@@ -54,6 +57,7 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
+    productList: List<ProductModel>,
     selectedTab: HomeMenuModel,
     selectedCategory: HomeCategoryModel,
     onTabClick: (HomeMenuModel) -> Unit,
@@ -70,53 +74,47 @@ fun HomeScreen(
             onSearchClick = {},
         )
 
-        LazyColumn {
-            item {
-                HomeTabRow(
-                    selectedTab = selectedTab,
-                    onTabClick = onTabClick,
-                )
-
-                HomeBanner()
-
-                Column(
-                    modifier = Modifier.padding(vertical = 20.dp),
-                ) {
-                    Text(
-                        text = "김솝트님을 위한 추천 아이템",
-                        style = PLAYSOPTTheme.typography.body.m18,
-                        modifier = Modifier.padding(horizontal = 16.dp),
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(bottom = 96.dp),
+        ) {
+            item(
+                span = { GridItemSpan(maxLineSpan) },
+            ) {
+                Column {
+                    HomeTabRow(
+                        selectedTab = selectedTab,
+                        onTabClick = onTabClick,
                     )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    HomeBanner()
 
-                    HomeChipRow(
-                        selectedCategory = selectedCategory,
-                        onChipClick = onChipClick,
-                    )
-                }
-            }
+                    Column(
+                        modifier = Modifier.padding(vertical = 20.dp),
+                    ) {
+                        Text(
+                            text = "김솝트님을 위한 추천 아이템",
+                            style = PLAYSOPTTheme.typography.body.m18,
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                        )
 
-            items(productMockData.chunked(2)) { rowItems ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    rowItems.forEach { product ->
-                        ProductCard(
-                            product = product,
-                            onHeartClick = { onHeartClick(product) },
-                            modifier = Modifier.weight(1f),
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        HomeChipRow(
+                            selectedCategory = selectedCategory,
+                            onChipClick = onChipClick,
                         )
                     }
-
-                    if (rowItems.size == 1) {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
                 }
             }
 
-            item {
-                Spacer(modifier = Modifier.height(96.dp))
+            items(productList) { product ->
+                ProductCard(
+                    product = product,
+                    onHeartClick = { onHeartClick(product) },
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
     }
@@ -130,6 +128,7 @@ private fun HomeScreenPreview() {
         var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }
 
         HomeScreen(
+            productList = productMockData,
             selectedTab = HomeMenuModel.HOME,
             selectedCategory = HomeCategoryModel.ALL,
             onTabClick = { selectedTab = it },

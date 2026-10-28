@@ -5,18 +5,18 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import org.sopt.play.R
 import org.sopt.play.core.extension.toast
-import org.sopt.play.presentation.home.ui.HomeRoute
 import org.sopt.play.presentation.auth.login.ui.LoginRoute
 import org.sopt.play.presentation.auth.register.ui.RegisterRoute
 import org.sopt.play.presentation.favorite.ui.FavoriteRoute
+import org.sopt.play.presentation.home.ui.HomeRoute
 import org.sopt.play.presentation.mypage.ui.MyPageRoute
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.navigation
 
 private const val REGISTER_EMAIL = "register_email"
 private const val REGISTER_PASSWORD = "register_password"

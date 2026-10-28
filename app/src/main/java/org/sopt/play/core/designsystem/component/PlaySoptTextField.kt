@@ -96,13 +96,6 @@ fun PlaySoptTextField(
                         }
                     }
                 }
-                .semantics {
-                    contentDescription = label
-
-                    if (!errorMsg.isNullOrEmpty()) {
-                        error(errorMsg)
-                    }
-                }
                 .padding(16.dp),
             textStyle = PLAYSOPTTheme.typography.body.m18.copy(
                 color = PLAYSOPTTheme.colors.black,
