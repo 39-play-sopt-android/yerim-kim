@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.ui
+package org.sopt.play.presentation.main
 
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize

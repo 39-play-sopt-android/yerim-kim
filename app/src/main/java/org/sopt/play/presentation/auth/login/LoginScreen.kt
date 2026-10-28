@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.auth.login.ui
+package org.sopt.play.presentation.auth.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
