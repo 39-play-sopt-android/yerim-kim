@@ -21,10 +21,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
+import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.util.getEmailError
@@ -164,7 +164,7 @@ fun RegisterScreen(
     }
 }
 
-@Preview
+@FontScalePreviews
 @Composable
 private fun RegisterScreenPreview() {
     PlaySoptTheme {

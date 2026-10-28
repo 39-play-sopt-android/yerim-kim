@@ -19,8 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.data.mock.productMockData
@@ -120,7 +120,7 @@ fun HomeScreen(
     }
 }
 
-@Preview
+@FontScalePreviews
 @Composable
 private fun HomeScreenPreview() {
     PlaySoptTheme {
