@@ -3,9 +3,12 @@ package org.sopt.play.core.common.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +16,7 @@ import androidx.navigation.navigation
 import org.sopt.play.R
 import org.sopt.play.core.extension.toast
 import org.sopt.play.presentation.auth.login.LoginRoute
+import org.sopt.play.presentation.auth.login.LoginViewModel
 import org.sopt.play.presentation.auth.register.RegisterRoute
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
@@ -43,7 +47,15 @@ fun AppNavHost(
                 val successMessage = stringResource(R.string.success_login)
                 val errorMessage = stringResource(R.string.wrong_input)
 
+                val viewModel: LoginViewModel = viewModel(
+                    viewModelStoreOwner = backStackEntry
+                )
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+
                 LoginRoute(
+                    state = state,
+                    onEmailChange = viewModel::onEmailChange,
+                    onPasswordChange = viewModel::onPasswordChange,
                     onLoginClick = { email, password ->
                         val savedStateHandle = backStackEntry.savedStateHandle
                         val registerEmail = savedStateHandle.get<String>(REGISTER_EMAIL)
