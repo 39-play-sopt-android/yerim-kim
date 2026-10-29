@@ -18,6 +18,7 @@ import org.sopt.play.core.extension.toast
 import org.sopt.play.presentation.auth.login.LoginRoute
 import org.sopt.play.presentation.auth.login.LoginViewModel
 import org.sopt.play.presentation.auth.register.RegisterRoute
+import org.sopt.play.presentation.auth.register.RegisterViewModel
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.mypage.MyPageRoute
@@ -80,11 +81,21 @@ fun AppNavHost(
                 )
             }
 
-            composable<Register> {
+            composable<Register> { backStackEntry ->
                 val context = LocalContext.current
                 val successMessage = stringResource(R.string.success_register)
 
+                val viewModel: RegisterViewModel = viewModel(
+                    viewModelStoreOwner = backStackEntry
+                )
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+
                 RegisterRoute(
+                    state = state,
+                    onNameChange = viewModel::onNameChange,
+                    onEmailChange = viewModel::onEmailChange,
+                    onPasswordChange = viewModel::onPasswordChange,
+                    onPasswordCheckChange = viewModel::onPasswordCheckChange,
                     onRegisterClick = { email, password ->
                         navController.previousBackStackEntry
                             ?.savedStateHandle
