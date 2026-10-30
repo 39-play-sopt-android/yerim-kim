@@ -5,7 +5,7 @@ import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
 
 class LoginViewModel :
-    BaseViewModel<LoginUiState, Unit>(
+    BaseViewModel<LoginUiState, LoginUiEffect>(
         initialState = LoginUiState()
     ) {
     fun onEmailChange(email: String) {
@@ -24,5 +24,13 @@ class LoginViewModel :
                 passwordError = getPasswordError(password),
             )
         }
+    }
+
+    fun onLoginClick(registeredEmail: String?, registeredPassword: String?) {
+        val state = currentState
+        if (!state.isLoginEnabled) return
+        val success = state.email == registeredEmail && state.password == registeredPassword
+
+        sendEffect(if (success) LoginUiEffect.LoginSuccess else LoginUiEffect.LoginFailure)
     }
 }

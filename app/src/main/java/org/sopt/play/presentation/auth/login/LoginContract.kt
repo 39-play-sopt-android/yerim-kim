@@ -15,3 +15,8 @@ data class LoginUiState(
                 emailError == null &&
                 passwordError == null
 }
+
+sealed interface LoginUiEffect {
+    data object LoginFailure : LoginUiEffect
+    data object LoginSuccess : LoginUiEffect
+}

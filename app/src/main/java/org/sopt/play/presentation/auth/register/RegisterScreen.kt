@@ -34,7 +34,7 @@ fun RegisterRoute(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordCheckChange: (String) -> Unit,
-    onRegisterClick: (String, String) -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     RegisterScreen(
@@ -55,7 +55,7 @@ fun RegisterScreen(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordCheckChange: (String) -> Unit,
-    onRegisterClick: (String, String) -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nameState = rememberTextFieldState(state.name)
@@ -163,12 +163,7 @@ fun RegisterScreen(
 
         PlaySoptButton(
             text = "회원가입",
-            onClick = {
-                onRegisterClick(
-                    emailState.text.toString(),
-                    passwordState.text.toString()
-                )
-            },
+            onClick = onRegisterClick,
             enabled = state.isRegisterEnabled
         )
     }
@@ -184,7 +179,7 @@ private fun RegisterScreenPreview() {
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordCheckChange = {},
-            onRegisterClick = { _, _ -> }
+            onRegisterClick = {}
         )
     }
 }

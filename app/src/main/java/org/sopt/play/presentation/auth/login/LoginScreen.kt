@@ -39,7 +39,7 @@ fun LoginRoute(
     state: LoginUiState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: (String, String) -> Unit,
+    onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -58,7 +58,7 @@ fun LoginScreen(
     state: LoginUiState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: (String, String) -> Unit,
+    onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -130,12 +130,7 @@ fun LoginScreen(
         ) {
             PlaySoptButton(
                 text = "로그인",
-                onClick = {
-                    onLoginClick(
-                        emailState.text.toString(),
-                        passwordState.text.toString(),
-                    )
-                },
+                onClick = onLoginClick,
                 enabled = state.isLoginEnabled,
             )
 
@@ -174,7 +169,7 @@ private fun LoginScreenPreview() {
             onEmailChange = {},
             onPasswordChange = {},
             modifier = Modifier,
-            onLoginClick = { _, _ -> },
+            onLoginClick = {},
             onRegisterClick = {},
         )
     }

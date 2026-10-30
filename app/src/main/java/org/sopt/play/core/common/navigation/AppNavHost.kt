@@ -3,6 +3,7 @@ package org.sopt.play.core.common.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,8 +17,10 @@ import androidx.navigation.navigation
 import org.sopt.play.R
 import org.sopt.play.core.extension.toast
 import org.sopt.play.presentation.auth.login.LoginRoute
+import org.sopt.play.presentation.auth.login.LoginUiEffect
 import org.sopt.play.presentation.auth.login.LoginViewModel
 import org.sopt.play.presentation.auth.register.RegisterRoute
+import org.sopt.play.presentation.auth.register.RegisterUiEffect
 import org.sopt.play.presentation.auth.register.RegisterViewModel
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
@@ -53,27 +56,33 @@ fun AppNavHost(
                 )
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+                LaunchedEffect(viewModel, backStackEntry) {
+                    viewModel.uiEffect.collect { effect ->
+                        when (effect) {
+                            LoginUiEffect.LoginSuccess -> {
+                                context.toast(successMessage)
+                                navController.navigate(BottomBarRoute.Home) {
+                                    popUpTo<AuthGraph> { inclusive = true }
+                                    launchSingleTop = true
+                                }
+                            }
+
+                            LoginUiEffect.LoginFailure -> context.toast(errorMessage)
+                        }
+                    }
+                }
+
                 LoginRoute(
                     state = state,
                     onEmailChange = viewModel::onEmailChange,
                     onPasswordChange = viewModel::onPasswordChange,
-                    onLoginClick = { email, password ->
+                    onLoginClick = {
                         val savedStateHandle = backStackEntry.savedStateHandle
-                        val registerEmail = savedStateHandle.get<String>(REGISTER_EMAIL)
-                        val registerPassword = savedStateHandle.get<String>(REGISTER_PASSWORD)
 
-                        if (email == registerEmail && password == registerPassword) {
-                            context.toast(successMessage)
-
-                            navController.navigate(BottomBarRoute.Home) {
-                                popUpTo<AuthGraph> {
-                                    inclusive = true
-                                }
-                                launchSingleTop = true
-                            }
-                        } else {
-                            context.toast(errorMessage)
-                        }
+                        viewModel.onLoginClick(
+                            registeredEmail = savedStateHandle[REGISTER_EMAIL],
+                            registeredPassword = savedStateHandle[REGISTER_PASSWORD],
+                        )
                     },
                     onRegisterClick = {
                         navController.navigate(Register)
@@ -90,22 +99,31 @@ fun AppNavHost(
                 )
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+                LaunchedEffect(viewModel, backStackEntry) {
+                    viewModel.uiEffect.collect { effect ->
+                        when (effect) {
+                            is RegisterUiEffect.RegisterSuccess -> {
+                                navController.previousBackStackEntry
+                                    ?.savedStateHandle
+                                    ?.apply {
+                                        set(REGISTER_EMAIL, effect.email)
+                                        set(REGISTER_PASSWORD, effect.password)
+                                    }
+
+                                context.toast(successMessage)
+                                navController.popBackStack()
+                            }
+                        }
+                    }
+                }
+
                 RegisterRoute(
                     state = state,
                     onNameChange = viewModel::onNameChange,
                     onEmailChange = viewModel::onEmailChange,
                     onPasswordChange = viewModel::onPasswordChange,
                     onPasswordCheckChange = viewModel::onPasswordCheckChange,
-                    onRegisterClick = { email, password ->
-                        navController.previousBackStackEntry
-                            ?.savedStateHandle
-                            ?.apply {
-                                set(REGISTER_EMAIL, email)
-                                set(REGISTER_PASSWORD, password)
-                            }
-                        context.toast(successMessage)
-                        navController.popBackStack()
-                    },
+                    onRegisterClick = viewModel::onRegisterClick
                 )
             }
         }

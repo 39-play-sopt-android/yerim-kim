@@ -13,11 +13,18 @@ data class RegisterUiState(
     @param:StringRes val passwordCheckError: Int? = null,
 ) : BaseUiState {
     val isRegisterEnabled: Boolean
-        get() = name.isNotEmpty() &&
+        get() = name.isNotBlank() &&
                 email.isNotEmpty() &&
                 password.isNotEmpty() &&
                 passwordCheck.isNotEmpty() &&
                 emailError == null &&
                 passwordError == null &&
                 passwordCheckError == null
+}
+
+sealed interface RegisterUiEffect {
+    data class RegisterSuccess(
+        val email: String,
+        val password: String,
+    ) : RegisterUiEffect
 }

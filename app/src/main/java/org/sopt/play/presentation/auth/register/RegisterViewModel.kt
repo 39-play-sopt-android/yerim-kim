@@ -6,7 +6,7 @@ import org.sopt.play.core.util.getPasswordCheckError
 import org.sopt.play.core.util.getPasswordError
 
 class RegisterViewModel :
-    BaseViewModel<RegisterUiState, Unit>(
+    BaseViewModel<RegisterUiState, RegisterUiEffect>(
         initialState = RegisterUiState(),
     ) {
 
@@ -42,5 +42,16 @@ class RegisterViewModel :
                 passwordCheckError = getPasswordCheckError(password, passwordCheck),
             )
         }
+    }
+
+    fun onRegisterClick() {
+        val state = currentState
+
+        sendEffect(
+            RegisterUiEffect.RegisterSuccess(
+                email = state.email,
+                password = state.password,
+            )
+        )
     }
 }
