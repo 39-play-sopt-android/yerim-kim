@@ -70,7 +70,7 @@ private fun BottomBarItem(
             imageVector = ImageVector.vectorResource(if (isSelected) bottomTab.filledIcon else bottomTab.defaultIcon),
             contentDescription = bottomTab.label,
             modifier = Modifier.size(24.dp),
-            tint = PLAYSOPTTheme.colors.black,
+            tint = if (isSelected) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray5,
         )
 
         Spacer(modifier = Modifier.height(2.dp))

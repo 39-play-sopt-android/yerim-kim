@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.auth.login.ui
+package org.sopt.play.presentation.auth.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,9 +14,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -34,16 +33,20 @@ import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
-import org.sopt.play.core.util.getEmailError
-import org.sopt.play.core.util.getPasswordError
 
 @Composable
 fun LoginRoute(
-    onLoginClick: (String, String) -> Unit,
+    state: LoginUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LoginScreen(
+        state = state,
+        onEmailChange = onEmailChange,
+        onPasswordChange = onPasswordChange,
         onLoginClick = onLoginClick,
         onRegisterClick = onRegisterClick,
         modifier = modifier,
@@ -52,21 +55,27 @@ fun LoginRoute(
 
 @Composable
 fun LoginScreen(
-    onLoginClick: (String, String) -> Unit,
+    state: LoginUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val emailState = rememberTextFieldState()
-    val passwordState = rememberTextFieldState()
-
-    val emailError by remember {
-        derivedStateOf { getEmailError(emailState.text.toString()) }
-    }
-    val passwordError by remember {
-        derivedStateOf { getPasswordError(passwordState.text.toString()) }
-    }
+    val emailState = rememberTextFieldState(state.email)
+    val passwordState = rememberTextFieldState(state.password)
 
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(emailState) {
+        snapshotFlow { emailState.text.toString() }
+            .collect { onEmailChange(it) }
+    }
+
+    LaunchedEffect(passwordState) {
+        snapshotFlow { passwordState.text.toString() }
+            .collect { onPasswordChange(it) }
+    }
 
     Column(
         modifier = modifier
@@ -88,7 +97,7 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = emailError?.let { stringResource(it) },
+                errorMsg = state.emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -104,7 +113,7 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = passwordError?.let { stringResource(it) },
+                errorMsg = state.passwordError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -121,16 +130,8 @@ fun LoginScreen(
         ) {
             PlaySoptButton(
                 text = "로그인",
-                onClick = {
-                    onLoginClick(
-                        emailState.text.toString(),
-                        passwordState.text.toString(),
-                    )
-                },
-                enabled = emailState.text.isNotEmpty() &&
-                        passwordState.text.isNotEmpty() &&
-                        emailError == null &&
-                        passwordError == null,
+                onClick = onLoginClick,
+                enabled = state.isLoginEnabled,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -164,8 +165,11 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     PlaySoptTheme {
         LoginScreen(
+            state = LoginUiState(),
+            onEmailChange = {},
+            onPasswordChange = {},
             modifier = Modifier,
-            onLoginClick = { _, _ -> },
+            onLoginClick = {},
             onRegisterClick = {},
         )
     }

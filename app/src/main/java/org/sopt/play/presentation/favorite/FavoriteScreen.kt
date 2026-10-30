@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.favorite.ui
+package org.sopt.play.presentation.favorite
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,6 @@ fun FavoriteScreen(
     ) {
         Text(
             text = "찜~",
-            modifier = Modifier,
             style = PLAYSOPTTheme.typography.body.m18,
         )
     }
