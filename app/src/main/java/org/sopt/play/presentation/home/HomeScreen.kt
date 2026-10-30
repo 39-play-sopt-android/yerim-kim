@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,13 +38,23 @@ import org.sopt.play.presentation.main.component.MainTopBar
 
 @Composable
 fun HomeRoute(
+    onNavigateToSearch: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(viewModel, onNavigateToSearch) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                HomeUiEffect.NavigateToSearch -> onNavigateToSearch()
+            }
+        }
+    }
+
     HomeScreen(
         state = state,
+        onSearchClick = viewModel::onSearchClick,
         onTabClick = viewModel::onTabClick,
         onChipClick = viewModel::onCategoryClick,
         onHeartClick = viewModel::onHeartClick,
@@ -54,6 +65,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     state: HomeUiState,
+    onSearchClick: () -> Unit,
     onTabClick: (HomeMenuModel) -> Unit,
     onChipClick: (HomeCategoryModel) -> Unit,
     onHeartClick: (ProductModel) -> Unit,
@@ -65,7 +77,7 @@ fun HomeScreen(
             .background(color = PLAYSOPTTheme.colors.white),
     ) {
         MainTopBar(
-            onSearchClick = {},
+            onSearchClick = onSearchClick,
         )
 
         LazyVerticalGrid(
@@ -125,6 +137,7 @@ private fun HomeScreenPreview() {
             state = HomeUiState(
                 productList = productMockData,
             ),
+            onSearchClick = { },
             onTabClick = { selectedTab = it },
             onChipClick = { selectedCategory = it },
             onHeartClick = { },

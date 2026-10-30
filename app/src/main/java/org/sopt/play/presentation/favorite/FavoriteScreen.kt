@@ -34,7 +34,6 @@ fun FavoriteScreen(
     ) {
         Text(
             text = "찜~",
-            modifier = Modifier,
             style = PLAYSOPTTheme.typography.body.m18,
         )
     }

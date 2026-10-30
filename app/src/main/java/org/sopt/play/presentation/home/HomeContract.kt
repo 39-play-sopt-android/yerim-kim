@@ -10,3 +10,7 @@ data class HomeUiState(
     val selectedTab: HomeMenuModel = HomeMenuModel.HOME,
     val selectedCategory: HomeCategoryModel = HomeCategoryModel.ALL,
 ) : BaseUiState
+
+sealed interface HomeUiEffect{
+    data object NavigateToSearch : HomeUiEffect
+}

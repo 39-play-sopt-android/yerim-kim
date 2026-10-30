@@ -7,11 +7,14 @@ import org.sopt.play.presentation.home.model.HomeCategoryModel
 import org.sopt.play.presentation.home.model.HomeMenuModel
 
 class HomeViewModel :
-    BaseViewModel<HomeUiState, Unit>(
+    BaseViewModel<HomeUiState, HomeUiEffect>(
         initialState = HomeUiState(
             productList = productMockData,
         ),
     ) {
+    fun onSearchClick() {
+        sendEffect(HomeUiEffect.NavigateToSearch)
+    }
 
     fun onTabClick(tab: HomeMenuModel) {
         updateState {

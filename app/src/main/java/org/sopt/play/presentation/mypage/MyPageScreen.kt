@@ -34,7 +34,6 @@ fun MyPageScreen(
     ) {
         Text(
             text = "마이 페이지",
-            modifier = Modifier,
             style = PLAYSOPTTheme.typography.body.m18,
         )
     }

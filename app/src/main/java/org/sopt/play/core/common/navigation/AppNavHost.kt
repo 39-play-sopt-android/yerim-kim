@@ -25,6 +25,7 @@ import org.sopt.play.presentation.auth.register.RegisterViewModel
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.mypage.MyPageRoute
+import org.sopt.play.presentation.search.SearchRoute
 
 private const val REGISTER_EMAIL = "register_email"
 private const val REGISTER_PASSWORD = "register_password"
@@ -132,7 +133,11 @@ fun AppNavHost(
             startDestination = BottomBarRoute.Home
         ) {
             composable<BottomBarRoute.Home> {
-                HomeRoute()
+                HomeRoute(
+                    onNavigateToSearch = {
+                        navController.navigate(Search)
+                    },
+                )
             }
 
             composable<BottomBarRoute.Favorite> {
@@ -141,6 +146,10 @@ fun AppNavHost(
 
             composable<BottomBarRoute.MyPage> {
                 MyPageRoute()
+            }
+
+            composable<Search> {
+                SearchRoute()
             }
         }
     }
