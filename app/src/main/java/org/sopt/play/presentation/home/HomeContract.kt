@@ -11,6 +11,6 @@ data class HomeUiState(
     val selectedCategory: HomeCategoryModel = HomeCategoryModel.ALL,
 ) : BaseUiState
 
-sealed interface HomeUiEffect{
+sealed interface HomeUiEffect {
     data object NavigateToSearch : HomeUiEffect
 }

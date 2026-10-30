@@ -6,8 +6,8 @@ import org.sopt.play.core.base.BaseUiState
 data class LoginUiState(
     val email: String = "",
     val password: String = "",
-    @param: StringRes val emailError: Int? = null,
-    @param: StringRes val passwordError: Int? = null,
+    @param:StringRes val emailError: Int? = null,
+    @param:StringRes val passwordError: Int? = null,
 ) : BaseUiState {
     val isLoginEnabled: Boolean
         get() = email.isNotEmpty() &&
