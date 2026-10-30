@@ -20,6 +20,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
@@ -36,30 +38,22 @@ import org.sopt.play.presentation.main.component.MainTopBar
 @Composable
 fun HomeRoute(
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = viewModel(),
 ) {
-    var selectedTab by rememberSaveable {
-        mutableStateOf(HomeMenuModel.HOME)
-    }
-    var selectedCategory by rememberSaveable {
-        mutableStateOf(HomeCategoryModel.ALL)
-    }
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScreen(
-        productList = productMockData,
-        selectedTab = selectedTab,
-        selectedCategory = selectedCategory,
-        onTabClick = { selectedTab = it },
-        onChipClick = { selectedCategory = it },
-        onHeartClick = {},
+        state = state,
+        onTabClick = viewModel::onTabClick,
+        onChipClick = viewModel::onCategoryClick,
+        onHeartClick = viewModel::onHeartClick,
         modifier = modifier,
     )
 }
 
 @Composable
 fun HomeScreen(
-    productList: List<ProductModel>,
-    selectedTab: HomeMenuModel,
-    selectedCategory: HomeCategoryModel,
+    state: HomeUiState,
     onTabClick: (HomeMenuModel) -> Unit,
     onChipClick: (HomeCategoryModel) -> Unit,
     onHeartClick: (ProductModel) -> Unit,
@@ -84,7 +78,7 @@ fun HomeScreen(
             ) {
                 Column {
                     HomeTabRow(
-                        selectedTab = selectedTab,
+                        selectedTab = state.selectedTab,
                         onTabClick = onTabClick,
                     )
 
@@ -102,14 +96,14 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.height(12.dp))
 
                         HomeChipRow(
-                            selectedCategory = selectedCategory,
+                            selectedCategory = state.selectedCategory,
                             onChipClick = onChipClick,
                         )
                     }
                 }
             }
 
-            items(productList) { product ->
+            items(state.productList) { product ->
                 ProductCard(
                     product = product,
                     onHeartClick = { onHeartClick(product) },
@@ -128,9 +122,9 @@ private fun HomeScreenPreview() {
         var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }
 
         HomeScreen(
-            productList = productMockData,
-            selectedTab = HomeMenuModel.HOME,
-            selectedCategory = HomeCategoryModel.ALL,
+            state = HomeUiState(
+                productList = productMockData,
+            ),
             onTabClick = { selectedTab = it },
             onChipClick = { selectedCategory = it },
             onHeartClick = { },
