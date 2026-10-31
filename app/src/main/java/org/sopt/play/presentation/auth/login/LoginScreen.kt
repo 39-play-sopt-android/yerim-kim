@@ -44,6 +44,7 @@ fun LoginRoute(
     viewModel: LoginViewModel,
     navigateToHome: () -> Unit,
     navigateToRegister: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val successMessage = stringResource(R.string.success_login)
@@ -69,6 +70,7 @@ fun LoginRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onLoginClick = viewModel::onLoginClick,
         onRegisterClick = navigateToRegister,
+        modifier = modifier,
     )
 }
 

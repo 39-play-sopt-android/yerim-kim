@@ -22,12 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.data.mock.productMockData
-import org.sopt.play.data.model.ProductModel
+import org.sopt.play.domain.mock.productMockData
+import org.sopt.play.domain.model.ProductModel
 import org.sopt.play.presentation.home.component.HomeBanner
 import org.sopt.play.presentation.home.component.HomeChipRow
 import org.sopt.play.presentation.home.component.HomeTabRow
@@ -38,16 +37,16 @@ import org.sopt.play.presentation.main.component.MainTopBar
 
 @Composable
 fun HomeRoute(
-    onNavigateToSearch: () -> Unit,
+    viewModel: HomeViewModel,
+    navigateToSearch: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(viewModel, onNavigateToSearch) {
+    LaunchedEffect(viewModel, navigateToSearch) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                HomeUiEffect.NavigateToSearch -> onNavigateToSearch()
+                HomeUiEffect.NavigateToSearch -> navigateToSearch()
             }
         }
     }

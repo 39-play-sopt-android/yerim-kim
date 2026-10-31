@@ -36,6 +36,7 @@ import org.sopt.play.core.extension.toast
 fun RegisterRoute(
     viewModel: RegisterViewModel,
     navigateToLogin: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val successMessage = stringResource(R.string.success_register)
@@ -60,6 +61,7 @@ fun RegisterRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onPasswordCheckChange = viewModel::onPasswordCheckChange,
         onRegisterClick = viewModel::onRegisterClick,
+        modifier = modifier,
     )
 }
 

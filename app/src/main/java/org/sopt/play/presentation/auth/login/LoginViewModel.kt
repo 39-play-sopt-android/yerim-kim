@@ -5,13 +5,12 @@ import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
-import org.sopt.play.domain.repository.AuthRepository
+import org.sopt.play.data.di.RepositoryModule
 
-class LoginViewModel(
-    private val authRepository: AuthRepository
-) : BaseViewModel<LoginUiState, LoginUiEffect>(
-        initialState = LoginUiState()
-    ) {
+class LoginViewModel() : BaseViewModel<LoginUiState, LoginUiEffect>(
+    initialState = LoginUiState()
+) {
+    private val authRepository = RepositoryModule.authRepository
     fun onEmailChange(email: String) {
         updateState {
             copy(
@@ -35,9 +34,16 @@ class LoginViewModel(
         if (!state.isLoginEnabled) return
 
         viewModelScope.launch {
-            authRepository.login(state.email, state.password)
-                .onSuccess { sendEffect(LoginUiEffect.LoginSuccess) }
-                .onFailure { sendEffect(LoginUiEffect.LoginFailure) }
+            handleLogin(state.email, state.password)
         }
+    }
+
+    private suspend fun handleLogin(
+        email: String,
+        password: String,
+    ) {
+        authRepository.login(email, password)
+            .onSuccess { sendEffect(LoginUiEffect.LoginSuccess) }
+            .onFailure { sendEffect(LoginUiEffect.LoginFailure) }
     }
 }

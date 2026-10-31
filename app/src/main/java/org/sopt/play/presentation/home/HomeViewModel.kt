@@ -1,8 +1,8 @@
 package org.sopt.play.presentation.home
 
 import org.sopt.play.core.base.BaseViewModel
-import org.sopt.play.data.mock.productMockData
-import org.sopt.play.data.model.ProductModel
+import org.sopt.play.domain.mock.productMockData
+import org.sopt.play.domain.model.ProductModel
 import org.sopt.play.presentation.home.model.HomeCategoryModel
 import org.sopt.play.presentation.home.model.HomeMenuModel
 
