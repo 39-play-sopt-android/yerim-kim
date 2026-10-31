@@ -2,6 +2,7 @@ package org.sopt.play.presentation.auth.register
 
 import androidx.annotation.StringRes
 import org.sopt.play.core.base.BaseUiState
+import org.sopt.play.presentation.auth.login.LoginUiEffect
 
 data class RegisterUiState(
     val name: String = "",
@@ -23,8 +24,5 @@ data class RegisterUiState(
 }
 
 sealed interface RegisterUiEffect {
-    data class RegisterSuccess(
-        val email: String,
-        val password: String,
-    ) : RegisterUiEffect
+    data object RegisterSuccess : RegisterUiEffect
 }

@@ -15,10 +15,12 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -27,29 +29,46 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
+import org.sopt.play.core.extension.toast
 
 @Composable
 fun LoginRoute(
-    state: LoginUiState,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel,
+    navigateToHome: () -> Unit,
+    navigateToRegister: () -> Unit,
 ) {
+    val context = LocalContext.current
+    val successMessage = stringResource(R.string.success_login)
+    val errorMessage = stringResource(R.string.wrong_input)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                LoginUiEffect.LoginSuccess -> {
+                    context.toast(successMessage)
+                    navigateToHome()
+                }
+
+                LoginUiEffect.LoginFailure -> context.toast(errorMessage)
+            }
+        }
+    }
+
     LoginScreen(
         state = state,
-        onEmailChange = onEmailChange,
-        onPasswordChange = onPasswordChange,
-        onLoginClick = onLoginClick,
-        onRegisterClick = onRegisterClick,
-        modifier = modifier,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onLoginClick = viewModel::onLoginClick,
+        onRegisterClick = navigateToRegister,
     )
 }
 

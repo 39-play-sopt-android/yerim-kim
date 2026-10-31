@@ -1,11 +1,15 @@
 package org.sopt.play.presentation.auth.login
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
+import org.sopt.play.domain.repository.AuthRepository
 
-class LoginViewModel :
-    BaseViewModel<LoginUiState, LoginUiEffect>(
+class LoginViewModel(
+    private val authRepository: AuthRepository
+) : BaseViewModel<LoginUiState, LoginUiEffect>(
         initialState = LoginUiState()
     ) {
     fun onEmailChange(email: String) {
@@ -26,11 +30,14 @@ class LoginViewModel :
         }
     }
 
-    fun onLoginClick(registeredEmail: String?, registeredPassword: String?) {
+    fun onLoginClick() {
         val state = currentState
         if (!state.isLoginEnabled) return
-        val success = state.email == registeredEmail && state.password == registeredPassword
 
-        sendEffect(if (success) LoginUiEffect.LoginSuccess else LoginUiEffect.LoginFailure)
+        viewModelScope.launch {
+            authRepository.login(state.email, state.password)
+                .onSuccess { sendEffect(LoginUiEffect.LoginSuccess) }
+                .onFailure { sendEffect(LoginUiEffect.LoginFailure) }
+        }
     }
 }
