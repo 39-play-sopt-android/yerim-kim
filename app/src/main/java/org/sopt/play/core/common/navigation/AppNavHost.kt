@@ -16,17 +16,25 @@ import org.sopt.play.presentation.auth.register.RegisterViewModel
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.home.HomeViewModel
+import org.sopt.play.presentation.main.StartDestination
 import org.sopt.play.presentation.mypage.MyPageRoute
 import org.sopt.play.presentation.search.SearchRoute
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
+    startGraph: StartDestination?,
     modifier: Modifier = Modifier,
 ) {
+    val startDestination = when (startGraph) {
+        StartDestination.AUTH -> AuthGraph
+        StartDestination.MAIN -> MainGraph
+        else -> return
+    }
+
     NavHost(
         navController = navController,
-        startDestination = AuthGraph,
+        startDestination = startDestination,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },

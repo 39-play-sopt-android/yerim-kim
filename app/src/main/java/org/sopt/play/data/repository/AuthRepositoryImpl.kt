@@ -2,6 +2,7 @@ package org.sopt.play.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import org.sopt.play.R
 import org.sopt.play.data.local.datastore.AuthDataStore
 import org.sopt.play.domain.repository.AuthRepository
