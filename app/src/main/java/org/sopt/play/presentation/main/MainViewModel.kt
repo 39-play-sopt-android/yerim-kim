@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.data.di.RepositoryModule.authRepository
 
-class MainViewModel ():
+class MainViewModel :
     BaseViewModel<MainUiState, Unit>(
         initialState = MainUiState(),
     ) {

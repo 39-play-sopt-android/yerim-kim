@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PlaySoptTheme {
                 MainScreen(
-                     viewModel = viewModel
+                    viewModel = viewModel
                 )
             }
         }
