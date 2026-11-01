@@ -10,9 +10,9 @@ import org.sopt.play.data.di.RepositoryModule.authRepository
 
 class MainViewModel :
     BaseViewModel<MainUiState, Unit>(
-        initialState = MainUiState(),
+        initialState = MainUiState,
     ) {
-    private val _startDestination = MutableStateFlow<StartDestination?>(null)
+    private val _startDestination = MutableStateFlow(StartDestination.AUTH)
     val startDestination = _startDestination.asStateFlow()
 
     init {

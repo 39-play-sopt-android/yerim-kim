@@ -7,6 +7,4 @@ enum class StartDestination {
     MAIN,
 }
 
-data class MainUiState(
-    val startDestination: StartDestination? = StartDestination.AUTH,
-) : BaseUiState
+data object MainUiState : BaseUiState

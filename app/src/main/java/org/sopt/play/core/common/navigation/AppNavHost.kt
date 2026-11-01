@@ -23,13 +23,12 @@ import org.sopt.play.presentation.search.SearchRoute
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    startGraph: StartDestination?,
+    startGraph: StartDestination,
     modifier: Modifier = Modifier,
 ) {
     val startDestination = when (startGraph) {
         StartDestination.AUTH -> AuthGraph
         StartDestination.MAIN -> MainGraph
-        else -> return
     }
 
     NavHost(
