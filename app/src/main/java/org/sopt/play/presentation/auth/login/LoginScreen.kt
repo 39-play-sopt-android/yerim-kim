@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.auth.login.ui
+package org.sopt.play.presentation.auth.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,12 +14,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -28,45 +29,74 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.extension.noRippleClickable
-import org.sopt.play.core.util.getEmailError
-import org.sopt.play.core.util.getPasswordError
+import org.sopt.play.core.extension.toast
 
 @Composable
 fun LoginRoute(
-    onLoginClick: (String, String) -> Unit,
-    onRegisterClick: () -> Unit,
+    viewModel: LoginViewModel,
+    navigateToHome: () -> Unit,
+    navigateToRegister: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val successMessage = stringResource(R.string.success_login)
+    val errorMessage = stringResource(R.string.wrong_input)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                LoginUiEffect.LoginSuccess -> {
+                    context.toast(successMessage)
+                    navigateToHome()
+                }
+
+                LoginUiEffect.LoginFailure -> context.toast(errorMessage)
+            }
+        }
+    }
+
     LoginScreen(
-        onLoginClick = onLoginClick,
-        onRegisterClick = onRegisterClick,
+        state = state,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onLoginClick = viewModel::onLoginClick,
+        onRegisterClick = navigateToRegister,
         modifier = modifier,
     )
 }
 
 @Composable
 fun LoginScreen(
-    onLoginClick: (String, String) -> Unit,
+    state: LoginUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val emailState = rememberTextFieldState()
-    val passwordState = rememberTextFieldState()
-
-    val emailError by remember {
-        derivedStateOf { getEmailError(emailState.text.toString()) }
-    }
-    val passwordError by remember {
-        derivedStateOf { getPasswordError(passwordState.text.toString()) }
-    }
+    val emailState = rememberTextFieldState(state.email)
+    val passwordState = rememberTextFieldState(state.password)
 
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(emailState) {
+        snapshotFlow { emailState.text.toString() }
+            .collect { onEmailChange(it) }
+    }
+
+    LaunchedEffect(passwordState) {
+        snapshotFlow { passwordState.text.toString() }
+            .collect { onPasswordChange(it) }
+    }
 
     Column(
         modifier = modifier
@@ -88,7 +118,7 @@ fun LoginScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@gmail.com",
-                errorMsg = emailError?.let { stringResource(it) },
+                errorMsg = state.emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -104,7 +134,7 @@ fun LoginScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = passwordError?.let { stringResource(it) },
+                errorMsg = state.passwordError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -121,16 +151,8 @@ fun LoginScreen(
         ) {
             PlaySoptButton(
                 text = "로그인",
-                onClick = {
-                    onLoginClick(
-                        emailState.text.toString(),
-                        passwordState.text.toString(),
-                    )
-                },
-                enabled = emailState.text.isNotEmpty() &&
-                        passwordState.text.isNotEmpty() &&
-                        emailError == null &&
-                        passwordError == null,
+                onClick = onLoginClick,
+                enabled = state.isLoginEnabled,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -164,8 +186,11 @@ fun LoginScreen(
 private fun LoginScreenPreview() {
     PlaySoptTheme {
         LoginScreen(
+            state = LoginUiState(),
+            onEmailChange = {},
+            onPasswordChange = {},
             modifier = Modifier,
-            onLoginClick = { _, _ -> },
+            onLoginClick = {},
             onRegisterClick = {},
         )
     }

@@ -1,8 +1,8 @@
-package org.sopt.play.data.mock
+package org.sopt.play.domain.mock
 
 import org.sopt.play.R
-import org.sopt.play.data.model.ProductModel
-import org.sopt.play.data.model.ProductType
+import org.sopt.play.domain.model.ProductModel
+import org.sopt.play.domain.model.ProductType
 
 val productMockData = listOf(
     ProductModel(

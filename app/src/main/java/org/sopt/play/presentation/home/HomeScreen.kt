@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.home.ui
+package org.sopt.play.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,17 +14,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.data.mock.productMockData
-import org.sopt.play.data.model.ProductModel
+import org.sopt.play.domain.mock.productMockData
+import org.sopt.play.domain.model.ProductModel
 import org.sopt.play.presentation.home.component.HomeBanner
 import org.sopt.play.presentation.home.component.HomeChipRow
 import org.sopt.play.presentation.home.component.HomeTabRow
@@ -35,31 +37,34 @@ import org.sopt.play.presentation.main.component.MainTopBar
 
 @Composable
 fun HomeRoute(
+    viewModel: HomeViewModel,
+    navigateToSearch: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedTab by rememberSaveable {
-        mutableStateOf(HomeMenuModel.HOME)
-    }
-    var selectedCategory by rememberSaveable {
-        mutableStateOf(HomeCategoryModel.ALL)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel, navigateToSearch) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                HomeUiEffect.NavigateToSearch -> navigateToSearch()
+            }
+        }
     }
 
     HomeScreen(
-        productList = productMockData,
-        selectedTab = selectedTab,
-        selectedCategory = selectedCategory,
-        onTabClick = { selectedTab = it },
-        onChipClick = { selectedCategory = it },
-        onHeartClick = {},
+        state = state,
+        onSearchClick = viewModel::onSearchClick,
+        onTabClick = viewModel::onTabClick,
+        onChipClick = viewModel::onCategoryClick,
+        onHeartClick = viewModel::onHeartClick,
         modifier = modifier,
     )
 }
 
 @Composable
 fun HomeScreen(
-    productList: List<ProductModel>,
-    selectedTab: HomeMenuModel,
-    selectedCategory: HomeCategoryModel,
+    state: HomeUiState,
+    onSearchClick: () -> Unit,
     onTabClick: (HomeMenuModel) -> Unit,
     onChipClick: (HomeCategoryModel) -> Unit,
     onHeartClick: (ProductModel) -> Unit,
@@ -71,7 +76,7 @@ fun HomeScreen(
             .background(color = PLAYSOPTTheme.colors.white),
     ) {
         MainTopBar(
-            onSearchClick = {},
+            onSearchClick = onSearchClick,
         )
 
         LazyVerticalGrid(
@@ -84,7 +89,7 @@ fun HomeScreen(
             ) {
                 Column {
                     HomeTabRow(
-                        selectedTab = selectedTab,
+                        selectedTab = state.selectedTab,
                         onTabClick = onTabClick,
                     )
 
@@ -102,14 +107,14 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.height(12.dp))
 
                         HomeChipRow(
-                            selectedCategory = selectedCategory,
+                            selectedCategory = state.selectedCategory,
                             onChipClick = onChipClick,
                         )
                     }
                 }
             }
 
-            items(productList) { product ->
+            items(state.productList) { product ->
                 ProductCard(
                     product = product,
                     onHeartClick = { onHeartClick(product) },
@@ -128,9 +133,10 @@ private fun HomeScreenPreview() {
         var selectedCategory by rememberSaveable { mutableStateOf(HomeCategoryModel.ALL) }
 
         HomeScreen(
-            productList = productMockData,
-            selectedTab = HomeMenuModel.HOME,
-            selectedCategory = HomeCategoryModel.ALL,
+            state = HomeUiState(
+                productList = productMockData,
+            ),
+            onSearchClick = { },
             onTabClick = { selectedTab = it },
             onChipClick = { selectedCategory = it },
             onHeartClick = { },

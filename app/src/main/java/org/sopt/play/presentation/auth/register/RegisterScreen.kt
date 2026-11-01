@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.auth.register.ui
+package org.sopt.play.presentation.auth.register
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,59 +12,92 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.play.R
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.util.getEmailError
-import org.sopt.play.core.util.getPasswordCheckError
-import org.sopt.play.core.util.getPasswordError
+import org.sopt.play.core.extension.toast
 
 @Composable
 fun RegisterRoute(
-    onRegisterClick: (String, String) -> Unit,
+    viewModel: RegisterViewModel,
+    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val successMessage = stringResource(R.string.success_register)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                RegisterUiEffect.RegisterSuccess -> {
+                    context.toast(successMessage)
+
+                    navigateToLogin()
+                }
+            }
+        }
+    }
+
     RegisterScreen(
-        onRegisterClick = onRegisterClick,
+        state = state,
+        onNameChange = viewModel::onNameChange,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onPasswordCheckChange = viewModel::onPasswordCheckChange,
+        onRegisterClick = viewModel::onRegisterClick,
         modifier = modifier,
     )
 }
 
 @Composable
 fun RegisterScreen(
-    onRegisterClick: (String, String) -> Unit,
+    state: RegisterUiState,
+    onNameChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onPasswordCheckChange: (String) -> Unit,
+    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val nameState = rememberTextFieldState()
-    val emailState = rememberTextFieldState()
-    val passwordState = rememberTextFieldState()
-    val passwordCheckState = rememberTextFieldState()
+    val nameState = rememberTextFieldState(state.name)
+    val emailState = rememberTextFieldState(state.email)
+    val passwordState = rememberTextFieldState(state.password)
+    val passwordCheckState = rememberTextFieldState(state.passwordCheck)
 
-    val emailError by remember {
-        derivedStateOf { getEmailError(emailState.text.toString()) }
+    LaunchedEffect(nameState) {
+        snapshotFlow { nameState.text.toString() }
+            .collect { onNameChange(it) }
     }
-    val passwordError by remember {
-        derivedStateOf { getPasswordError(passwordState.text.toString()) }
+
+    LaunchedEffect(emailState) {
+        snapshotFlow { emailState.text.toString() }
+            .collect { onEmailChange(it) }
     }
-    val passwordCheckError by remember {
-        derivedStateOf {
-            getPasswordCheckError(
-                passwordState.text.toString(),
-                passwordCheckState.text.toString()
-            )
-        }
+
+    LaunchedEffect(passwordState) {
+        snapshotFlow { passwordState.text.toString() }
+            .collect { onPasswordChange(it) }
+    }
+
+    LaunchedEffect(passwordCheckState) {
+        snapshotFlow { passwordCheckState.text.toString() }
+            .collect { onPasswordCheckChange(it) }
     }
 
     val scrollState = rememberScrollState()
@@ -104,7 +137,7 @@ fun RegisterScreen(
                 state = emailState,
                 label = "이메일 주소",
                 placeholder = "abc@email.com",
-                errorMsg = emailError?.let { stringResource(it) },
+                errorMsg = state.emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
@@ -118,7 +151,7 @@ fun RegisterScreen(
                 state = passwordState,
                 label = "비밀번호",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = passwordError?.let { stringResource(it) },
+                errorMsg = state.passwordError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -133,7 +166,7 @@ fun RegisterScreen(
                 state = passwordCheckState,
                 label = "비밀번호 확인",
                 placeholder = "6자 이상의 비밀번호",
-                errorMsg = passwordCheckError?.let { stringResource(it) },
+                errorMsg = state.passwordCheckError?.let { stringResource(it) },
                 isPassword = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
@@ -147,19 +180,8 @@ fun RegisterScreen(
 
         PlaySoptButton(
             text = "회원가입",
-            onClick = {
-                onRegisterClick(
-                    emailState.text.toString(),
-                    passwordState.text.toString()
-                )
-            },
-            enabled = nameState.text.isNotEmpty() &&
-                    emailState.text.isNotEmpty() &&
-                    passwordState.text.isNotEmpty() &&
-                    passwordCheckState.text.isNotEmpty() &&
-                    emailError == null &&
-                    passwordError == null &&
-                    passwordCheckError == null,
+            onClick = onRegisterClick,
+            enabled = state.isRegisterEnabled
         )
     }
 }
@@ -169,7 +191,12 @@ fun RegisterScreen(
 private fun RegisterScreenPreview() {
     PlaySoptTheme {
         RegisterScreen(
-            onRegisterClick = { _, _ -> }
+            state = RegisterUiState(),
+            onNameChange = {},
+            onEmailChange = {},
+            onPasswordChange = {},
+            onPasswordCheckChange = {},
+            onRegisterClick = {}
         )
     }
 }

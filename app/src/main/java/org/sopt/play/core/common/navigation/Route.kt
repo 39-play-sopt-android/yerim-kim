@@ -25,3 +25,6 @@ sealed interface BottomBarRoute {
     @Serializable
     data object MyPage : BottomBarRoute
 }
+
+@Serializable
+data object Search
