@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.extension.noRippleClickable
+import org.sopt.play.core.common.extension.noRippleClickable
 
 @Composable
 fun MainTopBar(

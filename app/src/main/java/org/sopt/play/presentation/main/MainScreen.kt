@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.main.ui
+package org.sopt.play.presentation.main
 
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,10 +7,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.sopt.play.core.common.navigation.AppNavHost
 import org.sopt.play.core.common.navigation.MainGraph
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.presentation.main.component.MainBottomBar
@@ -18,8 +18,11 @@ import org.sopt.play.presentation.main.model.BottomBarItemModel
 
 @Composable
 fun MainScreen(
+    viewModel: MainViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
+
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -48,11 +51,14 @@ fun MainScreen(
             }
         },
     ) { innerPadding ->
-        AppNavHost(
-            navController = navController,
-            modifier = Modifier
-                .padding(innerPadding)
-                .consumeWindowInsets(innerPadding),
-        )
+        startDestination?.let {
+            AppNavHost(
+                startGraph = it,
+                navController = navController,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .consumeWindowInsets(innerPadding),
+            )
+        }
     }
 }

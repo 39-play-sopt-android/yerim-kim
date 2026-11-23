@@ -1,9 +1,8 @@
-package org.sopt.play.data.model
-
-import androidx.annotation.DrawableRes
+package org.sopt.play.domain.model
 
 data class ProductModel(
-    @param: DrawableRes val imgRes: Int,
+    val productId: Long,
+    val imgRes: Int,
     val storeName: String,
     val productName: String,
     val productType: ProductType,

@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import org.sopt.play.R
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.extension.noRippleClickable
-import org.sopt.play.data.model.ProductModel
-import org.sopt.play.data.model.ProductType
+import org.sopt.play.core.common.extension.noRippleClickable
+import org.sopt.play.domain.model.ProductModel
+import org.sopt.play.domain.model.ProductType
 import java.text.DecimalFormat
 
 val priceFormatter = DecimalFormat("#,###")
@@ -117,6 +117,7 @@ private fun ProductCardPreview() {
             ) {
                 ProductCard(
                     product = ProductModel(
+                        productId = 1L,
                         imgRes = R.drawable.img_product1,
                         storeName = "스토어명 최대 한 줄",
                         productName = "상품명 최대 한 줄",
@@ -133,6 +134,7 @@ private fun ProductCardPreview() {
 
                 ProductCard(
                     product = ProductModel(
+                        productId = 2L,
                         imgRes = R.drawable.img_product2,
                         storeName = "스토어명이 한 줄을 넘어가면 이렇게 됩니다.",
                         productName = "상품명이 한 줄을 넘어가면 이렇게 됩니다.",

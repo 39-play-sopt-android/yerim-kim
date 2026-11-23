@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.mypage.ui
+package org.sopt.play.presentation.mypage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,6 @@ fun MyPageScreen(
     ) {
         Text(
             text = "마이 페이지",
-            modifier = Modifier,
             style = PLAYSOPTTheme.typography.body.m18,
         )
     }
