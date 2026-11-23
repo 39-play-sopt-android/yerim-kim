@@ -117,7 +117,7 @@ fun LoginScreen(
             PlaySoptTextField(
                 state = emailState,
                 label = "이메일 주소",
-                placeholder = "abc@gmail.com",
+                placeholder = "abc@email.com",
                 errorMsg = state.emailError?.let { stringResource(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
