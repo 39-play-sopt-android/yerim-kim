@@ -36,8 +36,8 @@ import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.extension.noRippleClickable
-import org.sopt.play.core.extension.toast
+import org.sopt.play.core.common.extension.noRippleClickable
+import org.sopt.play.core.common.extension.toast
 
 @Composable
 fun LoginRoute(

@@ -1,4 +1,4 @@
-package org.sopt.play.core.util
+package org.sopt.play.core.common.util
 
 import android.util.Patterns
 import androidx.annotation.StringRes

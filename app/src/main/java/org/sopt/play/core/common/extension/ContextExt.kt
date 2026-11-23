@@ -1,4 +1,4 @@
-package org.sopt.play.core.extension
+package org.sopt.play.core.common.extension
 
 import android.content.Context
 import android.widget.Toast

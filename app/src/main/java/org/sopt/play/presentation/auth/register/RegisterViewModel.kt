@@ -3,9 +3,9 @@ package org.sopt.play.presentation.auth.register
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
-import org.sopt.play.core.util.getEmailError
-import org.sopt.play.core.util.getPasswordCheckError
-import org.sopt.play.core.util.getPasswordError
+import org.sopt.play.core.common.util.getEmailError
+import org.sopt.play.core.common.util.getPasswordCheckError
+import org.sopt.play.core.common.util.getPasswordError
 import org.sopt.play.data.di.RepositoryModule
 
 class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(

@@ -2,8 +2,8 @@ package org.sopt.play.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import org.sopt.play.R
+import org.sopt.play.core.common.util.suspendRunCatching
 import org.sopt.play.data.local.datastore.AuthDataStore
 import org.sopt.play.domain.repository.AuthRepository
 
@@ -15,14 +15,14 @@ class AuthRepositoryImpl(
         name: String,
         email: String,
         password: String,
-    ): Result<Unit> = runCatching {
+    ): Result<Unit> = suspendRunCatching {
         authDataStore.saveUser(email, password)
     }
 
     override suspend fun login(
         email: String,
         password: String,
-    ): Result<Unit> = runCatching {
+    ): Result<Unit> = suspendRunCatching {
         val savedEmail = authDataStore.email.first()
         val savedPassword = authDataStore.password.first()
 
@@ -36,5 +36,5 @@ class AuthRepositoryImpl(
 
     override fun getIsLoggedIn(): Flow<Boolean> = authDataStore.isLoggedIn
 
-    override suspend fun logout(): Result<Unit> = runCatching { authDataStore.setLoggedIn(false) }
+    override suspend fun logout(): Result<Unit> = suspendRunCatching { authDataStore.setLoggedIn(false) }
 }
