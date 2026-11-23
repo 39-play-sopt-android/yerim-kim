@@ -10,8 +10,8 @@ data class LoginUiState(
     @param:StringRes val passwordError: Int? = null,
 ) : BaseUiState {
     val isLoginEnabled: Boolean
-        get() = email.isNotEmpty() &&
-                password.isNotEmpty() &&
+        get() = email.isNotBlank() &&
+                password.isNotBlank() &&
                 emailError == null &&
                 passwordError == null
 }

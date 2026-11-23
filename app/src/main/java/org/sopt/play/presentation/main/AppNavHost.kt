@@ -1,4 +1,4 @@
-package org.sopt.play.core.common.navigation
+package org.sopt.play.presentation.main
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -9,6 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.sopt.play.core.common.navigation.AuthGraph
+import org.sopt.play.core.common.navigation.BottomBarRoute
+import org.sopt.play.core.common.navigation.Login
+import org.sopt.play.core.common.navigation.MainGraph
+import org.sopt.play.core.common.navigation.Register
+import org.sopt.play.core.common.navigation.Search
 import org.sopt.play.presentation.auth.login.LoginRoute
 import org.sopt.play.presentation.auth.login.LoginViewModel
 import org.sopt.play.presentation.auth.register.RegisterRoute
@@ -16,7 +22,6 @@ import org.sopt.play.presentation.auth.register.RegisterViewModel
 import org.sopt.play.presentation.favorite.FavoriteRoute
 import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.home.HomeViewModel
-import org.sopt.play.presentation.main.StartDestination
 import org.sopt.play.presentation.mypage.MyPageRoute
 import org.sopt.play.presentation.search.SearchRoute
 

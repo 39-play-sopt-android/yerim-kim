@@ -14,9 +14,9 @@ data class RegisterUiState(
 ) : BaseUiState {
     val isRegisterEnabled: Boolean
         get() = name.isNotBlank() &&
-                email.isNotEmpty() &&
-                password.isNotEmpty() &&
-                passwordCheck.isNotEmpty() &&
+                email.isNotBlank() &&
+                password.isNotBlank() &&
+                passwordCheck.isNotBlank() &&
                 emailError == null &&
                 passwordError == null &&
                 passwordCheckError == null
