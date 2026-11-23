@@ -7,7 +7,7 @@ import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordError
 import org.sopt.play.data.di.RepositoryModule
 
-class LoginViewModel() : BaseViewModel<LoginUiState, LoginUiEffect>(
+class LoginViewModel : BaseViewModel<LoginUiState, LoginUiEffect>(
     initialState = LoginUiState()
 ) {
     private val authRepository = RepositoryModule.authRepository
@@ -31,10 +31,16 @@ class LoginViewModel() : BaseViewModel<LoginUiState, LoginUiEffect>(
 
     fun onLoginClick() {
         val state = currentState
-        if (!state.isLoginEnabled) return
+        if (!state.isLoginEnabled || state.isLoading) return
 
         viewModelScope.launch {
-            handleLogin(state.email, state.password)
+            updateState { copy(isLoading = true) }
+
+            try {
+                handleLogin(state.email, state.password)
+            } finally {
+                updateState { copy(isLoading = false) }
+            }
         }
     }
 

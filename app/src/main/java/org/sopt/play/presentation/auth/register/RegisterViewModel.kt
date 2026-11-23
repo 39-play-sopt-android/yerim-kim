@@ -49,10 +49,15 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
 
     fun onRegisterClick() {
         val state = currentState
-        if (!state.isRegisterEnabled) return
+        if (!state.isRegisterEnabled || state.isLoading) return
 
         viewModelScope.launch {
-            handleRegister(state.name, state.email, state.password)
+            updateState { copy(isLoading = true) }
+            try {
+                handleRegister(state.name, state.email, state.password)
+            } finally {
+                updateState { copy(isLoading = false) }
+            }
         }
     }
 

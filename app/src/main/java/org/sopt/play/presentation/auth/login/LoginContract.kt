@@ -8,6 +8,7 @@ data class LoginUiState(
     val password: String = "",
     @param:StringRes val emailError: Int? = null,
     @param:StringRes val passwordError: Int? = null,
+    val isLoading: Boolean = false,
 ) : BaseUiState {
     val isLoginEnabled: Boolean
         get() = email.isNotBlank() &&

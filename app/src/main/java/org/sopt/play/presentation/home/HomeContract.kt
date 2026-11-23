@@ -9,6 +9,7 @@ data class HomeUiState(
     val productList: List<ProductModel> = emptyList(),
     val selectedTab: HomeMenuModel = HomeMenuModel.HOME,
     val selectedCategory: HomeCategoryModel = HomeCategoryModel.ALL,
+    val isLoading: Boolean = false,
 ) : BaseUiState
 
 sealed interface HomeUiEffect {

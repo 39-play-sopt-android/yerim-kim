@@ -11,6 +11,7 @@ data class RegisterUiState(
     @param:StringRes val emailError: Int? = null,
     @param:StringRes val passwordError: Int? = null,
     @param:StringRes val passwordCheckError: Int? = null,
+    val isLoading: Boolean = false,
 ) : BaseUiState {
     val isRegisterEnabled: Boolean
         get() = name.isNotBlank() &&
