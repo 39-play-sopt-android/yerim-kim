@@ -7,14 +7,10 @@ import org.sopt.play.core.util.getEmailError
 import org.sopt.play.core.util.getPasswordCheckError
 import org.sopt.play.core.util.getPasswordError
 import org.sopt.play.data.di.RepositoryModule
-import org.sopt.play.domain.repository.AuthRepository
 
-class RegisterViewModel(
-    authRepository: AuthRepository,
-) :
-    BaseViewModel<RegisterUiState, RegisterUiEffect>(
-        initialState = RegisterUiState(),
-    ) {
+class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
+    initialState = RegisterUiState(),
+) {
     private val authRepository = RepositoryModule.authRepository
 
     fun onNameChange(name: String) {
