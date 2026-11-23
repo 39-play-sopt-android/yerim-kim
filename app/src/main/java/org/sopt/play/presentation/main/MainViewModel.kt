@@ -17,7 +17,7 @@ class MainViewModel :
 
     init {
         viewModelScope.launch {
-            val isLoggedIn = authRepository.getIsLoggedIn().first()
+            val isLoggedIn = authRepository.isLoggedIn.first()
             _startDestination.value =
                 if (isLoggedIn) StartDestination.MAIN
                 else StartDestination.AUTH

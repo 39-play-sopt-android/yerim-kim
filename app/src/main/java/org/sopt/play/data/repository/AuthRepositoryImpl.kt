@@ -32,7 +32,7 @@ class AuthRepositoryImpl(
         return suspendRunCatching { authDataStore.setLoggedIn(true) }
     }
 
-    override fun getIsLoggedIn(): Flow<Boolean> = authDataStore.isLoggedIn
+    override val isLoggedIn: Flow<Boolean> get() = authDataStore.isLoggedIn
 
     override suspend fun logout(): Result<Unit> =
         suspendRunCatching { authDataStore.setLoggedIn(false) }
