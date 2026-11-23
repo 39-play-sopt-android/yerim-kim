@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -30,14 +31,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.sopt.play.R
+import org.sopt.play.core.common.extension.noRippleClickable
+import org.sopt.play.core.common.extension.toast
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.common.extension.noRippleClickable
-import org.sopt.play.core.common.extension.toast
+
 
 @Composable
 fun LoginRoute(
@@ -47,19 +48,19 @@ fun LoginRoute(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val successMessage = stringResource(R.string.success_login)
-    val errorMessage = stringResource(R.string.wrong_input)
+    val resource = LocalResources.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(viewModel) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                LoginUiEffect.LoginSuccess -> {
-                    context.toast(successMessage)
-                    navigateToHome()
+                is LoginUiEffect.ShowToast -> {
+                    context.toast(resource.getString(effect.message))
                 }
 
-                LoginUiEffect.LoginFailure -> context.toast(errorMessage)
+                LoginUiEffect.NavigateToHome -> {
+                    navigateToHome()
+                }
             }
         }
     }

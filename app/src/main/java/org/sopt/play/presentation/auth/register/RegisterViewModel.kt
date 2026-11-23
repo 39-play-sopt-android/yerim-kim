@@ -2,6 +2,7 @@ package org.sopt.play.presentation.auth.register
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.sopt.play.R
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.common.util.getEmailError
 import org.sopt.play.core.common.util.getPasswordCheckError
@@ -67,6 +68,6 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
         password: String,
     ) {
         authRepository.register(name, email, password)
-            .onSuccess { sendEffect(RegisterUiEffect.RegisterSuccess) }
+            .onSuccess { sendEffect(RegisterUiEffect.ShowToast(R.string.success_register)) }
     }
 }

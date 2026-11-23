@@ -18,6 +18,6 @@ data class LoginUiState(
 }
 
 sealed interface LoginUiEffect {
-    data object LoginFailure : LoginUiEffect
-    data object LoginSuccess : LoginUiEffect
+    data class ShowToast(@param:StringRes val message: Int) : LoginUiEffect
+    data object NavigateToHome : LoginUiEffect
 }

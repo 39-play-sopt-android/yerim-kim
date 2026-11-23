@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,17 +40,17 @@ fun RegisterRoute(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val successMessage = stringResource(R.string.success_register)
+    val resource = LocalResources.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(viewModel) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                RegisterUiEffect.RegisterSuccess -> {
-                    context.toast(successMessage)
-
-                    navigateToLogin()
+                is RegisterUiEffect.ShowToast -> {
+                    context.toast(resource.getString(effect.message))
                 }
+
+                RegisterUiEffect.NavigateToLogin -> { navigateToLogin() }
             }
         }
     }

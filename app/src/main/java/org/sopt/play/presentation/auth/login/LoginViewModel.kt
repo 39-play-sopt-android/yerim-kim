@@ -2,6 +2,7 @@ package org.sopt.play.presentation.auth.login
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.sopt.play.R
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.common.util.getEmailError
 import org.sopt.play.core.common.util.getPasswordError
@@ -49,7 +50,12 @@ class LoginViewModel : BaseViewModel<LoginUiState, LoginUiEffect>(
         password: String,
     ) {
         authRepository.login(email, password)
-            .onSuccess { sendEffect(LoginUiEffect.LoginSuccess) }
-            .onFailure { sendEffect(LoginUiEffect.LoginFailure) }
+            .onSuccess {
+                sendEffect(LoginUiEffect.ShowToast(R.string.success_login))
+                sendEffect(LoginUiEffect.NavigateToHome)
+            }
+            .onFailure {
+                sendEffect(LoginUiEffect.ShowToast(R.string.wrong_input))
+            }
     }
 }
