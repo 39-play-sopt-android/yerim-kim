@@ -51,12 +51,14 @@ fun MainScreen(
             }
         },
     ) { innerPadding ->
-        AppNavHost(
-            startGraph = startDestination,
-            navController = navController,
-            modifier = Modifier
-                .padding(innerPadding)
-                .consumeWindowInsets(innerPadding),
-        )
+        startDestination?.let {
+            AppNavHost(
+                startGraph = it,
+                navController = navController,
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .consumeWindowInsets(innerPadding),
+            )
+        }
     }
 }

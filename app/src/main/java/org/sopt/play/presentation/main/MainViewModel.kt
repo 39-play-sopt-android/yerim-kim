@@ -12,7 +12,7 @@ class MainViewModel :
     BaseViewModel<MainUiState, Unit>(
         initialState = MainUiState,
     ) {
-    private val _startDestination = MutableStateFlow(StartDestination.AUTH)
+    private val _startDestination = MutableStateFlow<StartDestination?>(null)
     val startDestination = _startDestination.asStateFlow()
 
     init {
