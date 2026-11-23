@@ -1,5 +1,7 @@
 package org.sopt.play.presentation.auth.register
 
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.play.R
@@ -13,38 +15,46 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
     initialState = RegisterUiState(),
 ) {
     private val authRepository = RepositoryModule.authRepository
+    val nameState = TextFieldState()
+    val emailState = TextFieldState()
+    val passwordState = TextFieldState()
+    val passwordCheckState = TextFieldState()
 
-    fun onNameChange(name: String) {
-        updateState {
-            copy(name = name)
+    init {
+        viewModelScope.launch {
+            snapshotFlow { nameState.text.toString() }
+                .collect { name ->
+                    updateState {
+                        copy(name = name)
+                    }
+                }
         }
-    }
 
-    fun onEmailChange(email: String) {
-        updateState {
-            copy(
-                email = email,
-                emailError = getEmailError(email),
-            )
+        viewModelScope.launch {
+            snapshotFlow { emailState.text.toString() }
+                .collect { email ->
+                    updateState {
+                        copy(
+                            email = email,
+                            emailError = getEmailError(email)
+                        )
+                    }
+                }
         }
-    }
 
-    fun onPasswordChange(password: String) {
-        updateState {
-            copy(
-                password = password,
-                passwordError = getPasswordError(password),
-                passwordCheckError = getPasswordCheckError(password, passwordCheck),
-            )
-        }
-    }
-
-    fun onPasswordCheckChange(passwordCheck: String) {
-        updateState {
-            copy(
-                passwordCheck = passwordCheck,
-                passwordCheckError = getPasswordCheckError(password, passwordCheck),
-            )
+        viewModelScope.launch {
+            snapshotFlow {
+                passwordState.text.toString() to passwordCheckState.text.toString()
+            }.collect { (password, passwordCheck) ->
+                updateState {
+                    copy(
+                        password = password,
+                        passwordCheck = passwordCheck,
+                        passwordError = getPasswordError(password),
+                        passwordCheckError = getPasswordCheckError(password, passwordCheck),
+                    )
+                }
+            }
         }
     }
 
@@ -68,6 +78,9 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
         password: String,
     ) {
         authRepository.register(name, email, password)
-            .onSuccess { sendEffect(RegisterUiEffect.ShowToast(R.string.success_register)) }
+            .onSuccess {
+                sendEffect(RegisterUiEffect.ShowToast(R.string.success_register))
+                sendEffect(RegisterUiEffect.NavigateToLogin)
+            }
     }
 }

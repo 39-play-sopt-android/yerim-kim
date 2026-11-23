@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
@@ -25,13 +24,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.sopt.play.R
+import org.sopt.play.core.common.extension.toast
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.common.extension.toast
 
 @Composable
 fun RegisterRoute(
@@ -50,17 +48,19 @@ fun RegisterRoute(
                     context.toast(resource.getString(effect.message))
                 }
 
-                RegisterUiEffect.NavigateToLogin -> { navigateToLogin() }
+                RegisterUiEffect.NavigateToLogin -> {
+                    navigateToLogin()
+                }
             }
         }
     }
 
     RegisterScreen(
         state = state,
-        onNameChange = viewModel::onNameChange,
-        onEmailChange = viewModel::onEmailChange,
-        onPasswordChange = viewModel::onPasswordChange,
-        onPasswordCheckChange = viewModel::onPasswordCheckChange,
+        nameState = viewModel.nameState,
+        emailState = viewModel.emailState,
+        passwordState = viewModel.passwordState,
+        passwordCheckState = viewModel.passwordCheckState,
         onRegisterClick = viewModel::onRegisterClick,
         modifier = modifier,
     )
@@ -69,38 +69,13 @@ fun RegisterRoute(
 @Composable
 fun RegisterScreen(
     state: RegisterUiState,
-    onNameChange: (String) -> Unit,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onPasswordCheckChange: (String) -> Unit,
+    nameState: TextFieldState,
+    emailState: TextFieldState,
+    passwordState: TextFieldState,
+    passwordCheckState: TextFieldState,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val nameState = rememberTextFieldState(state.name)
-    val emailState = rememberTextFieldState(state.email)
-    val passwordState = rememberTextFieldState(state.password)
-    val passwordCheckState = rememberTextFieldState(state.passwordCheck)
-
-    LaunchedEffect(nameState) {
-        snapshotFlow { nameState.text.toString() }
-            .collect { onNameChange(it) }
-    }
-
-    LaunchedEffect(emailState) {
-        snapshotFlow { emailState.text.toString() }
-            .collect { onEmailChange(it) }
-    }
-
-    LaunchedEffect(passwordState) {
-        snapshotFlow { passwordState.text.toString() }
-            .collect { onPasswordChange(it) }
-    }
-
-    LaunchedEffect(passwordCheckState) {
-        snapshotFlow { passwordCheckState.text.toString() }
-            .collect { onPasswordCheckChange(it) }
-    }
-
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
 
@@ -193,10 +168,10 @@ private fun RegisterScreenPreview() {
     PlaySoptTheme {
         RegisterScreen(
             state = RegisterUiState(),
-            onNameChange = {},
-            onEmailChange = {},
-            onPasswordChange = {},
-            onPasswordCheckChange = {},
+            nameState = TextFieldState(),
+            emailState = TextFieldState(),
+            passwordState = TextFieldState(),
+            passwordCheckState = TextFieldState(),
             onRegisterClick = {}
         )
     }

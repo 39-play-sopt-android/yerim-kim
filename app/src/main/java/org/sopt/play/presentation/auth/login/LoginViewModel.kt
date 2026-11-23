@@ -1,5 +1,7 @@
 package org.sopt.play.presentation.auth.login
 
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.play.R
@@ -11,34 +13,48 @@ import org.sopt.play.data.di.RepositoryModule
 class LoginViewModel : BaseViewModel<LoginUiState, LoginUiEffect>(
     initialState = LoginUiState()
 ) {
+    val emailState = TextFieldState()
+    val passwordState = TextFieldState()
     private val authRepository = RepositoryModule.authRepository
-    fun onEmailChange(email: String) {
-        updateState {
-            copy(
-                email = email,
-                emailError = getEmailError(email),
-            )
-        }
-    }
 
-    fun onPasswordChange(password: String) {
-        updateState {
-            copy(
-                password = password,
-                passwordError = getPasswordError(password),
-            )
+    init {
+        viewModelScope.launch {
+            snapshotFlow { emailState.text.toString() }
+                .collect { email ->
+                    updateState {
+                        copy(
+                            email = email,
+                            emailError = getEmailError(email)
+                        )
+                    }
+                }
+        }
+
+        viewModelScope.launch {
+            snapshotFlow { passwordState.text.toString() }
+                .collect { password ->
+                    updateState {
+                        copy(
+                            password = password,
+                            passwordError = getPasswordError(password)
+                        )
+                    }
+                }
         }
     }
 
     fun onLoginClick() {
         val state = currentState
+        val email = emailState.text.toString()
+        val password = passwordState.text.toString()
+
         if (!state.isLoginEnabled || state.isLoading) return
 
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
 
             try {
-                handleLogin(state.email, state.password)
+                handleLogin(email, password)
             } finally {
                 updateState { copy(isLoading = false) }
             }

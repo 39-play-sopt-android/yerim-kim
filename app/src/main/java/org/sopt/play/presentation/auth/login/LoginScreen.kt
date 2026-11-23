@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -38,7 +37,6 @@ import org.sopt.play.core.designsystem.component.PlaySoptTextField
 import org.sopt.play.core.designsystem.preview.FontScalePreviews
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-
 
 @Composable
 fun LoginRoute(
@@ -67,8 +65,8 @@ fun LoginRoute(
 
     LoginScreen(
         state = state,
-        onEmailChange = viewModel::onEmailChange,
-        onPasswordChange = viewModel::onPasswordChange,
+        emailState = viewModel.emailState,
+        passwordState = viewModel.passwordState,
         onLoginClick = viewModel::onLoginClick,
         onRegisterClick = navigateToRegister,
         modifier = modifier,
@@ -78,26 +76,13 @@ fun LoginRoute(
 @Composable
 fun LoginScreen(
     state: LoginUiState,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
+    emailState: TextFieldState,
+    passwordState: TextFieldState,
     onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val emailState = rememberTextFieldState(state.email)
-    val passwordState = rememberTextFieldState(state.password)
-
     val focusManager = LocalFocusManager.current
-
-    LaunchedEffect(emailState) {
-        snapshotFlow { emailState.text.toString() }
-            .collect { onEmailChange(it) }
-    }
-
-    LaunchedEffect(passwordState) {
-        snapshotFlow { passwordState.text.toString() }
-            .collect { onPasswordChange(it) }
-    }
 
     Column(
         modifier = modifier
@@ -188,8 +173,8 @@ private fun LoginScreenPreview() {
     PlaySoptTheme {
         LoginScreen(
             state = LoginUiState(),
-            onEmailChange = {},
-            onPasswordChange = {},
+            emailState = TextFieldState(),
+            passwordState = TextFieldState(),
             modifier = Modifier,
             onLoginClick = {},
             onRegisterClick = {},
