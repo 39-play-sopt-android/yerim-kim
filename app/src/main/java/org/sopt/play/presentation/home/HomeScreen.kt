@@ -114,7 +114,10 @@ fun HomeScreen(
                 }
             }
 
-            items(state.productList) { product ->
+            items(
+                items = state.productList,
+                key = { it.productId }
+            ) { product ->
                 ProductCard(
                     product = product,
                     onHeartClick = { onHeartClick(product) },

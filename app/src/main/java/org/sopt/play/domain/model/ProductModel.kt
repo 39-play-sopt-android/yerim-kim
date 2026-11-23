@@ -3,6 +3,7 @@ package org.sopt.play.domain.model
 import androidx.annotation.DrawableRes
 
 data class ProductModel(
+    val productId: Long,
     @param: DrawableRes val imgRes: Int,
     val storeName: String,
     val productName: String,

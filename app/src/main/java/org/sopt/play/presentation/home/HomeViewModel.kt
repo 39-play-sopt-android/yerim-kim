@@ -32,7 +32,7 @@ class HomeViewModel :
         updateState {
             copy(
                 productList = productList.map {
-                    if (it == product) it.copy(isFavorite = !it.isFavorite) else it
+                    if (it.productId == product.productId) it.copy(isFavorite = !it.isFavorite) else it
                 },
             )
         }
