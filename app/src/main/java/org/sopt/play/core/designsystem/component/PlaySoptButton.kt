@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -16,9 +17,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.sopt.play.core.common.extension.noRippleClickable
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.core.common.extension.noRippleClickable
 
 sealed interface PlaySoptButtonType {
     data object Primary : PlaySoptButtonType
@@ -42,6 +43,7 @@ fun PlaySoptButton(
                 color = when (type) {
                     PlaySoptButtonType.Primary ->
                         if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1
+
                     PlaySoptButtonType.Secondary -> PLAYSOPTTheme.colors.gray1
                 }
             )
@@ -58,6 +60,7 @@ fun PlaySoptButton(
         color = when (type) {
             PlaySoptButtonType.Primary ->
                 if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3
+
             PlaySoptButtonType.Secondary -> PLAYSOPTTheme.colors.gray5
         },
         textAlign = TextAlign.Center,
@@ -88,6 +91,7 @@ private fun PlaySoptButtonPreview() {
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 PlaySoptButton(
@@ -99,7 +103,7 @@ private fun PlaySoptButtonPreview() {
                 )
 
                 PlaySoptButton(
-                    text = "삭제",
+                    text = "로그인 만약에 글씨가 길어지고 길어짐",
                     onClick = {},
                     modifier = Modifier.weight(1f),
                     enabled = true,
