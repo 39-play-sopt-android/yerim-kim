@@ -3,6 +3,7 @@ package org.sopt.play.core.designsystem.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -19,11 +20,17 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.core.common.extension.noRippleClickable
 
+sealed interface PlaySoptButtonType {
+    data object Primary : PlaySoptButtonType
+    data object Secondary : PlaySoptButtonType
+}
+
 @Composable
 fun PlaySoptButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    type: PlaySoptButtonType = PlaySoptButtonType.Primary,
     enabled: Boolean = false,
 ) {
     Text(
@@ -32,7 +39,11 @@ fun PlaySoptButton(
             .fillMaxWidth()
             .background(
                 shape = CircleShape,
-                color = if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1,
+                color = when (type) {
+                    PlaySoptButtonType.Primary ->
+                        if (enabled) PLAYSOPTTheme.colors.black else PLAYSOPTTheme.colors.gray1
+                    PlaySoptButtonType.Secondary -> PLAYSOPTTheme.colors.gray1
+                }
             )
             .noRippleClickable(
                 enabled = enabled,
@@ -44,7 +55,11 @@ fun PlaySoptButton(
                 }
             )
             .padding(16.dp),
-        color = if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3,
+        color = when (type) {
+            PlaySoptButtonType.Primary ->
+                if (enabled) PLAYSOPTTheme.colors.gray1 else PLAYSOPTTheme.colors.gray3
+            PlaySoptButtonType.Secondary -> PLAYSOPTTheme.colors.gray5
+        },
         textAlign = TextAlign.Center,
         style = PLAYSOPTTheme.typography.caption.sb14,
     )
@@ -70,6 +85,27 @@ private fun PlaySoptButtonPreview() {
                 modifier = Modifier,
                 enabled = true,
             )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                PlaySoptButton(
+                    text = "취소",
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    enabled = true,
+                    type = PlaySoptButtonType.Secondary,
+                )
+
+                PlaySoptButton(
+                    text = "삭제",
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    enabled = true,
+                    type = PlaySoptButtonType.Primary,
+                )
+            }
         }
     }
 }
