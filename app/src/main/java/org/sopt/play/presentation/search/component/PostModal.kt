@@ -1,4 +1,4 @@
-package org.sopt.play.presentation.mypage.component
+package org.sopt.play.presentation.search.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
