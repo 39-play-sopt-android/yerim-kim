@@ -25,6 +25,7 @@ import org.sopt.play.presentation.home.HomeRoute
 import org.sopt.play.presentation.home.HomeViewModel
 import org.sopt.play.presentation.mypage.MyPageRoute
 import org.sopt.play.presentation.search.SearchRoute
+import org.sopt.play.presentation.search.SearchViewModel
 
 @Composable
 fun AppNavHost(
@@ -104,8 +105,14 @@ fun AppNavHost(
                 MyPageRoute()
             }
 
-            composable<Search> {
-                SearchRoute()
+            composable<Search> { backStackEntry ->
+                val viewModel: SearchViewModel = viewModel(
+                    viewModelStoreOwner = backStackEntry
+                )
+
+                SearchRoute(
+                    viewModel = viewModel,
+                )
             }
         }
     }
