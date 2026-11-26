@@ -76,7 +76,7 @@ fun SearchScreen(
 private fun SearchScreenPreview() {
     PlaySoptTheme {
         SearchScreen(
-            state = SearchUiState(),
+            state = SearchUiState.dummy,
             searchState = TextFieldState(),
             onSearchClick = {},
         )
