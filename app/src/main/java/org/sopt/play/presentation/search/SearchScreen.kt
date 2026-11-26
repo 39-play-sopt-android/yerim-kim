@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.search.component.FloatingButton
+import org.sopt.play.presentation.search.component.PostBottomSheet
 import org.sopt.play.presentation.search.component.PostSection
 import org.sopt.play.presentation.search.component.SearchTextField
 
@@ -30,15 +32,20 @@ fun SearchRoute(
         state = state,
         searchState = viewModel.searchState,
         onSearchClick = viewModel::onSearchClick,
+        onFloatingClick = viewModel::onFloatingClick,
+        onBottomSheetDismiss = viewModel::onBottomSheetDismiss,
         modifier = modifier,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     state: SearchUiState,
     searchState: TextFieldState,
     onSearchClick: () -> Unit,
+    onFloatingClick: () -> Unit,
+    onBottomSheetDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -65,8 +72,17 @@ fun SearchScreen(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(bottom = 20.dp),
-                onButtonClick = {},
+                onButtonClick = onFloatingClick,
             )
+
+            if (state.showBottomSheet) {
+                PostBottomSheet(
+                    onDismissRequest = onBottomSheetDismiss,
+                    titleState = TextFieldState(),
+                    contentState = TextFieldState(),
+                    onButtonClick = onFloatingClick,
+                )
+            }
         }
     }
 }
@@ -78,6 +94,8 @@ private fun SearchScreenPreview() {
         SearchScreen(
             state = SearchUiState.dummy,
             searchState = TextFieldState(),
+            onBottomSheetDismiss = {},
+            onFloatingClick = {},
             onSearchClick = {},
         )
     }

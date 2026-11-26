@@ -8,9 +8,15 @@ class SearchViewModel :
         initialState = SearchUiState.dummy, // TODO : 빈 값으로 복원
     ) {
     val searchState = TextFieldState()
-    val titleState = TextFieldState()
-    val contentState = TextFieldState()
     fun onSearchClick() {
 
+    }
+
+    fun onFloatingClick() {
+        updateState { copy(showBottomSheet = true) }
+    }
+
+    fun onBottomSheetDismiss() {
+        updateState { copy(showBottomSheet = false) }
     }
 }

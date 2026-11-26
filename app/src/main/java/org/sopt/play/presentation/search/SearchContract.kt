@@ -9,6 +9,7 @@ data class SearchUiState(
     val nextCursor: Long = 0L,
     val hasNext: Boolean = false,
     val isLoading: Boolean = false,
+    val showBottomSheet: Boolean = false,
 ) : BaseUiState {
     companion object {
         val dummy = SearchUiState(
