@@ -1,7 +1,22 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+}
+
+val properties = Properties().apply{
+    val localProperties = rootProject.file("local.properties")
+
+    if (localProperties.exists()) {
+        load(localProperties.inputStream())
+    }
+}
+
+val baseUrl = properties.getProperty("BASE_URL").orEmpty()
+require(baseUrl.isNotBlank()) {
+    "local.properties에 BASE_URL이 없습니다 ㅠㅠ"
 }
 
 android {
@@ -20,6 +35,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
     }
 
     buildTypes {
@@ -35,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
