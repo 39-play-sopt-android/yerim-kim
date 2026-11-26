@@ -8,35 +8,38 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.domain.model.PostModel
-import org.sopt.play.domain.model.postDummy
 import org.sopt.play.presentation.search.component.FloatingButton
 import org.sopt.play.presentation.search.component.PostSection
 import org.sopt.play.presentation.search.component.SearchTextField
 
 @Composable
 fun SearchRoute(
+    viewModel: SearchViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
     SearchScreen(
-        searchState = TextFieldState(),
-        onSearchClick = {},
-        postList = emptyList(),
+        state = state,
+        searchState = viewModel.searchState,
+        onSearchClick = viewModel::onSearchClick,
         modifier = modifier,
     )
 }
 
 @Composable
 fun SearchScreen(
+    state: SearchUiState,
     searchState: TextFieldState,
     onSearchClick: () -> Unit,
-    postList: List<PostModel>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -55,9 +58,8 @@ fun SearchScreen(
         Box(
             modifier = Modifier.fillMaxWidth(),
         ) {
-
             PostSection(
-                postList = postList,
+                postList = state.postList,
             )
 
             FloatingButton(
@@ -75,9 +77,9 @@ fun SearchScreen(
 private fun SearchScreenPreview() {
     PlaySoptTheme {
         SearchScreen(
+            state = SearchUiState(),
             searchState = TextFieldState(),
             onSearchClick = {},
-            postList = postDummy,
         )
     }
 }
