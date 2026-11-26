@@ -1,21 +1,32 @@
 package org.sopt.play.presentation.search.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.play.core.designsystem.component.BottomSheet
+import org.sopt.play.core.designsystem.component.CustomDragHandle
+import org.sopt.play.core.designsystem.component.PlaySoptBottomSheet
 import org.sopt.play.core.designsystem.component.PlaySoptButton
 import org.sopt.play.core.designsystem.component.PlaySoptTextField
+import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostBottomSheet(
     titleState: TextFieldState,
@@ -23,7 +34,8 @@ fun PostBottomSheet(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    BottomSheet(
+    PlaySoptBottomSheet(
+        onDismissRequest = {},
         modifier = modifier,
         content = {
             BottomSheetContent(
@@ -38,7 +50,8 @@ fun PostBottomSheet(
 @Composable
 private fun BottomSheetContent(
     titleState: TextFieldState,
-    contentState: TextFieldState,    onButtonClick: () -> Unit,
+    contentState: TextFieldState,
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -76,12 +89,39 @@ private fun BottomSheetContent(
 
 @Preview
 @Composable
-private fun PostBottomSheetPreview() {
+private fun BottomSheetContentPreview() {
     PlaySoptTheme {
-        PostBottomSheet(
-            titleState = TextFieldState(),
-            contentState = TextFieldState(),
-            onButtonClick = {},
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = PLAYSOPTTheme.colors.white,
+                    shape = RoundedCornerShape(
+                        topStart = 24.dp,
+                        topEnd = 24.dp,
+                    )
+                )
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            CustomDragHandle()
+
+            BottomSheetContent(
+                titleState = TextFieldState(),
+                contentState = TextFieldState(),
+                onButtonClick = {},
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 10.dp)
+                    .width(108.dp)
+                    .height(4.dp)
+                    .background(
+                        color = PLAYSOPTTheme.colors.black,
+                        shape = CircleShape,
+                    )
+            )
+        }
     }
 }
