@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -109,10 +110,23 @@ fun SearchTextField(
 @Composable
 private fun SearchTextFieldPreview() {
     PlaySoptTheme {
-        SearchTextField(
-            state = TextFieldState(),
-            onSearchClick = {},
-            placeholder = "검색어를 입력하세요",
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ){
+            SearchTextField(
+                state = TextFieldState(),
+                onSearchClick = {},
+                placeholder = "검색어를 입력하세요",
+            )
+
+            SearchTextField(
+                state = TextFieldState("입력 중..."),
+                onSearchClick = {},
+                placeholder = "검색어를 입력하세요",
+            )
+        }
     }
 }
