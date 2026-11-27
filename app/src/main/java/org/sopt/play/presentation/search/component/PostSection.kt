@@ -20,6 +20,8 @@ import org.sopt.play.domain.model.postDummy
 @Composable
 fun PostSection(
     postList: List<PostModel>,
+    onPostClick: (Long) -> Unit,
+    onPostLongClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (postList.isEmpty()) {
@@ -39,13 +41,15 @@ fun PostSection(
             modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            items (items = postList, key = { it.postId }) { post ->
+            items(items = postList, key = { it.postId }) { post ->
                 PostCard(
                     postId = post.postId,
                     authorName = post.author,
                     createdAt = post.createdAt,
                     title = post.title,
                     content = post.content,
+                    onClick = { onPostClick(post.postId) },
+                    onLongClick = { onPostLongClick(post.postId) },
                 )
             }
         }
@@ -54,20 +58,24 @@ fun PostSection(
 
 @Preview
 @Composable
-private fun PostSectionPreview(){
-    PlaySoptTheme{
+private fun PostSectionPreview() {
+    PlaySoptTheme {
         PostSection(
             postList = postDummy,
+            onPostClick = {},
+            onPostLongClick = {},
         )
     }
 }
 
 @Preview
 @Composable
-private fun PostSectionPreviewEmpty(){
-    PlaySoptTheme{
+private fun PostSectionPreviewEmpty() {
+    PlaySoptTheme {
         PostSection(
             postList = emptyList(),
+            onPostClick = {},
+            onPostLongClick = {},
         )
     }
 }

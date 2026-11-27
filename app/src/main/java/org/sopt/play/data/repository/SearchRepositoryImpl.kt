@@ -37,4 +37,14 @@ class SearchRepositoryImpl(
             ),
         )
     }
+
+    override suspend fun deletePost(
+        authorizationCode: String,
+        postId: Long,
+    ): Result<Unit> = suspendRunCatching {
+        service.deletePost(
+            authorizationCode = authorizationCode,
+            postId = postId,
+        )
+    }
 }

@@ -18,6 +18,7 @@ import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.presentation.search.component.FloatingButton
 import org.sopt.play.presentation.search.component.PostBottomSheet
+import org.sopt.play.presentation.search.component.PostModal
 import org.sopt.play.presentation.search.component.PostSection
 import org.sopt.play.presentation.search.component.SearchTextField
 
@@ -34,9 +35,13 @@ fun SearchRoute(
         titleState = viewModel.titleState,
         contentState = viewModel.contentState,
         onSearchClick = viewModel::onSearchClick,
+        onPostClick = viewModel::onPostClick,
+        onPostLongClick = viewModel::onPostLongClick,
         onFloatingClick = viewModel::onFloatingClick,
         onCompleteClick = viewModel::onCompleteClick,
+        onDeleteClick = viewModel::onDeleteClick,
         onBottomSheetDismiss = viewModel::onBottomSheetDismiss,
+        onModalDismiss = viewModel::onModalDismiss,
         modifier = modifier,
     )
 }
@@ -49,9 +54,13 @@ fun SearchScreen(
     titleState: TextFieldState,
     contentState: TextFieldState,
     onSearchClick: () -> Unit,
+    onPostClick: (Long) -> Unit,
+    onPostLongClick: (Long) -> Unit,
     onFloatingClick: () -> Unit,
     onCompleteClick: () -> Unit,
     onBottomSheetDismiss: () -> Unit,
+    onModalDismiss: () -> Unit,
+    onDeleteClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -72,6 +81,8 @@ fun SearchScreen(
         ) {
             PostSection(
                 postList = state.postList,
+                onPostClick = onPostClick,
+                onPostLongClick = onPostLongClick,
             )
 
             FloatingButton(
@@ -89,6 +100,14 @@ fun SearchScreen(
                     onButtonClick = onCompleteClick,
                 )
             }
+
+            if (state.showModal) {
+                PostModal(
+                    onDismissRequest = onModalDismiss,
+                    onCancelClick = onModalDismiss,
+                    onDeleteClick = { state.selectedPostId?.let(onDeleteClick) },
+                    )
+            }
         }
     }
 }
@@ -103,9 +122,13 @@ private fun SearchScreenPreview() {
             titleState = TextFieldState(),
             contentState = TextFieldState(),
             onBottomSheetDismiss = {},
+            onModalDismiss = {},
+            onPostClick = {},
+            onPostLongClick = {},
             onFloatingClick = {},
             onCompleteClick = {},
             onSearchClick = {},
+            onDeleteClick = {},
         )
     }
 }

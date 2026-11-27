@@ -10,6 +10,8 @@ data class SearchUiState(
     val hasNext: Boolean = false,
     val isLoading: Boolean = false,
     val showBottomSheet: Boolean = false,
+    val selectedPostId: Long? = null,
+    val showModal: Boolean = false,
 ) : BaseUiState {
     companion object {
         val dummy = SearchUiState(

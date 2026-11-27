@@ -49,20 +49,51 @@ class SearchViewModel(
 
     }
 
+    fun onPostClick(postId: Long) {
+
+    }
+
+    fun onPostLongClick(postId: Long) {
+        updateState {
+            copy(
+                selectedPostId = postId,
+                showModal = true
+            )
+        }
+    }
+
+    fun onDeleteClick(postId: Long) {
+        updateState { copy(showModal = false) }
+
+        viewModelScope.launch {
+            searchRepository.deletePost(
+                authorizationCode = "20030207",
+                postId = postId,
+            ).onSuccess {
+                updateState {
+                    copy(
+                        postList = postList.filterNot { it.postId == postId }
+                    )
+                }
+            }.onFailure { throwable ->
+                Log.e("SearchViewModel", "게시글 삭제 실패", throwable)
+            }
+        }
+    }
+
     fun onCompleteClick() {
         val title = titleState.text.toString().trim()
-        val content = titleState.text.toString().trim()
+        val content = contentState.text.toString().trim()
 
         viewModelScope.launch {
             updateState { copy(showBottomSheet = false) }
 
-            val author = authRepository.currentUser.first()?.name
-
+            val author = authRepository.currentUser.first()?.name.toString()
             searchRepository.createPost(
                 authorizationCode = "20030207", // TODO : 인증 코드 발급 API 연동
                 title = title,
                 content = content,
-                author = author.toString(),
+                author = author,
             ).onSuccess {
                 updateState {
                     copy(
@@ -83,5 +114,9 @@ class SearchViewModel(
 
     fun onBottomSheetDismiss() {
         updateState { copy(showBottomSheet = false) }
+    }
+
+    fun onModalDismiss() {
+        updateState { copy(showModal = false) }
     }
 }
