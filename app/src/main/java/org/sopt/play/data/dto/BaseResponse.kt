@@ -1,7 +1,9 @@
-package org.sopt.play.data.dto.base
+package org.sopt.play.data.dto
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BaseResponse<T>(
     @SerialName("isSuccess")
     val isSuccess: Boolean,

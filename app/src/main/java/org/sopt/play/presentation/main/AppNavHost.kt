@@ -4,18 +4,22 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import org.sopt.play.PlaySoptApplication
 import org.sopt.play.core.common.navigation.AuthGraph
 import org.sopt.play.core.common.navigation.BottomBarRoute
 import org.sopt.play.core.common.navigation.Login
 import org.sopt.play.core.common.navigation.MainGraph
 import org.sopt.play.core.common.navigation.Register
 import org.sopt.play.core.common.navigation.Search
+import org.sopt.play.di.ViewModelFactory
 import org.sopt.play.presentation.auth.login.LoginRoute
 import org.sopt.play.presentation.auth.login.LoginViewModel
 import org.sopt.play.presentation.auth.register.RegisterRoute
@@ -37,6 +41,10 @@ fun AppNavHost(
         StartDestination.AUTH -> AuthGraph
         StartDestination.MAIN -> MainGraph
     }
+    val application = LocalContext.current.applicationContext as PlaySoptApplication
+    val factory = remember(application) {
+        ViewModelFactory(application.container)
+    }
 
     NavHost(
         navController = navController,
@@ -54,6 +62,7 @@ fun AppNavHost(
         ) {
             composable<Login> { backStackEntry ->
                 val viewModel: LoginViewModel = viewModel(
+//                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 
@@ -71,6 +80,7 @@ fun AppNavHost(
 
             composable<Register> { backStackEntry ->
                 val viewModel: RegisterViewModel = viewModel(
+//                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 
@@ -86,6 +96,7 @@ fun AppNavHost(
         ) {
             composable<BottomBarRoute.Home> { backStackEntry ->
                 val viewModel: HomeViewModel = viewModel(
+//                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 
@@ -107,6 +118,7 @@ fun AppNavHost(
 
             composable<Search> { backStackEntry ->
                 val viewModel: SearchViewModel = viewModel(
+                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 

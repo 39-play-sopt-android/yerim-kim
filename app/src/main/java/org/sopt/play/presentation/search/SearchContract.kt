@@ -6,7 +6,7 @@ import org.sopt.play.domain.model.postDummy
 
 data class SearchUiState(
     val postList: List<PostModel> = emptyList(),
-    val nextCursor: Long = 0L,
+    val nextCursor: Long? = null,
     val hasNext: Boolean = false,
     val isLoading: Boolean = false,
     val showBottomSheet: Boolean = false,
