@@ -28,6 +28,7 @@ sealed interface TypographyTokens {
     @Immutable
     data class Body(
         val m18: TextStyle,
+        val m16: TextStyle,
         val sb16: TextStyle,
     ) : TypographyTokens
 
@@ -36,6 +37,7 @@ sealed interface TypographyTokens {
         val m14: TextStyle,
         val sb14: TextStyle,
         val r14: TextStyle,
+        val m12: TextStyle,
     ) : TypographyTokens
 }
 
@@ -78,6 +80,11 @@ val defaultPLAYSOPTTypography = PLAYSOPTTypography(
             fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
         ),
+        m16 = PLAYSOPTTextStyle(
+            fontFamily = PretendardFont.Medium,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+        ),
         sb16 = PLAYSOPTTextStyle(
             fontFamily = PretendardFont.SemiBold,
             fontSize = 16.sp,
@@ -98,6 +105,11 @@ val defaultPLAYSOPTTypography = PLAYSOPTTypography(
         r14 = PLAYSOPTTextStyle(
             fontFamily = PretendardFont.Regular,
             fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+        ),
+        m12 = PLAYSOPTTextStyle(
+            fontFamily = PretendardFont.Medium,
+            fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
         ),
     ),

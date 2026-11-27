@@ -8,14 +8,15 @@ import org.sopt.play.R
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.common.util.getEmailError
 import org.sopt.play.core.common.util.getPasswordError
-import org.sopt.play.data.di.RepositoryModule
+import org.sopt.play.domain.repository.AuthRepository
 
-class LoginViewModel : BaseViewModel<LoginUiState, LoginUiEffect>(
+class LoginViewModel(
+    private val authRepository: AuthRepository,
+) : BaseViewModel<LoginUiState, LoginUiEffect>(
     initialState = LoginUiState()
 ) {
     val emailState = TextFieldState()
     val passwordState = TextFieldState()
-    private val authRepository = RepositoryModule.authRepository
 
     init {
         viewModelScope.launch {

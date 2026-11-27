@@ -13,4 +13,11 @@
 
     <!-- Home -->
     <string name="home_title">PLAY SOPT</string>
+
+    <!-- Search -->
+    <string name="post_create_success">게시글 생성 완료!</string>
+    <string name="post_create_failure">게시글 생성에 실패했습니다. 다시 시도해주세요.</string>
+    <string name="post_delete_success">게시글을 삭제했습니다.</string>
+    <string name="post_delete_failure">게시글 삭제에 실패했습니다. 다시 시도해주세요.</string>
+    <string name="post_load_failure">게시글을 불러오는 데 오류가 발생했습니다.</string>
 </resources>

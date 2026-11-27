@@ -1,41 +1,130 @@
 package org.sopt.play.presentation.search
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.play.core.common.extension.toast
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.presentation.search.component.FloatingButton
+import org.sopt.play.presentation.search.component.PostBottomSheet
+import org.sopt.play.presentation.search.component.PostModal
+import org.sopt.play.presentation.search.component.PostSection
+import org.sopt.play.presentation.search.component.SearchTextField
 
 @Composable
 fun SearchRoute(
+    viewModel: SearchViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val resource = LocalResources.current
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is SearchUiEffect.ShowToast -> {
+                    context.toast(resource.getString(effect.message))
+                }
+            }
+        }
+    }
+
     SearchScreen(
+        state = state,
+        searchState = viewModel.searchState,
+        titleState = viewModel.titleState,
+        contentState = viewModel.contentState,
+        onSearchClick = viewModel::onSearchClick,
+        onPostClick = viewModel::onPostClick,
+        onPostLongClick = viewModel::onPostLongClick,
+        onFloatingClick = viewModel::onFloatingClick,
+        onCompleteClick = viewModel::onCompleteClick,
+        onDeleteClick = viewModel::onDeleteClick,
+        onBottomSheetDismiss = viewModel::onBottomSheetDismiss,
+        onModalDismiss = viewModel::onModalDismiss,
         modifier = modifier,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
+    state: SearchUiState,
+    searchState: TextFieldState,
+    titleState: TextFieldState,
+    contentState: TextFieldState,
+    onSearchClick: () -> Unit,
+    onPostClick: (Long) -> Unit,
+    onPostLongClick: (Long) -> Unit,
+    onFloatingClick: () -> Unit,
+    onCompleteClick: () -> Unit,
+    onBottomSheetDismiss: () -> Unit,
+    onModalDismiss: () -> Unit,
+    onDeleteClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = PLAYSOPTTheme.colors.white),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+            .background(color = PLAYSOPTTheme.colors.white)
+            .padding(horizontal = 16.dp),
     ) {
-        Text(
-            text = "검색해라",
-            style = PLAYSOPTTheme.typography.body.m18,
+        SearchTextField(
+            state = searchState,
+            placeholder = "검색어를 입력하세요",
+            onSearchClick = onSearchClick,
+            modifier = Modifier.padding(vertical = 12.dp),
         )
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            PostSection(
+                postList = state.postList,
+                onPostClick = onPostClick,
+                onPostLongClick = onPostLongClick,
+            )
+
+            FloatingButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 20.dp),
+                onButtonClick = onFloatingClick,
+            )
+
+            if (state.showBottomSheet) {
+                PostBottomSheet(
+                    onDismissRequest = onBottomSheetDismiss,
+                    titleState = titleState,
+                    contentState = contentState,
+                    onButtonClick = onCompleteClick,
+                )
+            }
+
+            if (state.showModal) {
+                PostModal(
+                    onDismissRequest = onModalDismiss,
+                    onCancelClick = onModalDismiss,
+                    onDeleteClick = { state.selectedPostId?.let(onDeleteClick) },
+                )
+            }
+        }
     }
 }
 
@@ -43,6 +132,19 @@ fun SearchScreen(
 @Composable
 private fun SearchScreenPreview() {
     PlaySoptTheme {
-        SearchScreen()
+        SearchScreen(
+            state = SearchUiState.dummy,
+            searchState = TextFieldState(),
+            titleState = TextFieldState(),
+            contentState = TextFieldState(),
+            onBottomSheetDismiss = {},
+            onModalDismiss = {},
+            onPostClick = {},
+            onPostLongClick = {},
+            onFloatingClick = {},
+            onCompleteClick = {},
+            onSearchClick = {},
+            onDeleteClick = {},
+        )
     }
 }

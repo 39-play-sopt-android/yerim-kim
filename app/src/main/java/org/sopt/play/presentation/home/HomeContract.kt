@@ -6,6 +6,7 @@ import org.sopt.play.presentation.home.model.HomeCategoryModel
 import org.sopt.play.presentation.home.model.HomeMenuModel
 
 data class HomeUiState(
+    val userName: String? = null,
     val productList: List<ProductModel> = emptyList(),
     val selectedTab: HomeMenuModel = HomeMenuModel.HOME,
     val selectedCategory: HomeCategoryModel = HomeCategoryModel.ALL,
