@@ -62,7 +62,7 @@ fun AppNavHost(
         ) {
             composable<Login> { backStackEntry ->
                 val viewModel: LoginViewModel = viewModel(
-//                    factory = factory,
+                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 
@@ -80,7 +80,7 @@ fun AppNavHost(
 
             composable<Register> { backStackEntry ->
                 val viewModel: RegisterViewModel = viewModel(
-//                    factory = factory,
+                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 
@@ -96,7 +96,7 @@ fun AppNavHost(
         ) {
             composable<BottomBarRoute.Home> { backStackEntry ->
                 val viewModel: HomeViewModel = viewModel(
-//                    factory = factory,
+                    factory = factory,
                     viewModelStoreOwner = backStackEntry
                 )
 

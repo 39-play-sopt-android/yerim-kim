@@ -1,17 +1,33 @@
 package org.sopt.play.presentation.home
 
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
+import org.sopt.play.data.di.RepositoryModule.authRepository
 import org.sopt.play.domain.mock.productMockData
 import org.sopt.play.domain.model.ProductModel
+import org.sopt.play.domain.repository.AuthRepository
 import org.sopt.play.presentation.home.model.HomeCategoryModel
 import org.sopt.play.presentation.home.model.HomeMenuModel
 
-class HomeViewModel :
+class HomeViewModel(
+    private val authRepository: AuthRepository,
+) :
     BaseViewModel<HomeUiState, HomeUiEffect>(
         initialState = HomeUiState(
             productList = productMockData,
         ),
     ) {
+
+    init {
+        viewModelScope.launch {
+            authRepository.currentUser.collect { user ->
+                updateState {
+                    copy(userName = user?.name)
+                }
+            }
+        }
+    }
     fun onSearchClick() {
         sendEffect(HomeUiEffect.NavigateToSearch)
     }
