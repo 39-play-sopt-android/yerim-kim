@@ -31,8 +31,11 @@ fun SearchRoute(
     SearchScreen(
         state = state,
         searchState = viewModel.searchState,
+        titleState = viewModel.titleState,
+        contentState = viewModel.contentState,
         onSearchClick = viewModel::onSearchClick,
         onFloatingClick = viewModel::onFloatingClick,
+        onCompleteClick = viewModel::onCompleteClick,
         onBottomSheetDismiss = viewModel::onBottomSheetDismiss,
         modifier = modifier,
     )
@@ -43,8 +46,11 @@ fun SearchRoute(
 fun SearchScreen(
     state: SearchUiState,
     searchState: TextFieldState,
+    titleState: TextFieldState,
+    contentState: TextFieldState,
     onSearchClick: () -> Unit,
     onFloatingClick: () -> Unit,
+    onCompleteClick: () -> Unit,
     onBottomSheetDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -78,9 +84,9 @@ fun SearchScreen(
             if (state.showBottomSheet) {
                 PostBottomSheet(
                     onDismissRequest = onBottomSheetDismiss,
-                    titleState = TextFieldState(),
-                    contentState = TextFieldState(),
-                    onButtonClick = onFloatingClick,
+                    titleState = titleState,
+                    contentState = contentState,
+                    onButtonClick = onCompleteClick,
                 )
             }
         }
@@ -94,8 +100,11 @@ private fun SearchScreenPreview() {
         SearchScreen(
             state = SearchUiState.dummy,
             searchState = TextFieldState(),
+            titleState = TextFieldState(),
+            contentState = TextFieldState(),
             onBottomSheetDismiss = {},
             onFloatingClick = {},
+            onCompleteClick = {},
             onSearchClick = {},
         )
     }

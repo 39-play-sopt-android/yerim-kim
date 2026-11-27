@@ -9,9 +9,7 @@ import org.sopt.play.data.repository.SearchRepositoryImpl
 
 class AppContainer(context: Context) {
     private val appContext = context.applicationContext
-    private val authDataStore: AuthDataStore by lazy {
-        AuthDataStore(appContext)
-    }
+    private val authDataStore: AuthDataStore by lazy { AuthDataStore(appContext) }
     val authRepository by lazy { AuthRepositoryImpl(authDataStore) }
 
     private val searchService by lazy { NetworkModule.createService<SearchService>() }

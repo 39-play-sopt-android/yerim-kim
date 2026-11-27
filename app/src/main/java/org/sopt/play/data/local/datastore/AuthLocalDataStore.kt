@@ -42,9 +42,7 @@ class AuthDataStore(
 
             if (name != null && email != null) {
                 UserModel(name = name, email = email)
-            } else {
-                null
-            }
+            } else null
         }
 
     val password: Flow<String?> = appContext.dataStore.data

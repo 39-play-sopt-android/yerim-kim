@@ -5,11 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import org.sopt.play.PlaySoptApplication
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 import org.sopt.play.data.di.RepositoryModule
+import org.sopt.play.di.ViewModelFactory
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory((application as PlaySoptApplication).container)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

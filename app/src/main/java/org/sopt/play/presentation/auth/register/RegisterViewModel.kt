@@ -9,12 +9,14 @@ import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.common.util.getEmailError
 import org.sopt.play.core.common.util.getPasswordCheckError
 import org.sopt.play.core.common.util.getPasswordError
-import org.sopt.play.data.di.RepositoryModule
+import org.sopt.play.domain.repository.AuthRepository
 
-class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEffect>(
+class RegisterViewModel(
+    private val authRepository: AuthRepository,
+
+    ) : BaseViewModel<RegisterUiState, RegisterUiEffect>(
     initialState = RegisterUiState(),
 ) {
-    private val authRepository = RepositoryModule.authRepository
     val nameState = TextFieldState()
     val emailState = TextFieldState()
     val passwordState = TextFieldState()

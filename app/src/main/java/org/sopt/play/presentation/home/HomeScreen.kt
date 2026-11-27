@@ -1,6 +1,5 @@
 package org.sopt.play.presentation.home
 
-import android.R.attr.data
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -100,7 +99,7 @@ fun HomeScreen(
                         modifier = Modifier.padding(vertical = 20.dp),
                     ) {
                         Text(
-                            text = "${state.userName}님을 위한 추천 아이템",
+                            text = "${state.userName ?: ""}님을 위한 추천 아이템",
                             style = PLAYSOPTTheme.typography.body.m18,
                             modifier = Modifier.padding(horizontal = 16.dp),
                         )

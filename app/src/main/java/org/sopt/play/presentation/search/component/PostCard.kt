@@ -25,6 +25,7 @@ import org.sopt.play.core.designsystem.theme.PlaySoptTheme
 
 @Composable
 fun PostCard(
+    postId: Long,
     authorName: String,
     createdAt: Long,
     title: String,
@@ -115,6 +116,7 @@ private fun PostCardPreview() {
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             PostCard(
+                postId = 1L,
                 authorName = "작성자",
                 createdAt = 0L,
                 title = "제목",
@@ -122,6 +124,7 @@ private fun PostCardPreview() {
             )
 
             PostCard(
+                postId = 2L,
                 authorName = "작성자이름은김예림입니다안녕하세요반가워요지금시간은3시40분이네요",
                 createdAt = 0L,
                 title = "제목도 길어지면 이렇게 됩니다 제목은 한 줄만 보여줍니다",

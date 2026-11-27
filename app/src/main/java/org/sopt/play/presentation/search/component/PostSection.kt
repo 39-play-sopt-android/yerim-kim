@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,18 +34,20 @@ fun PostSection(
                 color = PLAYSOPTTheme.colors.gray3,
             )
         }
-    }
-    LazyColumn(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        items (postList.size) {
-            PostCard(
-                authorName = postList[it].author,
-                createdAt = postList[it].createdAt,
-                title = postList[it].title,
-                content = postList[it].content,
-            )
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items (items = postList, key = { it.postId }) { post ->
+                PostCard(
+                    postId = post.postId,
+                    authorName = post.author,
+                    createdAt = post.createdAt,
+                    title = post.title,
+                    content = post.content,
+                )
+            }
         }
     }
 }
