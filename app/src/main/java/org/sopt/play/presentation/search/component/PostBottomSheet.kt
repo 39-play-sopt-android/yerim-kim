@@ -76,6 +76,7 @@ private fun BottomSheetContent(
             state = titleState,
             label = "제목",
             placeholder = "제목을 입력하세요",
+            maxLength = 20,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
             ),
@@ -87,6 +88,7 @@ private fun BottomSheetContent(
             state = contentState,
             label = "본문",
             placeholder = "본문을 입력하세요",
+            maxLength = 1000,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
             ),
