@@ -2,6 +2,7 @@ package org.sopt.play.presentation.search
 
 import android.util.Log
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -91,8 +92,6 @@ class SearchViewModel(
         val content = contentState.text.toString().trim()
 
         viewModelScope.launch {
-            updateState { copy(showBottomSheet = false) }
-
             val author = authRepository.currentUser.first()?.name.toString()
             searchRepository.createPost(
                 authorizationCode = "20030207", // TODO : 인증 코드 발급 API 연동
@@ -100,16 +99,25 @@ class SearchViewModel(
                 content = content,
                 author = author,
             ).onSuccess {
+                titleState.clearText()
+                contentState.clearText()
+
                 updateState {
                     copy(
                         isLoading = false,
+                        showBottomSheet = false,
                     )
                 }
                 sendEffect(SearchUiEffect.ShowToast(R.string.post_create_success))
                 loadPosts()
             }.onFailure { throwable ->
                 Log.e("ServiceViewModel", "게시글 작성 실패", throwable)
-                updateState { copy(isLoading = false) }
+                updateState {
+                    copy(
+                        isLoading = false,
+                        showBottomSheet = false,
+                    )
+                }
                 sendEffect(SearchUiEffect.ShowToast(R.string.post_create_failure))
             }
         }
