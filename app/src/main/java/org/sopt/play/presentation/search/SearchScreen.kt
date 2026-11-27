@@ -8,14 +8,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.play.core.common.extension.toast
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
+import org.sopt.play.presentation.auth.login.LoginUiEffect
 import org.sopt.play.presentation.search.component.FloatingButton
 import org.sopt.play.presentation.search.component.PostBottomSheet
 import org.sopt.play.presentation.search.component.PostModal
@@ -27,7 +32,19 @@ fun SearchRoute(
     viewModel: SearchViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val resource = LocalResources.current
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is SearchUiEffect.ShowToast -> {
+                    context.toast(resource.getString(effect.message))
+                }
+            }
+        }
+    }
 
     SearchScreen(
         state = state,

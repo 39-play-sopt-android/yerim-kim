@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.sopt.play.R
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.domain.repository.AuthRepository
 import org.sopt.play.domain.repository.SearchRepository
@@ -41,6 +42,7 @@ class SearchViewModel(
                 .onFailure { throwable ->
                     Log.e("ServiceViewModel", "포스트 조회 실패", throwable)
                     updateState { copy(isLoading = false) }
+                    sendEffect(SearchUiEffect.ShowToast(R.string.post_load_failure))
                 }
         }
     }
@@ -75,9 +77,12 @@ class SearchViewModel(
                         postList = postList.filterNot { it.postId == postId }
                     )
                 }
+                sendEffect(SearchUiEffect.ShowToast(R.string.post_delete_success))
             }.onFailure { throwable ->
                 Log.e("SearchViewModel", "게시글 삭제 실패", throwable)
+                sendEffect(SearchUiEffect.ShowToast(R.string.post_delete_failure))
             }
+
         }
     }
 
@@ -100,10 +105,12 @@ class SearchViewModel(
                         isLoading = false,
                     )
                 }
+                sendEffect(SearchUiEffect.ShowToast(R.string.post_create_success))
                 loadPosts()
             }.onFailure { throwable ->
                 Log.e("ServiceViewModel", "게시글 작성 실패", throwable)
                 updateState { copy(isLoading = false) }
+                sendEffect(SearchUiEffect.ShowToast(R.string.post_create_failure))
             }
         }
     }
