@@ -3,7 +3,6 @@ package org.sopt.play.presentation.home
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.sopt.play.core.base.BaseViewModel
-import org.sopt.play.data.di.RepositoryModule.authRepository
 import org.sopt.play.domain.mock.productMockData
 import org.sopt.play.domain.model.ProductModel
 import org.sopt.play.domain.repository.AuthRepository
@@ -28,6 +27,7 @@ class HomeViewModel(
             }
         }
     }
+
     fun onSearchClick() {
         sendEffect(HomeUiEffect.NavigateToSearch)
     }

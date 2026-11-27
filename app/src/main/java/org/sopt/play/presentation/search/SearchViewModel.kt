@@ -69,8 +69,14 @@ class SearchViewModel(
         updateState { copy(showModal = false) }
 
         viewModelScope.launch {
+            val authorizationCode = authRepository.getAuthorizationCode()
+                .getOrElse { throwable ->
+                    Log.e("SearchViewModel", "인증 코드 발급 실패", throwable)
+                    return@launch
+                }
+
             searchRepository.deletePost(
-                authorizationCode = "20030207",
+                authorizationCode = authorizationCode,
                 postId = postId,
             ).onSuccess {
                 updateState {
@@ -83,7 +89,6 @@ class SearchViewModel(
                 Log.e("SearchViewModel", "게시글 삭제 실패", throwable)
                 sendEffect(SearchUiEffect.ShowToast(R.string.post_delete_failure))
             }
-
         }
     }
 
@@ -92,9 +97,16 @@ class SearchViewModel(
         val content = contentState.text.toString().trim()
 
         viewModelScope.launch {
+            val authorizationCode = authRepository.getAuthorizationCode()
+                .getOrElse { throwable ->
+                    Log.e("SearchViewModel", "인증 코드 발급 실패", throwable)
+                    sendEffect(SearchUiEffect.ShowToast(R.string.post_create_failure))
+                    return@launch
+                }
+
             val author = authRepository.currentUser.first()?.name.toString()
             searchRepository.createPost(
-                authorizationCode = "20030207", // TODO : 인증 코드 발급 API 연동
+                authorizationCode = authorizationCode,
                 title = title,
                 content = content,
                 author = author,

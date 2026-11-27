@@ -12,4 +12,5 @@ interface AuthRepository {
 
     suspend fun logout(): Result<Unit>
 
+    suspend fun getAuthorizationCode(): Result<String>
 }

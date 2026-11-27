@@ -22,12 +22,24 @@ class AuthDataStore(
     private val appContext = context.applicationContext
 
     private companion object {
+        private val AUTHORIZATION_CODE = stringPreferencesKey("authorizationCode")
         private val NAME = stringPreferencesKey("name")
         private val EMAIL = stringPreferencesKey("email")
         private val PASSWORD = stringPreferencesKey("password")
         private val IS_LOGGED_IN = booleanPreferencesKey("isLoggedIn")
     }
 
+    val authorizationCode: Flow<String?> = appContext.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            preferences[AUTHORIZATION_CODE]
+        }
     val userProfile: Flow<UserModel?> = appContext.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
@@ -53,6 +65,7 @@ class AuthDataStore(
                 throw exception
             }
         }.map { it[PASSWORD] }
+
     val isLoggedIn = appContext.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
@@ -61,6 +74,10 @@ class AuthDataStore(
                 throw exception
             }
         }.map { preferences -> preferences[IS_LOGGED_IN] ?: false }
+
+    suspend fun saveAuthorizationCode(code: String) {
+        appContext.dataStore.edit { it[AUTHORIZATION_CODE] = code }
+    }
 
     suspend fun saveUser(name: String, email: String, password: String) {
         appContext.dataStore.edit {

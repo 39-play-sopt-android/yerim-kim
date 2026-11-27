@@ -8,7 +8,6 @@ import org.sopt.play.R
 import org.sopt.play.core.base.BaseViewModel
 import org.sopt.play.core.common.util.getEmailError
 import org.sopt.play.core.common.util.getPasswordError
-import org.sopt.play.data.di.RepositoryModule
 import org.sopt.play.domain.repository.AuthRepository
 
 class LoginViewModel(
