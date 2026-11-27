@@ -40,6 +40,7 @@ class AuthDataStore(
         .map { preferences ->
             preferences[AUTHORIZATION_CODE]
         }
+
     val userProfile: Flow<UserModel?> = appContext.dataStore.data
         .catch { exception ->
             if (exception is IOException) {

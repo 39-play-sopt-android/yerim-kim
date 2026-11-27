@@ -15,5 +15,5 @@ interface SearchRepository {
     suspend fun deletePost(
         authorizationCode: String,
         postId: Long,
-    ):Result<Unit>
+    ): Result<Unit>
 }

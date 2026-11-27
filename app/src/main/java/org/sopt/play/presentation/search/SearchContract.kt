@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import org.sopt.play.core.base.BaseUiState
 import org.sopt.play.domain.model.PostModel
 import org.sopt.play.domain.model.postDummy
-import org.sopt.play.presentation.auth.login.LoginUiEffect
 
 data class SearchUiState(
     val postList: List<PostModel> = emptyList(),

@@ -20,7 +20,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.play.core.common.extension.toast
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.presentation.auth.login.LoginUiEffect
 import org.sopt.play.presentation.search.component.FloatingButton
 import org.sopt.play.presentation.search.component.PostBottomSheet
 import org.sopt.play.presentation.search.component.PostModal
@@ -123,7 +122,7 @@ fun SearchScreen(
                     onDismissRequest = onModalDismiss,
                     onCancelClick = onModalDismiss,
                     onDeleteClick = { state.selectedPostId?.let(onDeleteClick) },
-                    )
+                )
             }
         }
     }

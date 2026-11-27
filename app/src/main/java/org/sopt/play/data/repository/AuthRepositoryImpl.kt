@@ -47,15 +47,15 @@ class AuthRepositoryImpl(
     override suspend fun getAuthorizationCode(): Result<String> =
         suspendRunCatching {
             authDataStore.authorizationCode.first() ?: run {
-                    val response = service.getAuthorizationCode(
-                        request = AuthorizationCodeRequest(part = "ANDROID"),
-                    )
+                val response = service.getAuthorizationCode(
+                    request = AuthorizationCodeRequest(part = "ANDROID"),
+                )
 
-                    requireNotNull(response.data) {
-                        response.message
-                    }.authorizationCode.also { code ->
-                        authDataStore.saveAuthorizationCode(code)
-                    }
+                requireNotNull(response.data) {
+                    response.message
+                }.authorizationCode.also { code ->
+                    authDataStore.saveAuthorizationCode(code)
                 }
+            }
         }
 }

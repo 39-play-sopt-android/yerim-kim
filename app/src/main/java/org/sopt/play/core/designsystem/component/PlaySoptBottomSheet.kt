@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.sopt.play.core.designsystem.theme.PLAYSOPTTheme
 import org.sopt.play.core.designsystem.theme.PlaySoptTheme
-import org.sopt.play.presentation.search.component.FloatingButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -97,14 +98,18 @@ private fun PlaySoptBottomSheetPreview() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = PLAYSOPTTheme.colors.white)
-                .padding(bottom = 100.dp, end = 20.dp),
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Bottom,
+                .background(color = PLAYSOPTTheme.colors.white),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
-            FloatingButton(
-                onButtonClick = { showBottomSheet = true },
-            )
+            Button(
+                onClick = { showBottomSheet = true },
+            ) {
+                Text(
+                    text = "플로팅 버튼",
+                    color = PLAYSOPTTheme.colors.white,
+                )
+            }
 
             if (showBottomSheet) {
                 PlaySoptBottomSheet(
